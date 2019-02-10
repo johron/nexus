@@ -13,4 +13,5 @@ set_property(GLOBAL PROPERTY CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_subdirectory("nexus-lib")
 add_subdirectory("nexus-tests")
+add_subdirectory("nexus-sample")
 

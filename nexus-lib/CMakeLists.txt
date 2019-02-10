@@ -3,22 +3,29 @@ set(target_name "nexus-lib")
 set(src_precompiled
     "src/precompiled.h")
 
-set(src_sample
-    "src/sample.cpp"
-    "src/sample.h")
+set(src_include
+	"include/nexus/nexus-lib.h")
+
+set(src_engine
+	"src/dummy.cpp"
+    "src/engine.h"
+    "src/window.h")
 
 
 set(src_files
     ${src_precompiled}
-    ${src_sample})
+	${src_include}
+    ${src_engine})
 
 add_library(${target_name} STATIC ${src_files})
 
 source_group("src\\precompiled" FILES ${src_precompiled})
-source_group("src\\sample" FILES ${src_sample})
+source_group("src\\include" FILES ${src_include})
+source_group("src\\engine" FILES ${src_engine})
 
 target_link_libraries(${target_name} PRIVATE "compiler-warnings")
-target_link_libraries(${target_name} PRIVATE "sfml-main")
+target_link_libraries(${target_name} PUBLIC "sfml-main")
+target_link_libraries(${target_name} PUBLIC "sfml-graphics")
 
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 
