@@ -21,12 +21,22 @@ if(result)
 endif()
 
 set(SFML_BUILD_AUDIO OFF CACHE BOOL "TRUE to build SFML's Audio module." FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "TRUE to build SFML libs ass DLL's" FORCE)
 
 add_subdirectory(${PROJECT_BINARY_DIR}/third_party/${external_project}/src)
 
-#set_target_properties("sfml-audio" PROPERTIES FOLDER "third_party/sfml")
-set_target_properties("sfml-graphics" PROPERTIES FOLDER "third_party/sfml")
-set_target_properties("sfml-main" PROPERTIES FOLDER "third_party/sfml")
-set_target_properties("sfml-network" PROPERTIES FOLDER "third_party/sfml")
-set_target_properties("sfml-system" PROPERTIES FOLDER "third_party/sfml")
-set_target_properties("sfml-window" PROPERTIES FOLDER "third_party/sfml")
+set(used-libs
+    #"sfml-audio",
+    "sfml-graphics"
+    "sfml-main"
+    "sfml-network"
+    "sfml-system"
+    "sfml-window")
+
+foreach(sfml-lib ${used-libs})
+    set_target_properties(${sfml-lib} PROPERTIES FOLDER "third_party/sfml")
+    message("dir: ${PROJECT_BINARY_DIR}/third_party/sfml/${sfml-lib}")
+    #add_custom_command(TARGET ${sfml-lib} POST_BUILD
+    #    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/"
+    #)
+endforeach()
