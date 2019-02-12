@@ -2,7 +2,7 @@ set(target_name "nexus-sample")
 
 set(src_files "src/main.cpp")
 
-add_executable(${target_name} ${src_files})
+add_executable(${target_name} WIN32 ${src_files})
 
 target_link_libraries(${target_name} "nexus-lib")
 

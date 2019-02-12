@@ -1,27 +1,11 @@
 #pragma once
-
-#include <SFML/Graphics.hpp>
+#include "sfml/engine.h"
 
 namespace nexus {
-	struct engine {
-		[[nodiscard]] bool is_running() const {
-			return true;
-		}
 
-		void update() {
-
-		}
-
-		void render() {
-
-		}
-
-		[[nodiscard]] int shutdown() {
-			return EXIT_SUCCESS;
-		}
-	};
-
-	auto make_engine() {
-		return engine{};
-	}
+auto make_engine(uint32_t width, uint32_t height, std::string&& title) {
+	return std::make_unique<sfml::engine>(width, height, std::move(title));
 }
+
+
+}  // namespace nexus

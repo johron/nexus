@@ -6,6 +6,10 @@ set(src_precompiled
 set(src_include
 	"include/nexus/nexus-lib.h")
 
+set(src_sfml_engine 
+    "src/sfml/engine.h"
+    "src/sfml/window.h")
+
 set(src_engine
 	"src/dummy.cpp"
     "src/engine.h"
@@ -15,15 +19,17 @@ set(src_engine
 set(src_files
     ${src_precompiled}
 	${src_include}
-    ${src_engine})
+    ${src_engine}
+    ${src_sfml_engine})
 
 add_library(${target_name} STATIC ${src_files})
 
 source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
 source_group("src\\engine" FILES ${src_engine})
+source_group("src\\engine\\sfml" FILES ${src_sfml_engine})
 
-target_link_libraries(${target_name} PRIVATE "compiler-warnings")
+target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "sfml-main")
 target_link_libraries(${target_name} PUBLIC "sfml-graphics")
 

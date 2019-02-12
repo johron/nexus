@@ -1,4 +1,4 @@
-BasedOnStyle: Chromium
+﻿BasedOnStyle: Chromium
 BinPackArguments: false
 BinPackParameters: false
 BreakConstructorInitializers: BeforeComma 
