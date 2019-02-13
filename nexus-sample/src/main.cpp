@@ -1,14 +1,14 @@
 #include "nexus/nexus-lib.h"
 
 int main(int /*argc*/, char const* /*argv[]*/) {
-	auto engine = nexus::make_engine(800, 600, "sample");
+	auto window = nexus::make_window(800, 600, "sample window");
 
-	while (engine->is_running()) {
-		engine->update();
-		engine->render();
+	while (window->is_open()) {
+		window->update();
+		window->render();
 	}
 
-	engine.reset();
+	window.reset();
 
 	return EXIT_SUCCESS;
 }

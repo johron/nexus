@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "input.h"
 
 namespace nexus::sfml {
 struct window {
@@ -13,18 +14,18 @@ struct window {
 		while (m_window.pollEvent(current_event)) {
 			switch (current_event.type) {
 				case sf::Event::Closed:
-					m_window.close();
+					close();
 					break;
 
 				case sf::Event::KeyPressed:
 					if (current_event.key.code == sf::Keyboard::Escape) {
-						m_window.close();
+						close();
 					}
 			}
 		}
 	}
 
-	void render() { 
+	void render() {
 		sf::CircleShape circle(20);
 		circle.setFillColor(sf::Color(255, 0, 0, 100));
 
@@ -34,7 +35,12 @@ struct window {
 		m_window.clear(sf::Color::Black);
 	}
 
+	void close() {
+		m_window.close();
+	}
+
 private:
+	input_binding m_input_binding;
 	sf::RenderWindow m_window;
 };
 }  // namespace nexus::sfml

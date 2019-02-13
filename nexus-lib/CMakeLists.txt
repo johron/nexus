@@ -8,6 +8,7 @@ set(src_include
 
 set(src_sfml_engine 
     "src/sfml/engine.h"
+	"src/sfml/input.h"
     "src/sfml/window.h")
 
 set(src_engine

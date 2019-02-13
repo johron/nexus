@@ -1,4 +1,5 @@
-﻿BasedOnStyle: Chromium
+﻿AllowShortFunctionsOnASingleLine: false
+BasedOnStyle: Chromium
 BinPackArguments: false
 BinPackParameters: false
 BreakConstructorInitializers: BeforeComma 
