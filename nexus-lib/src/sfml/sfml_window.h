@@ -1,11 +1,12 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "input.h"
+#include "../input_handler.h"
+#include "sfml_keyboard.h"
 
 namespace nexus::sfml {
 struct window {
 	window(uint32_t width, uint32_t height, std::string&& title)
-		: m_window(sf::VideoMode(width, height, 32), title) {}
+		: m_window(sf::VideoMode(width, height, 32), title) { }
 
 	bool is_open() const { return m_window.isOpen(); }
 
@@ -18,9 +19,8 @@ struct window {
 					break;
 
 				case sf::Event::KeyPressed:
-					if (current_event.key.code == sf::Keyboard::Escape) {
-						close();
-					}
+					m_input.trigger(current_event.key.code);
+					break;
 			}
 		}
 	}
@@ -35,12 +35,16 @@ struct window {
 		m_window.clear(sf::Color::Black);
 	}
 
+	auto& input() {
+		return m_input;
+	}
+
 	void close() {
 		m_window.close();
 	}
 
 private:
-	input_binding m_input_binding;
 	sf::RenderWindow m_window;
+	input_handler<nexus::key> m_input;
 };
 }  // namespace nexus::sfml

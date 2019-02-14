@@ -1,12 +1,14 @@
 #pragma once
-#include "SFML/Window/Keyboard.hpp"
+#include "key_code.h"
 
 namespace nexus {
-using key = sf::Keyboard::Key;
-
 struct input_binding {
 	void bind(nexus::key key, std::function<void()> action) {
 		m_bindings[key] = action;
+	}
+
+	bool has_binding(nexus::key key) const {
+		return m_bindings.find(key) != m_bindings.end();
 	}
 
 	void trigger(nexus::key key) {
