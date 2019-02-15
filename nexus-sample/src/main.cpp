@@ -2,7 +2,7 @@
 
 int main(int /*argc*/, char const* /*argv[]*/) {
 	auto window = nexus::make_window(800, 600, "sample window");
-	window->input().bind(nexus::key::Escape, [&window]() { window->close(); });
+	window->input().bind(nexus::key::escape, [&window]() { window->close(); });
 
 	while (window->is_open()) {
 		window->update();

@@ -19,7 +19,7 @@ struct window {
 					break;
 
 				case sf::Event::KeyPressed:
-					m_input.trigger(current_event.key.code);
+					m_input.trigger(key(current_event.key.code));
 					break;
 			}
 		}
