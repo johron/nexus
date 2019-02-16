@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 
 namespace nexus {
 template <class key_t>

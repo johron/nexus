@@ -7,10 +7,13 @@ set(src_include
 	"include/nexus/nexus-lib.h")
 
 set(src_sfml_engine 
+	"src/sfml/sfml_drawable.h"
 	"src/sfml/sfml_keyboard.h"
+	"src/sfml/sfml_mouse.h"
     "src/sfml/sfml_window.h")
 
 set(src_engine
+	"src/window.h"
 	"src/engine_interface.h"
 	"src/input_handler.h"
 	"src/dummy.cpp")

@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
-#include "../input_handler.h"
 #include "sfml_keyboard.h"
+#include "../input_handler.h"
 
 namespace nexus::sfml {
 struct window {
@@ -19,20 +19,23 @@ struct window {
 					break;
 
 				case sf::Event::KeyPressed:
-					m_input.trigger(key(current_event.key.code));
+					m_input.trigger(keyboard::key(current_event.key.code));
 					break;
 			}
 		}
 	}
 
-	void render() {
-		sf::CircleShape circle(20);
-		circle.setFillColor(sf::Color(255, 0, 0, 100));
+	template <class drawable_t>
+	void draw(const drawable_t& drawable) {
+		m_window.draw(drawable);
+	}
 
-		m_window.draw(circle);
-
-		m_window.display();
+	void clear() {
 		m_window.clear(sf::Color::Black);
+	}
+
+	void present() {
+		m_window.display();
 	}
 
 	auto& input() {
@@ -45,6 +48,6 @@ struct window {
 
 private:
 	sf::RenderWindow m_window;
-	input_handler<nexus::key> m_input;
+	input_handler<nexus::sfml::keyboard::key> m_input;
 };
 }  // namespace nexus::sfml
