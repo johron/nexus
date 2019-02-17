@@ -18,7 +18,7 @@ private:
 
 };
 
-int main(int /*argc*/, char const* /*argv[]*/) {
+int main(int /*argc*/, char ** /*argv*/) {
 	auto window = std::make_unique<nexus::window>(800, 600, "sample window");
 	window->input().bind(nexus::keyboard::key::escape, [&window]() { window->close(); });
 

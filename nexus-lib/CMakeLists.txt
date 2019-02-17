@@ -33,8 +33,8 @@ source_group("src\\engine" FILES ${src_engine})
 source_group("src\\engine\\sfml" FILES ${src_sfml_engine})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
-target_link_libraries(${target_name} PUBLIC "sfml-main")
-target_link_libraries(${target_name} PUBLIC "sfml-graphics")
+target_link_libraries(${target_name} PUBLIC "code-coverage")
+target_link_libraries(${target_name} PUBLIC ${sfml_libraries})
 
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 
