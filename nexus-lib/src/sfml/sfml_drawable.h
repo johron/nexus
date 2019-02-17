@@ -9,30 +9,31 @@ struct color_t : public sf::Color {
 	}
 };
 
-struct texture : public sf::Texture {
-	texture(const std::string& filename) {
-		if (!loadFromFile(filename)) {
+
+// should add a mechanism to share texture memory;
+struct sprite {
+	sprite(const std::string& filename) {
+		if (!m_texture.loadFromFile(filename)) {
 			throw std::runtime_error("failed to load texture");
+			// set to fallback texture;
+		} else {
+			m_sprite.setTexture(m_texture);
 		}
 	}
 
-	texture(size_t width, size_t height) {
-		create(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
-	}
-};
-
-struct sprite : public sf::Sprite {
-	sprite(texture&& texture)
-		: sf::Sprite(std::move(texture)) {
+	sprite(size_t width, size_t height, color_t color = { 255, 0, 255, 255 }) {
+		m_texture.create(static_cast<unsigned int>(width), static_cast<unsigned int>(height));
+		m_sprite.setTexture(m_texture);
+		m_sprite.setColor(color);
 	}
 
-	sprite(const std::string& filename)
-		: sf::Sprite(texture(filename)) {
+	const sf::Sprite& operator()() const {
+		return m_sprite;
 	}
 
-	sprite(size_t width, size_t height, color_t color = {255, 0, 255, 255})
-		: sf::Sprite(texture(width, height)) {
-		setColor(color);
-	}
+private:
+	sf::Texture m_texture;
+	sf::Sprite m_sprite;
+
 };
 }  // namespace nexus

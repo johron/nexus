@@ -33,7 +33,7 @@ struct window {
 
 	template <class drawable_t>
 	void draw(const drawable_t& drawable) {
-		m_window.draw(drawable);
+		m_window.draw(drawable());
 	}
 
 	void clear() {
