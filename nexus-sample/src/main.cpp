@@ -1,7 +1,5 @@
 #include "nexus/nexus-lib.h"
 
-#include <filesystem>
-
 struct sample_app {
 	sample_app(size_t count = 1) {
 		for (auto i = 0; i < count; ++i) {
@@ -23,8 +21,6 @@ private:
 };
 
 int main(int /*argc*/, char** argv) {
-	std::filesystem::path current = argv[0];
-
 	auto window = std::make_unique<nexus::window>(800, 600, "sample window");
 	window->input().bind(nexus::keyboard::key::escape, [&window]() { window->close(); });
 
