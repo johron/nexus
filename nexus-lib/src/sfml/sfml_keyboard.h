@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Window/Keyboard.hpp"
 
-namespace nexus::sfml {
+namespace nexus {
 struct keyboard {
 	enum class key {
 		a = sf::Keyboard::Key::A,

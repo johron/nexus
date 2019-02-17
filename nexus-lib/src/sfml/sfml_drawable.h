@@ -4,7 +4,8 @@
 
 namespace nexus {
 struct color_t : public sf::Color {
-	color_t(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255) {
+	color_t(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
+		: sf::Color(r, g, b, a) {
 	}
 };
 
@@ -16,7 +17,7 @@ struct texture : public sf::Texture {
 	}
 
 	texture(size_t width, size_t height) {
-		create(width, height);
+		create(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
 	}
 };
 
@@ -34,5 +35,4 @@ struct sprite : public sf::Sprite {
 		setColor(color);
 	}
 };
-
 }  // namespace nexus

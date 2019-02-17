@@ -3,14 +3,14 @@
 #include "sfml_keyboard.h"
 #include "../input_handler.h"
 
-namespace nexus::sfml {
+namespace nexus {
 struct window {
 	window(uint32_t width, uint32_t height, std::string&& title)
 		: m_window(sf::VideoMode(width, height, 32), title) { }
 
 	bool is_open() const { return m_window.isOpen(); }
 
-	void update() {
+	void poll_events() {
 		sf::Event current_event;
 		while (m_window.pollEvent(current_event)) {
 			switch (current_event.type) {
@@ -48,6 +48,6 @@ struct window {
 
 private:
 	sf::RenderWindow m_window;
-	input_handler<nexus::sfml::keyboard::key> m_input;
+	input_handler<nexus::keyboard::key> m_input;
 };
 }  // namespace nexus::sfml

@@ -11,10 +11,6 @@
 
 #include "../../src/sfml/sfml_window.h"
 #include "../../src/sfml/sfml_keyboard.h"
+#include "../../src/sfml/sfml_drawable.h"
 
 #endif
-
-namespace nexus {
-using window = IMPL::window;
-using keyboard = IMPL::keyboard;
-}
