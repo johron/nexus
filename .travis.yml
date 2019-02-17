@@ -6,7 +6,6 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
-      - sourceline: 'ppa:mhier/libboost-latest'
     packages:
       - libx11-dev
       - libxrandr-dev
@@ -14,14 +13,14 @@ addons:
       - g++-7
       - libgl1-mesa-dev
 
-install:
+before_script:
   - sudo -H pip install coverage
 
 script:
+  - coverage help
   - export CXX=$CXX_EXE
   - export CC=$CC_EXE
-  - mkdir -p build && cd build
-  - cmake $CMAKE_OPTIONS ..
-  - make -j4
-  - ctest .
+  - cmake $CMAKE_OPTIONS .
+  - cmake --build .
+  - ctest
   - bash <(curl -s https://codecov.io/bash) -x $GCOV
