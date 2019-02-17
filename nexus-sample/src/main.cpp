@@ -1,31 +1,36 @@
 #include "nexus/nexus-lib.h"
 
 struct sample_app {
-	sample_app() {
-	
+	sample_app(size_t count = 1) {
+		for (auto i = 0; i < count; ++i) {
+			m_sprites.emplace_back("resources/sprite_sheet.png");
+		}
 	}
 
 	void update() {
-	
 	}
 
-	void render(nexus::window& /*window*/) {
-		//window.draw()
+	void render(nexus::window& window) {
+		for (const auto& sprite : m_sprites) {
+			window.draw(sprite());
+		}
 	}
 
 private:
-	std::unique_ptr<nexus::sprite> m_sprite;
-
+	std::vector<nexus::sprite> m_sprites;
 };
 
-int main(int /*argc*/, char const* /*argv[]*/) {
+int main(int /*argc*/, char** /*argv*/) {
 	auto window = std::make_unique<nexus::window>(800, 600, "sample window");
 	window->input().bind(nexus::keyboard::key::escape, [&window]() { window->close(); });
+
+	sample_app application(1);
 
 	while (window->is_open()) {
 		window->clear();
 		window->poll_events();
-		// game update + rendering
+		application.update();
+		application.render(*window);
 		window->present();
 	}
 

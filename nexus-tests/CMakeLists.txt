@@ -12,4 +12,6 @@ target_include_directories(${target_name} PRIVATE "../../")
 
 set_target_properties(${target_name} PROPERTIES FOLDER "nexus")
 
+gtest_discover_tests(${target_name})
+
 cotire(${target_name})
