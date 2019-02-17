@@ -34,6 +34,20 @@ struct sprite {
 private:
 	sf::Texture m_texture;
 	sf::Sprite m_sprite;
-
 };
+
+/*
+struct rect {
+	rect(int32_t x, int32_t y, uint32_t width, uint32_t height)
+		: m_rect(x, y, width, height) {
+	}
+
+	const auto& operator()() const {
+		return m_rect;
+	}
+
+private:
+	sf::RectangleShape m_rect;
+};*/
+
 }  // namespace nexus

@@ -9,11 +9,19 @@ set(res_files
 
 set(src_precompiled "src/precompiled.h")
 
+set(src_game
+	"src/pac_man/maze.h"
+	"src/pac_man/player.h"
+	"src/pac_man/ghost.h")
+
 set(src_files 
 	${src_precompiled}
+	${src_game}
 	"src/main.cpp")
 
 add_executable(${target_name} WIN32 ${src_files} ${res_files})
+
+source_group("src\\pac_man" FILES ${src_game})
 
 target_link_libraries(${target_name} "nexus-lib")
 

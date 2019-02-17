@@ -12,7 +12,7 @@ struct sample_app {
 
 	void render(nexus::window& window) {
 		for (const auto& sprite : m_sprites) {
-			window.draw(sprite);
+			window.draw(sprite());
 		}
 	}
 
@@ -20,7 +20,7 @@ private:
 	std::vector<nexus::sprite> m_sprites;
 };
 
-int main(int /*argc*/, char** argv) {
+int main(int /*argc*/, char** /*argv*/) {
 	auto window = std::make_unique<nexus::window>(800, 600, "sample window");
 	window->input().bind(nexus::keyboard::key::escape, [&window]() { window->close(); });
 
