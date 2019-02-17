@@ -12,6 +12,7 @@ addons:
       - libxrandr-dev
       - libudev-dev
       - g++-7
+      - libgl1-mesa-dev
 
 install:
   - sudo -H pip install coverage
