@@ -25,10 +25,12 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "TRUE to build SFML libs ass DLL's" FORCE)
 
 add_subdirectory(${PROJECT_BINARY_DIR}/third_party/${external_project}/src)
 
-if (MSVC)
-    set_target_properties("sfml-main" PROPERTIES FOLDER "third_party/sfml")
-    set_target_properties("sfml-graphics" PROPERTIES FOLDER "third_party/sfml")
-    set_target_properties("sfml-network" PROPERTIES FOLDER "third_party/sfml")
-    set_target_properties("sfml-system" PROPERTIES FOLDER "third_party/sfml")
-    set_target_properties("sfml-window" PROPERTIES FOLDER "third_party/sfml")
-endif(MSVC)
+set(sfml_libraries "sfml-graphics" "sfml-network" "sfml-system" "sfml-window")
+
+if (WIN32)
+    list(APPEND sfml_libraries "sfml-main")
+endif(WIN32)
+
+foreach(library ${sfml_libraries})
+    set_target_properties(${library} PROPERTIES FOLDER "third_party/sfml")
+endforeach(library)
