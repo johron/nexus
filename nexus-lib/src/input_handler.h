@@ -4,8 +4,8 @@
 namespace nexus {
 template <class key_t>
 struct input_handler {
-	template <class functor>
-	void bind(const key_t& key, const functor& functor) {
+	template <class functor_t>
+	void bind(const key_t& key, const functor_t& functor) {
 		m_bindings[key] = functor;
 	}
 
