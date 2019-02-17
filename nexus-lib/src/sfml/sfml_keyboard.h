@@ -81,8 +81,8 @@ struct keyboard {
 		arrow_down = sf::Keyboard::Key::Down,
 
 	};
-	inline bool is_down(key key) {
-		return sf::Keyboard::isKeyPressed(sf::Keyboard::Key(key));
+	inline bool is_down(key current_key) {
+		return sf::Keyboard::isKeyPressed(sf::Keyboard::Key(current_key));
 	}
 };
 }  // namespace nexus::sfml

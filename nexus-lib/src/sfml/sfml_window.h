@@ -1,14 +1,17 @@
 #pragma once
+#include "../input_handler.h"
 #include "SFML/Graphics.hpp"
 #include "sfml_keyboard.h"
-#include "../input_handler.h"
 
 namespace nexus {
 struct window {
 	window(uint32_t width, uint32_t height, std::string&& title)
-		: m_window(sf::VideoMode(width, height, 32), title) { }
+		: m_window(sf::VideoMode(width, height, 32), title) {
+	}
 
-	bool is_open() const { return m_window.isOpen(); }
+	bool is_open() const {
+		return m_window.isOpen();
+	}
 
 	void poll_events() {
 		sf::Event current_event;
@@ -20,6 +23,9 @@ struct window {
 
 				case sf::Event::KeyPressed:
 					m_input.trigger(keyboard::key(current_event.key.code));
+					break;
+
+				default:
 					break;
 			}
 		}
@@ -50,4 +56,4 @@ private:
 	sf::RenderWindow m_window;
 	input_handler<nexus::keyboard::key> m_input;
 };
-}  // namespace nexus::sfml
+}  // namespace nexus
