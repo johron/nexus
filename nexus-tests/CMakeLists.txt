@@ -1,8 +1,14 @@
 set(target_name "nexus-tests")
 
-set(src_files "src/input_handler.cpp")
+set(src_math
+	"src/math/vector.cpp")
+
+set(src_files 
+	${src_math})
 
 add_executable(${target_name} ${src_files})
+
+source_group("src\\math" FILES ${src_math})
 
 target_link_libraries(${target_name} "nexus-lib")
 target_link_libraries(${target_name} "gtest_main")

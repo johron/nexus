@@ -6,6 +6,9 @@ set(src_precompiled
 set(src_include
 	"include/nexus/nexus-lib.h")
 
+set(src_math
+	"src/math/vector.h")
+
 set(src_sfml_engine 
 	"src/sfml/sfml_drawable.h"
 	"src/sfml/sfml_keyboard.h"
@@ -23,7 +26,8 @@ set(src_files
     ${src_precompiled}
 	${src_include}
     ${src_engine}
-    ${src_sfml_engine})
+    ${src_sfml_engine}
+	${src_math})
 
 add_library(${target_name} STATIC ${src_files})
 
@@ -31,6 +35,7 @@ source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
 source_group("src\\engine" FILES ${src_engine})
 source_group("src\\engine\\sfml" FILES ${src_sfml_engine})
+source_group("src\\math" FILES ${src_math})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")
