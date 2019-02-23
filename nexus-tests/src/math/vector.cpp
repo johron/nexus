@@ -10,6 +10,7 @@ TEST(vector, constructor_default) {
 
 TEST(vector, constructor_values) {
 	constexpr vector2i a(1, 2);
+	constexpr vector2i a2(1, 23);
 	constexpr vector2i b(1.234f, 6.789f);
 }
 

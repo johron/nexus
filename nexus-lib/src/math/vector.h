@@ -134,7 +134,7 @@ struct vector<value_t, 2> : public detail::vector_base<value_t, 2> {
 	constexpr vector() {
 	}
 
-	template <class... arg_t>
+	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == 2, int> = 0>
 	constexpr vector(arg_t&&... args)
 		: detail::vector_base<value_t, 2>{std::forward<arg_t>(args)...} {
 	}
