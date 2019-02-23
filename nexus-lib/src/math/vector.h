@@ -33,7 +33,7 @@ struct vector_storage<value_t, 2> {
 
 	template <class... arg_t>
 	constexpr vector_storage(arg_t&&... data)
-		: m_storage{std::forward<arg_t>(data)...} {
+		: m_storage{static_cast<value_t>(std::forward<arg_t>(data))...} {
 	}
 
 	union {
@@ -99,18 +99,18 @@ struct vector_base : public vector_storage<value_t, N> {
 protected:
 	template <class... arg_t>
 	constexpr vector_base(arg_t&&... args)
-		: vector_storage<value_t, N>(std::forward<arg_t>(args)...) {
+		: vector_storage<value_t, N>{std::forward<arg_t>(args)...} {
 	}
 
 	template <class other_t>
 	constexpr vector_base(const vector_base<other_t, N>& other)
-		: vector_base(other, std::make_index_sequence<N>{}) {
+		: vector_base{other, std::make_index_sequence<N>{}} {
 	}
 
 private:
 	template <class other_t, std::size_t... index>
 	constexpr vector_base(const vector_base<other_t, N, 0>& other, std::index_sequence<index...>)
-		: vector_base(other[index]...) {
+		: vector_base{other[index]...} {
 	}
 };
 }  // namespace detail
@@ -120,9 +120,9 @@ struct vector : public detail::vector_base<value_t, N> {
 	constexpr vector() {
 	}
 
-	template <class... arg_t, std::enable_if_t<sizeof(arg_t) == N, int> = 0>
+	template <class... arg_t>
 	constexpr vector(arg_t&&... args)
-		: detail::vector_base<value_t, N>(std::forward<arg_t>(args)...) {
+		: detail::vector_base<value_t, N>{std::forward<arg_t>(args)...} {
 	}
 };
 
@@ -134,14 +134,14 @@ struct vector<value_t, 2> : public detail::vector_base<value_t, 2> {
 	constexpr vector() {
 	}
 
-	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == 2, int> = 0>
+	template <class... arg_t>
 	constexpr vector(arg_t&&... args)
-		: detail::vector_base<value_t, 2>(std::forward<arg_t>(args)...) {
+		: detail::vector_base<value_t, 2>{std::forward<arg_t>(args)...} {
 	}
 
 	template <class other_value_t>
 	constexpr vector(const vector<other_value_t, 2>& other)
-		: detail::vector_base<value_t, 2>(other) {
+		: detail::vector_base<value_t, 2>{other} {
 	}
 };
 
@@ -159,7 +159,7 @@ struct vector<value_t, 3> : public detail::vector_base<value_t, 3> {
 
 	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == 3, int> = 0>
 	constexpr vector(arg_t&&... args)
-		: detail::vector_base<value_t, 3>(std::forward<arg_t>(args)...) {
+		: detail::vector_base<value_t, 3>{std::forward<arg_t>(args)...} {
 	}
 };
 
