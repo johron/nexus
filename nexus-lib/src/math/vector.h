@@ -96,20 +96,10 @@ struct vector_base : public vector_storage<value_t, N> {
 		return vector_storage<value_t, N>::m_storage[index];
 	}
 
-	// protected:
+protected:
 	template <class... arg_t>
 	constexpr vector_base(arg_t&&... args)
 		: vector_storage<value_t, N>{std::forward<arg_t>(args)...} {
-	}
-
-	template <class other_t>
-	constexpr vector_base(const vector_base<other_t, N>& other)
-		: vector_base<value_t, N>{other, std::make_index_sequence<N>{}} {
-	}
-
-	template <class other_t, std::size_t... Index>
-	constexpr vector_base(const vector_base<other_t, N>& other, std::index_sequence<Index...>)
-		: vector_storage<value_t, N>{other[Index]...} {
 	}
 };
 }  // namespace detail
@@ -136,6 +126,17 @@ struct vector<value_t, 2> : public detail::vector_base<value_t, 2> {
 	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == 2, int> = 0>
 	constexpr vector(arg_t&&... args)
 		: detail::vector_base<value_t, 2>{std::forward<arg_t>(args)...} {
+	}
+
+	template <class other_t>
+	constexpr vector(const vector<other_t, 2>& other)
+		: vector<value_t, 2>(other, std::make_index_sequence<2>{}) {
+	}
+
+protected:
+	template <class other_t, std::size_t... I>
+	constexpr vector(const vector<other_t, 2>& other, std::index_sequence<I...>)
+		: detail::vector_base<value_t, 2>(other[I]...) {
 	}
 };
 
