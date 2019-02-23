@@ -136,7 +136,7 @@ struct vector<value_t, 2> : public detail::vector_base<value_t, 2> {
 protected:
 	template <class other_t, std::size_t... I>
 	constexpr vector(const vector<other_t, 2>& other, std::index_sequence<I...>)
-		: detail::vector_base<value_t, 2>(other[I]...) {
+		/*: detail::vector_base<value_t, 2>(other[I]...)*/ {
 	}
 };
 
