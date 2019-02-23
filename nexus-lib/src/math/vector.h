@@ -4,6 +4,8 @@
 #if _MSC_VER
 #pragma warning(push)
 #pragma warning(disable : 4201)  // nonstandard extension used: nameless struct/union
+#elif __GNUC__
+#pragma GCC diagnotic ignored "-Wpedantic" // ISO C++ prohibits anonymous structs [-Wpedantic]
 #endif
 
 namespace nexus::math {
@@ -99,16 +101,16 @@ protected:
 		: vector_storage<value_t, N>(std::forward<arg_t>(args)...) {
 	}
 
-// 	template <class other_t>
-// 	constexpr vector_base(const vector_base<other_t, N, 0>& other)
-// 		: vector_base(other, std::make_index_sequence<N>{}) {
-// 	}
-// 
-// private:
-// 	template <class other_t, std::size_t... index>
-// 	constexpr vector_base(const vector_base<other_t, N, 0>& other, std::index_sequence<index...>)
-// 		: vector_base(other[index]...) {
-// 	}
+	template <class other_t>
+	constexpr vector_base(const vector_base<other_t, N>& other)
+		: vector_base(other, std::make_index_sequence<N>{}) {
+	}
+
+private:
+	template <class other_t, std::size_t... index>
+	constexpr vector_base(const vector_base<other_t, N, 0>& other, std::index_sequence<index...>)
+		: vector_base(other[index]...) {
+	}
 };
 }  // namespace detail
 
@@ -136,10 +138,10 @@ struct vector<value_t, 2> : public detail::vector_base<value_t, 2> {
 		: detail::vector_base<value_t, 2>(std::forward<arg_t>(args)...) {
 	}
 
-// 	template <class other_value_t>
-// 	constexpr vector(const vector<other_value_t, 2>& other)
-// 		: detail::vector_base<value_t, 2>(other) {
-// 	}
+	template <class other_value_t>
+	constexpr vector(const vector<other_value_t, 2>& other)
+		: detail::vector_base<value_t, 2>(other) {
+	}
 };
 
 using vector2f = vector<float, 2>;
@@ -166,4 +168,6 @@ using vector3i = vector<int, 3>;
 
 #if _MSC_VER
 #pragma warning(pop)
+#elif __GNUC__
+#pragma GCC diagnostic pop  // "-Wpedantic"
 #endif

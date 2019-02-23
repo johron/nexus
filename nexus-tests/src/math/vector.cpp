@@ -9,8 +9,8 @@ TEST(vector, constructor_default) {
 }
 
 TEST(vector, constructor_values) {
-	constexpr vector2i vector2(1, 2);
-	constexpr vector3f vector3(1, 2, 3);
+	constexpr vector2i a(1, 2);
+	constexpr vector2i b(1.234f, 6.789f);
 }
 
 TEST(vector, constructor_copy) {
