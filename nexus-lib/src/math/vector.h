@@ -5,7 +5,8 @@
 #pragma warning(push)
 #pragma warning(disable : 4201)  // nonstandard extension used: nameless struct/union
 #elif __GNUC__
-#pragma GCC diagnotic ignored "-Wpedantic" // ISO C++ prohibits anonymous structs [-Wpedantic]
+#pragma GCC diagnostic ignored "-Wpedantic"  // ISO C++ prohibits anonymous structs [-Wpedantic]
+#pragma GCC diagnostic push
 #endif
 
 namespace nexus::math {
@@ -32,7 +33,7 @@ struct vector_storage<value_t, 2> {
 
 	template <class... arg_t>
 	constexpr vector_storage(arg_t&&... data)
-		: m_storage{static_cast<value_t>(std::forward<arg_t>(data))...} {
+		: m_storage{std::forward<arg_t>(data)...} {
 	}
 
 	union {

@@ -14,7 +14,7 @@ TEST(vector, constructor_values) {
 }
 
 TEST(vector, constructor_copy) {
-	constexpr vector2f first(1, 2);
+	//constexpr vector2f first(1, 2);
 	//constexpr vector2i second(vector2f(1,2));
 	//static_assert(first == second, "Copy constructor did not result in identical data");
 }
