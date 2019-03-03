@@ -106,7 +106,7 @@ template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto add(const nexus::vector<T, N>& lhs,
 				   const nexus::vector<U, N>& rhs,
 				   std::index_sequence<I...>) {
-	using result_t = typename std::common_type<T, U>::type;
+	using result_t = typename std::common_type_t<T, U>;
 	return nexus::vector<result_t, N>{(lhs[I] + rhs[I])...};
 }
 
@@ -114,28 +114,29 @@ template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto sub(const nexus::vector<T, N>& lhs,
 				   const nexus::vector<U, N>& rhs,
 				   std::index_sequence<I...>) {
-	using result_t = typename std::common_type<T, U>::type;
+	using result_t = typename std::common_type_t<T, U>;
 	return nexus::vector<result_t, N>{(lhs[I] - rhs[I])...};
 }
 
 template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto mul(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
-	using result_t = typename std::common_type<T, U>::type;
-	return nexus::vector<result_t, N>{static_cast<result_t>(lhs[I] * rhs)...};
+	using result_t = typename std::common_type_t<T, U>;
+	return nexus::vector<result_t, N>{(static_cast<result_t>(lhs[I]) * rhs)...};
 }
 
 template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto div(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
-	using result_t = typename std::common_type<T, U>::type;
-	return nexus::vector<result_t, N>{static_cast<result_t>(lhs[I] / rhs)...};
+	using result_t = typename std::common_type_t<T, U>;
+	return nexus::vector<result_t, N>{(static_cast<result_t>(lhs[I]) / rhs)...};
 }
 
 }  // namespace detail::vector
 
 template <class T, class U, std::size_t N>
 constexpr bool operator==(const vector<T, N>& lhs, const vector<U, N>& rhs) {
+	using common_t = typename std::common_type_t<T, U>;
 	for (std::size_t i = 0; i < N; ++i) {
-		if (lhs[i] != rhs[i]) {
+		if (static_cast<common_t>(lhs[i]) != static_cast<common_t>(rhs[i])) {
 			return false;
 		}
 	}
