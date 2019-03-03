@@ -1,10 +1,9 @@
 #pragma once
-
-#include "SFML/Graphics.hpp"
+#include "util.h"
 
 namespace nexus::sfml {
 struct window {
-	window() 
+	window()
 		: m_window{} {
 	}
 
@@ -20,15 +19,21 @@ struct window {
 		m_window.close();
 	}
 
-	void set_size(uint16_t width, uint16_t height) {
-		m_window.setSize({width, height});
+	[[nodiscard]] vector2u size() const {
+		return util::make_vector(m_window.getSize());
 	}
 
-	void set_position(uint16_t x, uint16_t y) {
-		m_window.setPosition({x, y});
+	void set_size(const vector2u& size) {
+		m_window.setSize(util::make_vector(size));
 	}
 
+	[[nodiscard]] vector2i position() const {
+		return util::make_vector(m_window.getPosition());
+	}
 
+	void set_position(const vector2i& pos) {
+		m_window.setPosition(util::make_vector(pos));
+	}
 
 private:
 	sf::Window m_window;

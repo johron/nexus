@@ -195,7 +195,8 @@ constexpr auto operator/=(vector<T, N>& lhs, const U& rhs) {
 }
 
 using vector2f = vector<float, 2>;
-using vector2i = vector<int, 2>;
+using vector2i = vector<int32_t, 2>;
+using vector2u = vector<uint32_t, 2>;
 
 using vector3f = vector<float, 3>;
 using vector3i = vector<int, 3>;

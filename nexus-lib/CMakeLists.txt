@@ -9,7 +9,11 @@ set(src_include
 set(src_math
 	"src/math/vector.h")
 
+set(src_mock
+	"src/mock/window.h")
+
 set(src_sfml
+	"src/sfml/util.h"
 	"src/sfml/window.h")
 
 set(src_engine
@@ -21,6 +25,7 @@ set(src_files
     ${src_precompiled}
 	${src_include}
     ${src_engine}
+	${src_mock}
 	${src_sfml}
 	${src_math})
 
@@ -30,6 +35,7 @@ source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
 source_group("src\\engine" FILES ${src_engine})
 source_group("src\\engine\\sfml" FILES ${src_sfml})
+source_group("src\\engine\\mock" FILES ${src_mock})
 source_group("src\\math" FILES ${src_math})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
