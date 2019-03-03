@@ -85,7 +85,7 @@ TEST(vector, subtraction_composite) {
 TEST(vector, scalar_multiplication) {
 	constexpr nexus::vector2i vec_1{1, 2};
 	constexpr auto result = vec_1 * 2.5f;
-	// scalar multiplication CAN change the returned storage type for the vector
+	// scalar multiplication CAN change the returned storage type for the returned vector
 	static_assert(std::is_same_v<decltype(result), const nexus::vector2f>, "multiplication return value");
 	static_assert(result == nexus::vector2f{2.5f, 5.0f});
 }
@@ -93,7 +93,7 @@ TEST(vector, scalar_multiplication) {
 TEST(vector, scalar_multiplication_composite) {
 	nexus::vector2i vec{1, 2};
 	vec *= 2.f;
-	// compound scalar multiplication CAN NOT change the storage type for the vector
+	// compound scalar multiplication CAN NOT change the storage type for the returned vector
 	static_assert(std::is_same_v<decltype(vec), nexus::vector2i>, "multiplication return value");
 	EXPECT_EQ(vec, nexus::vector2i(2, 4));
 }
@@ -101,7 +101,7 @@ TEST(vector, scalar_multiplication_composite) {
 TEST(vector, scalar_division) {
 	constexpr nexus::vector2i vec{2, 5};
 	constexpr auto result = vec / 2.f;
-	// scalar division CAN change the returned storage type for the vector
+	// scalar division CAN change the returned storage type for the returned vector
 	static_assert(std::is_same_v<decltype(result), const nexus::vector2f>, "division return value");
 	static_assert(result == nexus::vector2f(1, 2.5f));
 }
@@ -109,7 +109,7 @@ TEST(vector, scalar_division) {
 TEST(vector, scalar_division_composite) {
 	nexus::vector2i vec{2, 5};
 	vec /= 2;
-	// compound scalar division CAN NOT change the storage type for the vector
+	// compound scalar division CAN NOT change the storage type for the returned vector
 	static_assert(std::is_same_v<decltype(vec), nexus::vector2i>, "division return value");
 	EXPECT_EQ(vec, nexus::vector2i(1, 2));
 }
