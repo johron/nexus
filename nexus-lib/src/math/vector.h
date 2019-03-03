@@ -39,7 +39,9 @@ struct vector_data<T, 3> {
 
 template <class T, std::size_t N>
 struct vector_base : public vector_data<T, N> {
-	constexpr vector_base() = default;
+	constexpr vector_base()
+		: vector_data<T, N>{} {
+	}
 
 	template <class... arg_t>
 	constexpr vector_base(arg_t&&... args)
@@ -79,7 +81,9 @@ struct vector_base : public vector_data<T, N> {
 
 template <class T, std::size_t N>
 struct vector : public vector_base<T, N> {
-	constexpr vector() = default;
+	constexpr vector()
+		: vector_base<T, N>{} {
+	}
 
 	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == N, int> = 0>
 	constexpr vector(arg_t&&... args)
@@ -117,13 +121,13 @@ constexpr auto sub(const nexus::vector<T, N>& lhs,
 template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto mul(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
 	using result_t = typename std::common_type<T, U>::type;
-	return nexus::vector<result_t, N>{(lhs[I] * rhs)...};
+	return nexus::vector<result_t, N>{static_cast<T>(lhs[I] * rhs)...};
 }
 
 template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto div(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
 	using result_t = typename std::common_type<T, U>::type;
-	return nexus::vector<result_t, N>{(lhs[I] / rhs)...};
+	return nexus::vector<result_t, N>{static_cast<T>(lhs[I] / rhs)...};
 }
 
 }  // namespace detail::vector
