@@ -92,13 +92,13 @@ TEST(vector, scalar_multiplication) {
 	EXPECT_EQ(result.y, 5.0f);
 }
 
-TEST(vector, composite_scalar_multiplication) {
+TEST(vector, scalar_multiplication_composite) {
 	nexus::vector2i vec{1, 2};
-	vec *= 2.5f;
+	vec *= 2.f;
 	// compound scalar multiplication CAN NOT change the storage type for the vector
 	static_assert(std::is_same_v<decltype(vec), nexus::vector2i>, "multiplication return value");
 	EXPECT_EQ(vec.x, 2);
-	EXPECT_EQ(vec.y, 5);
+	EXPECT_EQ(vec.y, 4);
 }
 
 TEST(vector, scalar_division) {
@@ -110,7 +110,7 @@ TEST(vector, scalar_division) {
 	EXPECT_EQ(result.y, 2.5f);
 }
 
-TEST(vector, composite_scalar_division) {
+TEST(vector, scalar_division_composite) {
 	nexus::vector2i vec{2, 5};
 	vec /= 2;
 	// compound scalar division CAN NOT change the storage type for the vector

@@ -121,13 +121,13 @@ constexpr auto sub(const nexus::vector<T, N>& lhs,
 template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto mul(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
 	using result_t = typename std::common_type<T, U>::type;
-	return nexus::vector<result_t, N>{static_cast<T>(lhs[I] * rhs)...};
+	return nexus::vector<result_t, N>{static_cast<result_t>(lhs[I] * rhs)...};
 }
 
 template <class T, class U, std::size_t N, std::size_t... I>
 constexpr auto div(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
 	using result_t = typename std::common_type<T, U>::type;
-	return nexus::vector<result_t, N>{static_cast<T>(lhs[I] / rhs)...};
+	return nexus::vector<result_t, N>{static_cast<result_t>(lhs[I] / rhs)...};
 }
 
 }  // namespace detail::vector
