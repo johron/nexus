@@ -46,6 +46,7 @@ TEST(vector, comparison_operator) {
 	constexpr nexus::vector2i vec_1{1, 2};
 	constexpr nexus::vector2i vec_2{2, 3};
 	static_assert(vec_1 != vec_2, "vector comparison failed");
+	static_assert(!(vec_1 == vec_2), "vector comparison failed");
 	static_assert(vec_1 == nexus::vector2i(1, 2), "vector comparison failed");
 }
 
