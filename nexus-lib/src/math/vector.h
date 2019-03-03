@@ -81,7 +81,7 @@ public:
 	using vector_data<T, N>::m_data;
 };
 
-template <class T, std::size_t N>
+template <class T, std::size_t N, std::enable_if_t<std::is_arithmetic_v<T>, int> = 0>
 struct vector : public vector_base<T, N> {
 	constexpr vector()
 		: vector_base<T, N>{} {
