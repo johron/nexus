@@ -1,17 +1,26 @@
 set(target_name "nexus-tests")
 
+set(res_files
+	"res/default.png")
+
 set(src_precompiled
 	"src/precompiled.h")
 
 set(src_math
 	"src/math/vector.cpp")
 
+set(src_engine
+	"src/engine/window.cpp")
+
 set(src_files 
+	${src_engine}
 	${src_math})
 
-add_executable(${target_name} ${src_files})
+add_executable(${target_name} ${src_files} ${res_files})
 
 source_group("src\\math" FILES ${src_math})
+source_group("src\\engine" FILES ${src_engine})
+source_group("res" FILES ${res_files})
 
 target_link_libraries(${target_name} "nexus-lib")
 target_link_libraries(${target_name} "gtest_main")
@@ -23,6 +32,12 @@ set_target_properties(${target_name} PROPERTIES FOLDER "nexus")
 
 set_target_properties(${target_name} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT ${src_precompiled})
 
-gtest_discover_tests(${target_name})
+foreach(file ${res_files})
+	add_custom_command(TARGET ${target_name} 
+		POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+		${CMAKE_CURRENT_SOURCE_DIR}/${file}
+		${CMAKE_CURRENT_BINARY_DIR}/${file})
+endforeach(file ${res_files})
 
+gtest_discover_tests(${target_name})
 cotire(${target_name})

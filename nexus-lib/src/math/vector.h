@@ -9,161 +9,193 @@
 #pragma GCC diagnostic push
 #endif
 
-namespace nexus::math {
-namespace detail {
-template <class value_t, std::size_t N>
-struct vector_storage {
-	constexpr vector_storage()
-		: m_storage{} {
-	}
+namespace nexus {
 
-	template <class... arg_t>
-	constexpr vector_storage(arg_t&&... data)
-		: m_storage{static_cast<value_t>(std::forward<arg_t>(data))...} {
-	}
+template <class T, std::size_t N>
+struct vector_data {};
 
-	value_t m_storage[N];
-};
-
-template <class value_t>
-struct vector_storage<value_t, 2> {
-	constexpr vector_storage()
-		: m_storage{} {
-	}
-
-	template <class... arg_t>
-	constexpr vector_storage(arg_t&&... data)
-		: m_storage{static_cast<value_t>(std::forward<arg_t>(data))...} {
-	}
-
+template <class T>
+struct vector_data<T, 2> {
 	union {
+		T m_data[2];
 		struct {
-			value_t x;
-			value_t y;
+			T x;
+			T y;
 		};
-		value_t m_storage[2];
 	};
 };
 
-template <class value_t>
-struct vector_storage<value_t, 3> {
-	constexpr vector_storage()
-		: m_storage{} {
-	}
-
-	template <class... arg_t>
-	constexpr vector_storage(arg_t&&... data)
-		: m_storage{static_cast<value_t>(std::forward<arg_t>(data))...} {
-	}
-
+template <class T>
+struct vector_data<T, 3> {
 	union {
+		T m_data[3];
 		struct {
-			value_t x;
-			value_t y;
-			value_t z;
+			T x;
+			T y;
+			T z;
 		};
-		value_t m_storage[3];
 	};
 };
 
-template <class value_t, std::size_t N, std::enable_if_t<std::is_arithmetic_v<value_t>, int> = 0>
-struct vector_base : public vector_storage<value_t, N> {
-	static constexpr std::size_t size() {
+template <class T, std::size_t N>
+struct vector_base : public vector_data<T, N> {
+	constexpr vector_base() = default;
+
+	template <class... arg_t>
+	constexpr vector_base(arg_t&&... args)
+		: vector_data<T, N>{static_cast<T>(std::forward<arg_t>(args))...} {
+	}
+
+	[[nodiscard]] constexpr std::size_t size() const {
 		return N;
 	}
 
-	[[nodiscard]] constexpr auto begin() const {
-		return vector_storage<value_t, N>::m_storage;
+	[[nodiscard]] auto begin() {
+		return m_data;
 	}
 
-	[[nodiscard]] constexpr auto begin() {
-		return vector_storage<value_t, N>::m_storage;
+	[[nodiscard]] auto begin() const {
+		return m_data;
 	}
 
-	[[nodiscard]] constexpr auto end() const {
-		return vector_storage<value_t, N>::m_storage + N;
+	[[nodiscard]] auto end() {
+		return m_data + N;
 	}
 
-	[[nodiscard]] constexpr auto end() {
-		return vector_storage<value_t, N>::m_storage + N;
+	[[nodiscard]] auto end() const {
+		return m_data + N;
 	}
 
-	[[nodiscard]] constexpr auto operator[](std::size_t index) const {
-		return vector_storage<value_t, N>::m_storage[index];
+	[[nodiscard]] T& operator[](std::size_t index) {
+		return m_data[index];
 	}
 
-	[[nodiscard]] constexpr auto operator[](std::size_t index) {
-		return vector_storage<value_t, N>::m_storage[index];
+	[[nodiscard]] constexpr const T& operator[](std::size_t index) const {
+		return m_data[index];
 	}
 
-protected:
-	template <class... arg_t>
-	constexpr vector_base(arg_t&&... args)
-		: vector_storage<value_t, N>{std::forward<arg_t>(args)...} {
-	}
+	using vector_data<T, N>::m_data;
 };
-}  // namespace detail
 
-template <class value_t, std::size_t N, std::enable_if_t<N != 0, int> = 0>
-struct vector : public detail::vector_base<value_t, N> {
-	constexpr vector() {
-	}
+template <class T, std::size_t N>
+struct vector : public vector_base<T, N> {
+	constexpr vector() = default;
 
-	template <class... arg_t>
+	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == N, int> = 0>
 	constexpr vector(arg_t&&... args)
-		: detail::vector_base<value_t, N>{std::forward<arg_t>(args)...} {
+		: vector_base<T, N>{std::forward<arg_t>(args)...} {
+	}
+
+	template <class U>
+	constexpr vector(const vector<U, N>& other)
+		: vector<T, N>{other, std::make_index_sequence<N>{}} {
+	}
+
+	template <class U, std::size_t... I>
+	constexpr vector(const vector<U, N>& other, std::index_sequence<I...>)
+		: vector_base<T, N>{other[I]...} {
 	}
 };
 
-template <class value_t>
-struct vector<value_t, 2> : public detail::vector_base<value_t, 2> {
-	using detail::vector_storage<value_t, 2>::x;
-	using detail::vector_storage<value_t, 2>::y;
+namespace detail::vector {
+template <class T, class U, std::size_t N, std::size_t... I>
+constexpr auto add(const nexus::vector<T, N>& lhs,
+				   const nexus::vector<U, N>& rhs,
+				   std::index_sequence<I...>) {
+	using result_t = typename std::common_type<T, U>::type;
+	return nexus::vector<result_t, N>{(lhs[I] + rhs[I])...};
+}
 
-	constexpr vector() {
-	}
+template <class T, class U, std::size_t N, std::size_t... I>
+constexpr auto sub(const nexus::vector<T, N>& lhs,
+				   const nexus::vector<U, N>& rhs,
+				   std::index_sequence<I...>) {
+	using result_t = typename std::common_type<T, U>::type;
+	return nexus::vector<result_t, N>{(lhs[I] - rhs[I])...};
+}
 
-	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == 2, int> = 0>
-	constexpr vector(arg_t&&... args)
-		: detail::vector_base<value_t, 2>{std::forward<arg_t>(args)...} {
-	}
+template <class T, class U, std::size_t N, std::size_t... I>
+constexpr auto mul(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
+	using result_t = typename std::common_type<T, U>::type;
+	return nexus::vector<result_t, N>{(lhs[I] * rhs)...};
+}
 
-	template <class other_t>
-	constexpr vector(const vector<other_t, 2>& other)
-		: vector<value_t, 2>(other, std::make_index_sequence<2>{}) {
-	}
+template <class T, class U, std::size_t N, std::size_t... I>
+constexpr auto div(const nexus::vector<T, N>& lhs, const U& rhs, std::index_sequence<I...>) {
+	using result_t = typename std::common_type<T, U>::type;
+	return nexus::vector<result_t, N>{(lhs[I] / rhs)...};
+}
 
-protected:
-	template <class other_t, std::size_t... I>
-	constexpr vector(const vector<other_t, 2>& other, std::index_sequence<I...>)
-		: detail::vector_base<value_t, 2>(other[I]...) {
+}  // namespace detail::vector
+
+template <class T, class U, std::size_t N>
+constexpr bool operator==(const vector<T, N>& lhs, const vector<U, N>& rhs) {
+	for (std::size_t i = 0; i < N; ++i) {
+		if (lhs[i] != rhs[i]) {
+			return false;
+		}
 	}
-};
+	return true;
+}
+
+template <class T, class U, std::size_t N>
+[[nodiscard]] constexpr bool operator!=(const vector<T, N>& lhs, const vector<U, N>& rhs) {
+	return !(lhs == rhs);
+}
+
+template <class T, class U, std::size_t N>
+[[nodiscard]] constexpr auto operator+(const vector<T, N>& lhs, const vector<U, N>& rhs) {
+	return detail::vector::add(lhs, rhs, std::make_index_sequence<N>{});
+}
+
+template <class T, class U, std::size_t N>
+constexpr auto operator+=(vector<T, N>& lhs, const vector<U, N>& rhs) {
+	lhs = detail::vector::add(lhs, rhs, std::make_index_sequence<N>{});
+	return lhs;
+}
+
+template <class T, class U, std::size_t N>
+[[nodiscard]] constexpr auto operator-(const vector<T, N>& lhs, const vector<U, N>& rhs) {
+	return detail::vector::sub(lhs, rhs, std::make_index_sequence<N>{});
+}
+
+template <class T, class U, std::size_t N>
+constexpr auto operator-=(vector<T, N>& lhs, const vector<U, N>& rhs) {
+	lhs = detail::vector::sub(lhs, rhs, std::make_index_sequence<N>{});
+	return lhs;
+}
+
+template <class T, class U, std::size_t N>
+[[nodiscard]] constexpr auto operator*(const vector<T, N>& lhs, const U& rhs) {
+	return detail::vector::mul(lhs, rhs, std::make_index_sequence<N>{});
+}
+
+template <class T, class U, std::size_t N>
+constexpr auto operator*=(vector<T, N>& lhs, const U& rhs) {
+	lhs = detail::vector::mul(lhs, rhs, std::make_index_sequence<N>{});
+	return lhs;
+}
+
+template <class T, class U, std::size_t N>
+[[nodiscard]] constexpr auto operator/(const vector<T, N>& lhs, const U& rhs) {
+	return detail::vector::div(lhs, rhs, std::make_index_sequence<N>{});
+}
+
+template <class T, class U, std::size_t N>
+constexpr auto operator/=(vector<T, N>& lhs, const U& rhs) {
+	lhs = detail::vector::div(lhs, rhs, std::make_index_sequence<N>{});
+	return lhs;
+}
 
 using vector2f = vector<float, 2>;
 using vector2i = vector<int, 2>;
 
-template <class value_t>
-struct vector<value_t, 3> : public detail::vector_base<value_t, 3> {
-	using detail::vector_storage<value_t, 3>::x;
-	using detail::vector_storage<value_t, 3>::y;
-	using detail::vector_storage<value_t, 3>::z;
-
-	constexpr vector() {
-	}
-
-	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == 3, int> = 0>
-	constexpr vector(arg_t&&... args)
-		: detail::vector_base<value_t, 3>{std::forward<arg_t>(args)...} {
-	}
-};
-
 using vector3f = vector<float, 3>;
 using vector3i = vector<int, 3>;
-}  // namespace nexus::math
+}  // namespace nexus
 
 #if _MSC_VER
-#pragma warning(pop)
+#pragma warning(pop)  // nonstandard extension used: nameless struct/union
 #elif __GNUC__
-#pragma GCC diagnostic pop  // "-Wpedantic"
+#pragma GCC diagnostic pop  // ISO C++ prohibits anonymous structs [-Wpedantic]
 #endif
