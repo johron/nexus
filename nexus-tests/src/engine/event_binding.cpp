@@ -34,9 +34,9 @@ TEST(event_binding, has_binding) {
 TEST(event_binding, trigger) {
 	binding_t binding;
 	std::size_t counter = 0;
-	auto func_1 = [&counter]() { assert(counter++ == 0); };
-	auto func_2 = [&counter]() { assert(counter++ == 1); };
-	auto func_3 = [&counter]() { assert(counter++ == 2); };
+	auto func_1 = [&counter]() { assert(++counter == 1); };
+	auto func_2 = [&counter]() { assert(++counter == 2); };
+	auto func_3 = [&counter]() { assert(++counter == 3); };
 	binding.bind(1, func_1, func_2, func_3);
 	binding.trigger(1);
 	EXPECT_EQ(counter, 3);
@@ -45,10 +45,10 @@ TEST(event_binding, trigger) {
 TEST(event_binding, append) {
 	binding_t binding;
 	std::size_t counter = 0;
-	auto func_1 = [&counter]() { assert(counter++ == 0); };
-	auto func_2 = [&counter]() { assert(counter++ == 1); };
+	auto func_1 = [&counter]() { assert(++counter == 1); };
+	auto func_2 = [&counter]() { assert(++counter == 2); };
 	binding.bind(1, func_1, func_2);
-	auto func_3 = [&counter]() { assert(counter++ == 2); };
+	auto func_3 = [&counter]() { assert(++counter == 3); };
 	binding.append(1, func_3);
 	binding.trigger(1);
 	EXPECT_EQ(counter, 3);
