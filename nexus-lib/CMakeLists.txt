@@ -14,10 +14,12 @@ set(src_mock
 
 set(src_sfml
 	"src/sfml/util.h"
+	"src/sfml/input.h"
 	"src/sfml/window.h")
 
 set(src_engine
 	"src/engine.h"
+	"src/event_binding.h"
 	"src/dummy.cpp")
 
 

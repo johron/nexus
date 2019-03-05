@@ -35,6 +35,19 @@ struct window {
 		m_window.setPosition(util::make_vector(pos));
 	}
 
+	void poll_events() {
+		sf::Event event;
+		while (m_window.pollEvent(event)) {
+			switch (event.type) {
+				case sf::Event::Closed:
+					close();
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 private:
 	sf::Window m_window;
 };

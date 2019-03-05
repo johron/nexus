@@ -12,6 +12,7 @@ struct window {
 	window(uint16_t width, uint16_t height, const std::string& title = "unnamed")
 		: m_size{width, height}
 		, m_position{0, 0}
+		, m_title(title)
 		, m_is_open(true) {
 	}
 
@@ -39,9 +40,13 @@ struct window {
 		m_position = pos;
 	}
 
+	void poll_events() {
+	}
+
 private:
 	vector2u m_size;
 	vector2i m_position;
+	std::string m_title;
 	bool m_is_open;
 };
 }  // namespace nexus::mock

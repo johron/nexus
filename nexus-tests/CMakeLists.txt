@@ -10,6 +10,7 @@ set(src_math
 	"src/math/vector.cpp")
 
 set(src_engine
+	"src/engine/event_binding.cpp"
 	"src/engine/window.cpp")
 
 set(src_files 
