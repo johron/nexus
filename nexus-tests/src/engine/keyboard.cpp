@@ -3,7 +3,7 @@
 
 using namespace nexus;
 
-TEST(keyboard, key_codes) {
+TEST(keyboard, key_codes_are_defined) {
 	keyboard::key key_code = keyboard::key::unknown;
 	key_code = keyboard::key::a ;
 	key_code = keyboard::key::b;
@@ -110,6 +110,5 @@ TEST(keyboard, key_codes) {
 }
 
 TEST(keyboard, is_key_down) {
-	using key_t = keyboard::key;
 	EXPECT_FALSE(keyboard::is_key_down(keyboard::key::a));
 }
