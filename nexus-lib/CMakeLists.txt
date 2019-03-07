@@ -20,6 +20,7 @@ set(src_sfml
 set(src_engine
 	"src/engine.h"
 	"src/event_binding.h"
+	"src/keyboard.h"
 	"src/dummy.cpp")
 
 

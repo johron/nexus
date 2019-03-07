@@ -11,6 +11,7 @@ set(src_math
 
 set(src_engine
 	"src/engine/event_binding.cpp"
+	"src/engine/keyboard.cpp"
 	"src/engine/window.cpp")
 
 set(src_files 
