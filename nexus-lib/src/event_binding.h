@@ -5,9 +5,10 @@ template <class key_t, class event_t>
 struct event_binding {
 	template <class... functor_t>
 	void bind(const key_t& key, functor_t&&... functor) {
-		m_events[key] = [this, functor...]() { 
-			invoke(functor...);
+		m_events[key] = [this, functor...](auto&&... args) {
+			int unused[] = {0, (functor(std::forward<decltype(args)>(args)...), 0)...};
 		};
+
 	}
 
 	template <class... functor_t>
@@ -23,10 +24,11 @@ struct event_binding {
 		return m_events.find(key) != m_events.end();
 	}
 
-	void trigger(const key_t& key) {
+	template <class... arg_t>
+	void trigger(const key_t& key, arg_t&&... args) {
 		auto iterator = m_events.find(key);
 		if (iterator != m_events.end()) {
-			(*iterator).second();
+			(*iterator).second(std::forward<arg_t>(args)...);
 		}
 	}
 
@@ -39,17 +41,6 @@ struct event_binding {
 	}
 
 private:
-	template <class functor_t>
-	void invoke(functor_t&& last) {
-		last();
-	}
-
-	template <class first_t, class... functor_t>
-	void invoke(first_t&& head, functor_t&&... tail) {
-		head();
-		invoke(std::forward<functor_t>(tail)...);
-	}
-
 	std::map<key_t, event_t> m_events;
 };
 }  // namespace nexus

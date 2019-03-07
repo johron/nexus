@@ -42,6 +42,13 @@ TEST(event_binding, trigger) {
 	EXPECT_EQ(counter, 3);
 }
 
+TEST(event_binding, trigger_with_args) {
+	using custom_binding = nexus::event_binding<int, std::function<void(int, int)>>;
+	custom_binding binding;
+
+	binding.bind(1, [](int lhs, int rhs) { [[maybe_unused]] auto res = lhs + rhs; });
+}
+
 TEST(event_binding, append) {
 	binding_t binding;
 	std::size_t counter = 0;
