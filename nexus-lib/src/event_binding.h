@@ -6,9 +6,8 @@ struct event_binding {
 	template <class... functor_t>
 	void bind(const key_t& key, functor_t&&... functor) {
 		m_events[key] = [this, functor...](auto&&... args) {
-			int unused[] = {0, (functor(std::forward<decltype(args)>(args)...), 0)...};
+			[[maybe_unused]] int unused[] = {0, (functor(std::forward<decltype(args)>(args)...), 0)...};
 		};
-
 	}
 
 	template <class... functor_t>
