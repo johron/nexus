@@ -172,24 +172,24 @@ constexpr auto operator-=(vector<T, N>& lhs, const vector<U, N>& rhs) {
 	return lhs;
 }
 
-template <class T, class U, std::size_t N>
-[[nodiscard]] constexpr auto operator*(const vector<T, N>& lhs, const U& rhs) {
+template <class T, std::size_t N>
+[[nodiscard]] constexpr auto operator*(const vector<T, N>& lhs, const T& rhs) {
 	return detail::vector::mul(lhs, rhs, std::make_index_sequence<N>{});
 }
 
-template <class T, class U, std::size_t N>
-constexpr auto operator*=(vector<T, N>& lhs, const U& rhs) {
+template <class T, std::size_t N>
+constexpr auto operator*=(vector<T, N>& lhs, const T& rhs) {
 	lhs = detail::vector::mul(lhs, rhs, std::make_index_sequence<N>{});
 	return lhs;
 }
 
-template <class T, class U, std::size_t N>
-[[nodiscard]] constexpr auto operator/(const vector<T, N>& lhs, const U& rhs) {
+template <class T, std::size_t N>
+[[nodiscard]] constexpr auto operator/(const vector<T, N>& lhs, const T& rhs) {
 	return detail::vector::div(lhs, rhs, std::make_index_sequence<N>{});
 }
 
-template <class T, class U, std::size_t N>
-constexpr auto operator/=(vector<T, N>& lhs, const U& rhs) {
+template <class T, std::size_t N>
+constexpr auto operator/=(vector<T, N>& lhs, const T& rhs) {
 	lhs = detail::vector::div(lhs, rhs, std::make_index_sequence<N>{});
 	return lhs;
 }

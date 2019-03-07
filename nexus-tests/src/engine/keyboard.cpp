@@ -110,7 +110,7 @@ TEST(keyboard, key_codes_are_defined) {
 }
 
 TEST(keyboard, is_key_down) {
-#ifndef __GNUC__
+#ifndef __GNUC__ // for some reason causes an exception on Linux, should be debugged properly
 	EXPECT_FALSE(keyboard::is_key_down(keyboard::key::a));
 #endif
 }
