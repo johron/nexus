@@ -106,11 +106,24 @@ TEST(keyboard, key_codes_are_defined) {
 	key_code = keyboard::key::f14;
 	key_code = keyboard::key::f15;
 	key_code = keyboard::key::pause;
-	static_assert(static_cast<int>(keyboard::key::__key_count__) == 101);
 }
 
 TEST(keyboard, is_key_down) {
 #ifndef __GNUC__ // for some reason causes an exception on Linux, should be debugged properly
 	EXPECT_FALSE(keyboard::is_key_down(keyboard::key::a));
+#endif
+}
+
+TEST(mouse, buttons_are_defined) {
+	[[maybe_unused]] mouse::button button = mouse::button::left;
+	button = mouse::button::right;
+	button = mouse::button::middle;
+	button = mouse::button::extra_1;
+	button = mouse::button::extra_2;
+}
+
+TEST(mouse, is_button_down) {
+#ifndef __GNUC__  // for some reason causes an exception on Linux, should be debugged properly
+	EXPECT_FALSE(mouse::is_button_down(mouse::button::left));
 #endif
 }

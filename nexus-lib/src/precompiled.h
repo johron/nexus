@@ -6,3 +6,5 @@
 
 #include <map>
 #include <string>
+
+#include "sfml/util.h"

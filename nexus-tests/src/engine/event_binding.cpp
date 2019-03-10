@@ -47,6 +47,7 @@ TEST(event_binding, trigger_with_args) {
 	custom_binding binding;
 
 	binding.bind(1, [](int lhs, int rhs) { [[maybe_unused]] auto res = lhs + rhs; });
+	binding.trigger(1, 2, 3);
 }
 
 TEST(event_binding, append) {

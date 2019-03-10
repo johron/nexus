@@ -1,10 +1,10 @@
 #pragma once
 #include "SFML/Window/Keyboard.hpp"
+#include "SFML/Window/Mouse.hpp"
 
 namespace nexus::sfml {
-struct keyboard {
-	enum class key {
-		// clang-format off
+enum class key_code {
+	// clang-format off
 	unknown = -1,
 	a = 0, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z,
 	
@@ -49,11 +49,29 @@ struct keyboard {
 	f1, f2, f3, f4, f5, f6, f7, f8, 
 	f9, f10, f11, f12, f13, f14, f15,
 	pause,
-		// clang-format on
-	};
+	__key_count__ // number of keys
+	// clang-format on
+};
 
-	static bool is_key_down(const key& key) {
+struct keyboard {
+	static bool is_key_down(const key_code& key) {
 		return sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(key));
 	}
 };
-}
+
+enum class mouse_button {
+	none = -1,
+	left = 0,
+	right,
+	middle,
+	extra_button_1,
+	extra_button_2,
+};
+
+struct mouse {
+	static bool is_button_down(const mouse_button& button) {
+		return sf::Mouse::isButtonPressed(static_cast<sf::Mouse::Button>(button));
+	}
+};
+
+}  // namespace nexus::sfml

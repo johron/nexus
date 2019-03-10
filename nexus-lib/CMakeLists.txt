@@ -15,14 +15,14 @@ set(src_mock
 set(src_sfml
 	"src/sfml/util.h"
 	"src/sfml/events.h"
+	"src/sfml/mouse.h"
 	"src/sfml/keyboard.h"
 	"src/sfml/window.h")
 
 set(src_engine
 	"src/engine.h"
 	"src/event_binding.h"
-	"src/event_handler.h"
-	"src/keyboard.h"
+	"src/input_device.h"
 	"src/dummy.cpp")
 
 

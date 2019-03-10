@@ -11,7 +11,6 @@ set(src_math
 
 set(src_engine
 	"src/engine/event_binding.cpp"
-	"src/engine/event_handler.cpp"
 	"src/engine/keyboard.cpp"
 	"src/engine/window.cpp")
 

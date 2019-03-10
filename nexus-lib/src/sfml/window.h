@@ -2,6 +2,7 @@
 #include "util.h"
 
 namespace nexus::sfml {
+template <class keyboard_t, class mouse_t>
 struct window {
 	window()
 		: m_window{} {
@@ -27,12 +28,20 @@ struct window {
 		m_window.setSize(util::make_vector(size));
 	}
 
-	[[nodiscard]] vector2i position() const {
+	[[nodiscard]] vector2i get_position() const {
 		return util::make_vector(m_window.getPosition());
 	}
 
 	void set_position(const vector2i& pos) {
 		m_window.setPosition(util::make_vector(pos));
+	}
+
+	keyboard_t& keyboard() {
+		return m_keyboard;
+	}
+
+	mouse_t& mouse() {
+		return m_mouse;
 	}
 
 	void poll_events() {
@@ -42,6 +51,12 @@ struct window {
 				case sf::Event::Closed:
 					close();
 					break;
+				case sf::Event::KeyPressed:
+					m_keyboard.trigger(static_cast<typename keyboard_t::key>(event.key.code));
+					break;
+				case sf::Event::MouseButtonPressed:
+					m_mouse.trigger(static_cast<typename mouse_t::button>(event.mouseButton.button),
+									nexus::vector2i(event.mouseButton.x, event.mouseButton.y));
 				default:
 					break;
 			}
@@ -50,5 +65,7 @@ struct window {
 
 private:
 	sf::Window m_window;
+	keyboard_t m_keyboard;
+	mouse_t m_mouse;
 };
 }  // namespace nexus::sfml
