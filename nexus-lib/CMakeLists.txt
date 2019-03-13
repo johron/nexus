@@ -17,12 +17,16 @@ set(src_sfml
 	"src/sfml/events.h"
 	"src/sfml/mouse.h"
 	"src/sfml/keyboard.h"
+	"src/sfml/sprite.h"
+	"src/sfml/texture.h"
 	"src/sfml/window.h")
 
 set(src_engine
 	"src/engine.h"
 	"src/event_binding.h"
 	"src/input_device.h"
+	"src/resource_cache.h"
+	"src/sprite.h"
 	"src/dummy.cpp")
 
 

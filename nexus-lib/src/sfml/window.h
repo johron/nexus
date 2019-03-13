@@ -1,5 +1,6 @@
 #pragma once
 #include "util.h"
+#include "SFML/Graphics.hpp"
 
 namespace nexus::sfml {
 template <class keyboard_t, class mouse_t>
@@ -44,6 +45,11 @@ struct window {
 		return m_mouse;
 	}
 
+	template <class drawable_t>
+	void draw(const drawable_t& drawable) {
+	
+	}
+
 	void poll_events() {
 		sf::Event event;
 		while (m_window.pollEvent(event)) {
@@ -63,8 +69,16 @@ struct window {
 		}
 	}
 
+	void clear() {
+		m_window.clear(sf::Color::Black);
+	}
+
+	void present() {
+		m_window.display();
+	}
+
 private:
-	sf::Window m_window;
+	sf::RenderWindow m_window;
 	keyboard_t m_keyboard;
 	mouse_t m_mouse;
 };
