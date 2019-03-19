@@ -4,17 +4,17 @@
 namespace nexus {
 template <class resource_t>
 struct loader {
-	template <class... arg_t>
-	std::optional<resource_t> get(arg_t... args) {
-		return resource_t(args...);
+	template <class key_t>
+	static std::shared_ptr<resource_t> get(const key_t& key) {
+		return std::make_shared<resource_t>(key);
 	}
 };
 
 template <class key_t, class resource_t>
 struct resource_cache {
-	std::shared_ptr<resource_t> get(const key_t& key) {
+	[[nodiscard]] std::shared_ptr<resource_t> get(const key_t& key) {
 		if (!is_loaded(key)) {
-
+			load(key);
 		}
 
 		return m_resources[key];
@@ -24,21 +24,26 @@ struct resource_cache {
 		return m_resources.find(key) != m_resources.end();
 	}
 
-	template <class... arg_t>
-	resource_t& load(arg_t... args) {
-		
-	}
-
 	void release_unused() {
-		for (auto& entry : m_resources) {
-			if (entry.second->use_count() == 1) {
-				m_resources.erase(entry.first);
-			}
+		static const auto is_unused = [](const auto& entry) { return entry.second.use_count() == 1; };
+		for (auto it = m_resources.begin(); it != m_resources.end();) {
+			it = is_unused(*it) ? m_resources.erase(it) : ++it;
 		}
 	}
 
-private:
+	void load(const key_t& key) {
+		if (auto resource = loader<resource_t>::get(key)) {
+			m_resources.insert({key, std::move(resource)});
+		} else {
+			throw std::runtime_error("failed to load resource");
+		}
+	}
 
+	[[nodiscard]] std::size_t size() const {
+		return m_resources.size();
+	}
+
+private:
 	std::unordered_map<key_t, std::shared_ptr<resource_t>> m_resources;
 };
 }  // namespace nexus
