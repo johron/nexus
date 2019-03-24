@@ -10,14 +10,14 @@ struct type_list {};
 
 template <class T>
 struct deps {
-	static std::vector<nexus::module_id> get() {
+	static std::vector<uint32_t> get() {
 		return {};
 	}
 };
 
 template <>
 struct deps<module_3> {
-	static std::vector<nexus::module_id> get() {
+	static std::vector<uint32_t> get() {
 		return {nexus::type_id::get<module_1>()};
 	}
 };

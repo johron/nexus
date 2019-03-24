@@ -29,7 +29,7 @@ struct module_manager {
 	void load() {
 	}
 
-	void load(module_id id) {
+	void load(uint32_t /*id*/) {
 	}
 
 	template <class functor_t, class... arg_t>
