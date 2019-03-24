@@ -9,11 +9,25 @@ set(src_include
 set(src_math
 	"src/math/vector.h")
 
+set(src_mock
+	"src/mock/window.h")
+
 set(src_sfml
+	"src/sfml/util.h"
+	"src/sfml/drawable.h"
+	"src/sfml/events.h"
+	"src/sfml/mouse.h"
+	"src/sfml/keyboard.h"
+	"src/sfml/shapes.h"
+	"src/sfml/sprite.h"
+	"src/sfml/texture.h"
 	"src/sfml/window.h")
 
 set(src_engine
 	"src/engine.h"
+	"src/event_binding.h"
+	"src/input_device.h"
+	"src/resource_cache.h"
 	"src/dummy.cpp")
 
 
@@ -21,6 +35,7 @@ set(src_files
     ${src_precompiled}
 	${src_include}
     ${src_engine}
+	${src_mock}
 	${src_sfml}
 	${src_math})
 
@@ -30,6 +45,7 @@ source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
 source_group("src\\engine" FILES ${src_engine})
 source_group("src\\engine\\sfml" FILES ${src_sfml})
+source_group("src\\engine\\mock" FILES ${src_mock})
 source_group("src\\math" FILES ${src_math})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")

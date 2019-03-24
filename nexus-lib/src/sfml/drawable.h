@@ -1,0 +1,55 @@
+#pragma once
+#include "SFML/Graphics.hpp"
+
+namespace nexus::sfml {
+template <class drawable_t>
+struct drawable {
+	void set_position(float x, float y) {
+		m_drawable->setPosition(x, y);
+	}
+
+	void set_position(const vector2f& pos) {
+		m_drawable->setPosition(pos.x, pos.y);
+	}
+
+	void set_rotation(float angle) {
+		m_drawable->setRotation(angle);
+	}
+
+	float get_rotation() const {
+		return m_drawable->getRotation();
+	}
+
+	template <class visitor_t>
+	void visit(const visitor_t& visitor) const {
+		visitor(*m_drawable);
+	}
+
+	template <class visitor_t>
+	void visit(const visitor_t& visitor) {
+		visitor(*m_drawable);
+	}
+
+	drawable& operator=(const drawable& other) {
+		get_drawable() = other.get_drawable();
+		return *this;
+	}
+
+protected:
+	drawable_t& get_drawable() {
+		return *m_drawable;
+	}
+
+	template <class... arg_t>
+	drawable(arg_t... args)
+		: m_drawable(std::make_unique<drawable_t>(std::forward<arg_t>(args)...)) {
+	}
+
+	drawable(const drawable& other)
+		: m_drawable(std::make_unique<drawable_t>(*other.m_drawable)) {
+	}
+
+private:
+	std::unique_ptr<drawable_t> m_drawable;
+};
+}
