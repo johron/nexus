@@ -13,11 +13,12 @@ struct loader {
 template <class key_t, class resource_t>
 struct resource_cache {
 	[[nodiscard]] std::shared_ptr<resource_t> get(const key_t& key) {
-		if (!is_loaded(key)) {
-			load(key);
+		auto iterator = m_resources.find(key);
+		if (iterator == m_resources.end()) {
+			iterator = load(key);
 		}
 
-		return m_resources[key];
+		return iterator->second;	
 	}
 
 	[[nodiscard]] bool is_loaded(const key_t& key) const {
@@ -31,9 +32,9 @@ struct resource_cache {
 		}
 	}
 
-	void load(const key_t& key) {
+	auto load(const key_t& key) {
 		if (auto resource = loader<resource_t>::get(key)) {
-			m_resources.insert({key, std::move(resource)});
+			return m_resources.insert({key, std::move(resource)}).first;
 		} else {
 			throw std::runtime_error("failed to load resource");
 		}

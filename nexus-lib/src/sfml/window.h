@@ -1,8 +1,10 @@
 #pragma once
 #include "util.h"
+#include "sprite.h"
 #include "SFML/Graphics.hpp"
 
 namespace nexus::sfml {
+
 template <class keyboard_t, class mouse_t>
 struct window {
 	window()
@@ -46,8 +48,9 @@ struct window {
 	}
 
 	template <class drawable_t>
-	void draw(const drawable_t& drawable) {
-	
+	inline void draw(const drawable_t& drawable) {
+		static const auto renderer = [this](const auto& drawable) { m_window.draw(drawable); };
+		drawable.visit(renderer);
 	}
 
 	void poll_events() {

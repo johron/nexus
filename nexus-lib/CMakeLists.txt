@@ -14,9 +14,11 @@ set(src_mock
 
 set(src_sfml
 	"src/sfml/util.h"
+	"src/sfml/drawable.h"
 	"src/sfml/events.h"
 	"src/sfml/mouse.h"
 	"src/sfml/keyboard.h"
+	"src/sfml/shapes.h"
 	"src/sfml/sprite.h"
 	"src/sfml/texture.h"
 	"src/sfml/window.h")
@@ -27,6 +29,7 @@ set(src_engine
 	"src/input_device.h"
 	"src/resource_cache.h"
 	"src/sprite.h"
+	"src/renderer.h"
 	"src/dummy.cpp")
 
 

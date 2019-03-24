@@ -3,6 +3,7 @@ set(target_name "nexus-sample")
 set(src_precompiled "src/precompiled.h")
 
 set(res_files
+	"resources/ghost_red.png"
 	"resources/sprite_sheet.png")
 
 set(src_files 

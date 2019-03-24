@@ -1,12 +1,11 @@
 #pragma once
-#include "SFML/Graphics/Texture.hpp"
 
 namespace nexus::sfml {
-struct texture {
-	texture(std::string&& filename)
-		: m_texture(filename)
-
-private:
-	sf::Texture m_texture;
+struct texture : public sf::Texture {
+	texture(const std::string& filename) {
+		if (!loadFromFile(filename)) {
+			throw std::runtime_error("failed to load texture: " + filename);
+		}
+	}
 };
 }  // namespace nexus::sfml
