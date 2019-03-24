@@ -28,8 +28,6 @@ set(src_engine
 	"src/event_binding.h"
 	"src/input_device.h"
 	"src/resource_cache.h"
-	"src/sprite.h"
-	"src/renderer.h"
 	"src/dummy.cpp")
 
 
