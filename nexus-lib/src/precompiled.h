@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cassert>
+#include <cstdint>
+
 #include <memory>
 #include <functional>
 #include <type_traits>

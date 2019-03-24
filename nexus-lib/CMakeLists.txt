@@ -12,6 +12,11 @@ set(src_math
 set(src_mock
 	"src/mock/window.h")
 
+set(src_module
+	"src/module/module.h"
+	"src/module/module_id.h"
+	"src/module/module_manager.h")
+
 set(src_sfml
 	"src/sfml/util.h"
 	"src/sfml/drawable.h"
@@ -36,6 +41,7 @@ set(src_files
 	${src_include}
     ${src_engine}
 	${src_mock}
+	${src_module}
 	${src_sfml}
 	${src_math})
 
@@ -47,6 +53,7 @@ source_group("src\\engine" FILES ${src_engine})
 source_group("src\\engine\\sfml" FILES ${src_sfml})
 source_group("src\\engine\\mock" FILES ${src_mock})
 source_group("src\\math" FILES ${src_math})
+source_group("src\\module" FILES ${src_module})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")

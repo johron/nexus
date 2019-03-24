@@ -5,14 +5,14 @@ using binding_t = nexus::event_binding<int, std::function<void()>>;
 
 TEST(event_binding, construct_default) {
 	binding_t binding;
-	EXPECT_EQ(binding.size(), 0);
+	EXPECT_EQ(binding.size(), 0u);
 }
 
 TEST(event_binding, bind_single) {
 	binding_t binding;
 	auto func_1 = []() { /* any callable object */ };
 	binding.bind(1, func_1);
-	EXPECT_EQ(binding.size(), 1);
+	EXPECT_EQ(binding.size(), 1u);
 }
 
 TEST(event_binding, bind_multiple) {
@@ -21,7 +21,7 @@ TEST(event_binding, bind_multiple) {
 	auto func_2 = []() { /* should be called second */ };
 	auto func_3 = []() { /* should be called third */ };
 	binding.bind(1, func_1, func_2, func_3);
-	EXPECT_EQ(binding.size(), 1);
+	EXPECT_EQ(binding.size(), 1u);
 }
 
 TEST(event_binding, has_binding) {
@@ -39,7 +39,7 @@ TEST(event_binding, trigger) {
 	auto func_3 = [&counter]() { assert(++counter == 3); };
 	binding.bind(1, func_1, func_2, func_3);
 	binding.trigger(1);
-	EXPECT_EQ(counter, 3);
+	EXPECT_EQ(counter, 3u);
 }
 
 TEST(event_binding, trigger_with_args) {
@@ -59,7 +59,7 @@ TEST(event_binding, append) {
 	auto func_3 = [&counter]() { assert(++counter == 3); };
 	binding.append(1, func_3);
 	binding.trigger(1);
-	EXPECT_EQ(counter, 3);
+	EXPECT_EQ(counter, 3u);
 }
 
 TEST(event_binding, erase) {
