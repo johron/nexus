@@ -14,6 +14,7 @@ set(src_mock
 
 set(src_module
 	"src/module/module.h"
+	"src/module/module_dependency.h"
 	"src/module/module_id.cpp"
 	"src/module/module_id.h"
 	"src/module/module_manager.h")

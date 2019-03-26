@@ -9,6 +9,8 @@
 #include <type_traits>
 
 #include <map>
+#include <set>
+
 #include <string>
 
 #include "sfml/util.h"

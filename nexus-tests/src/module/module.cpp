@@ -1,70 +1,80 @@
+#include <array>
 #include <type_traits>
 #include "../include/nexus/nexus.h"
 #include "gtest/gtest.h"
 
-struct module_1 : public nexus::module {};
-struct module_3 : public nexus::module {};
+using namespace nexus;
 
-template <class... type>
-struct type_list {};
-
-template <class T>
-struct deps {
-	static std::vector<uint32_t> get() {
-		return {};
-	}
-};
-
-template <>
-struct deps<module_3> {
-	static std::vector<uint32_t> get() {
-		return {nexus::type_id::get<module_1>()};
-	}
-};
-
-struct module_2 : public nexus::module {
-	module_2(int first, int second)
+struct module_1 : public module {};
+struct module_2 : public module {};
+struct module_3 : public module {
+	using dependencies = nexus::module_dependency<module_1, module_2>;
+	module_3(int first, int second)
 		: m_value(first + second) {
 	}
 
 	int m_value;
 };
 
-TEST(module_manager, type_id) {
-	const auto id1 = nexus::type_id::get<module_1>();
-	const auto id2 = nexus::type_id::get<module_2>();
+TEST(module_manager, module_id) {
+	const auto id1 = module_id::get<module_1>();
+	const auto id2 = module_id::get<module_2>();
 	EXPECT_NE(id1, id2);
-	EXPECT_EQ(id1, nexus::type_id::get<module_1>());
-	const module_2 object(1, 2);
-	EXPECT_EQ(id2, nexus::type_id::get(object));
+	EXPECT_EQ(id1, module_id::get<module_1>());
+	const module_2 object;
+	EXPECT_EQ(id2, module_id::get(object));
 }
 
 TEST(module_manager, register_module) {
-	nexus::module_manager manager;
+	module_manager manager;
 	manager.register_module<module_1>();
-	manager.register_module<module_2>(1, 2);
+	manager.register_module<module_2>();
+	manager.register_module<module_3>(1, 2);
 }
 
 TEST(module_manager, get_module) {
-	nexus::module_manager manager;
+	module_manager manager;
 	manager.register_module<module_1>();
 	const auto& sample_module = manager.get<module_1>();
 	static_assert(std::is_same_v<std::decay_t<decltype(sample_module)>, module_1>);
 }
 
-TEST(module_manager, visit) {
-	nexus::module_manager manager;
+TEST(module_manager, visit_all) {
+	module_manager manager;
 	manager.register_module<module_1>();
-	manager.register_module<module_2>(1, 2);
+	manager.register_module<module_2>();
 	const auto visitor = [](auto&& /*module*/) { /* do something */ };
 	manager.visit(visitor);
 }
 
-TEST(module_manager, module_dependencies) {
-	nexus::module_manager manager;
+TEST(module_manager, load_single) {
+	module_manager manager;
 	manager.register_module<module_1>();
-	manager.register_module<module_2>(1, 2);
-	manager.register_module<module_3>();
+	manager.register_module<module_2>();
+	manager.register_module<module_3>(1, 2);
 
+	manager.load<module_1>();
+	EXPECT_TRUE(manager.is_loaded<module_1>());
+	EXPECT_FALSE(manager.is_loaded<module_2>());
+	EXPECT_FALSE(manager.is_loaded<module_3>());
+}
+
+TEST(module_manager, load_dependencies) {
+	module_manager manager;
+	manager.register_module<module_1>();
+	manager.register_module<module_2>();
+	manager.register_module<module_3>(1, 2);
+
+	// module 3 has dependencies to module 1 and 2, loading
+	// it should result in all the modules being loaded
 	manager.load<module_3>();
+	EXPECT_TRUE(manager.is_loaded<module_1>());
+	EXPECT_TRUE(manager.is_loaded<module_2>());
+	EXPECT_TRUE(manager.is_loaded<module_3>());
+}
+
+TEST(module_manager, module_dependencies) {
+	const auto dependencies = module_3::dependencies::id();
+	EXPECT_TRUE(dependencies.find(module_id::get<module_1>()) != dependencies.end());
+	EXPECT_TRUE(dependencies.find(module_id::get<module_2>()) != dependencies.end());
 }
