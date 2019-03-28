@@ -4,17 +4,16 @@
 namespace nexus {
 template <class... arg_t>
 struct module_dependency {
-	static auto id() {
-		return std::set<uint32_t>{module_id::get<arg_t>()...};
+	static std::set<uint32_t> get() {
+		return {module_id::get<arg_t>()...};
 	}
 };
-
 struct no_dependency {};
+
 template <>
 struct module_dependency<no_dependency> {
-	static auto id() {
-		return std::set<uint32_t>{};
+	static std::set<uint32_t> get() {
+		return {};
 	}
 };
-
 }  // namespace nexus

@@ -7,64 +7,106 @@ struct module_manager {
 	template <class module_t, class... arg_t>
 	void register_module(arg_t... args) {
 		const auto id = module_id::get<module_t>();
-		m_modules[id] = std::make_unique<module_t>(std::forward<arg_t>(args)...);
+		m_modules.insert(std::make_pair(id,
+										entry{std::make_unique<module_t>(std::forward<arg_t>(args)...),
+											  module_t::dependencies::get(),
+											  id}));
 	}
 
 	template <class module_t>
 	[[nodiscard]] bool is_registered() const {
-		return m_modules.find(module_id::get<module_t>()) != m_modules.end();
-	}
-
-	template <class module_t>
-	module_t& get() {
-		return static_cast<module_t&>(*m_modules.at(module_id::get<module_t>()));
-	}
-
-	template <class module_t>
-	const module_t& get() const {
-		return static_cast<module_t&>(*m_modules.at(module_id::get<module_t>()));
-	}
-
-	template <class module_t>
-	void load() {
-		const auto id = module_id::get<module_t>();
-		if (is_registered<module_t>() && !is_loaded<module_t>()) {
-			load(typename module_t::dependencies{});
-
-			auto& module = m_modules.at(id);
-			if (module->on_load() == module::load_result::ok) {
-				m_loaded.insert(id);
-			} else {
-				throw std::runtime_error("failed to load module:" + std::to_string(id));
-			}
-		}
-
+		return is_registered(module_id::get<module_t>());
 	}
 
 	template <class module_t>
 	[[nodiscard]] bool is_loaded() const {
-		return m_loaded.find(module_id::get<module_t>()) != m_loaded.end();
+		return is_loaded(module_id::get<module_t>());
+	}
+
+	template <class module_t>
+	module_t& get() {
+		return static_cast<module_t&>(*m_modules.at(module_id::get<module_t>()).m_module);
+	}
+
+	template <class module_t>
+	const module_t& get() const {
+		return static_cast<module_t&>(*m_modules.at(module_id::get<module_t>()).m_module);
+	}
+
+	template <class module_t>
+	void load() {
+		load(module_id::get<module_t>());
+	}
+
+	template <class module_t>
+	void unload() {
+		unload(module_id::get<module_t>());
 	}
 
 	template <class functor_t, class... arg_t>
 	void visit(functor_t& func, arg_t... args) {
 		for (auto& module : m_modules) {
-			func(*module.second, std::forward<arg_t>(args)...);
+			func(*module.second.m_module, std::forward<arg_t>(args)...);
 		}
 	}
 
+	template <class visitor_t>
+	auto visit(visitor_t&& visitor) {
+		return visitor(m_modules);
+	}
+
 private:
-	template <class... module_t>
-	void load(const module_dependency<module_t...>& /*unused*/) {
-		[[maybe_unused]] int unused[] = {0, (load<module_t>(), 0)...};
+	[[nodiscard]] bool is_loaded(uint32_t id) const {
+		return m_loaded.find(id) != m_loaded.end();
 	}
 
-	template <>
-	void load(const module_dependency<no_dependency>&) {
-		/* do nothing */
+	[[nodiscard]] bool is_registered(uint32_t id) const {
+		return m_modules.find(id) != m_modules.end();
 	}
 
-	std::map<uint32_t, std::unique_ptr<module>> m_modules;
+	void load(uint32_t id) {
+		if (!is_loaded(id) && is_registered(id)) {
+			auto& entry = m_modules.at(id);
+			for (auto& dependency : entry.m_dependencies) {
+				load(dependency);
+			}
+
+			if (entry.m_module->on_load() == module::load_result::ok) {
+				m_loaded.insert(id);
+			} else {
+				throw std::runtime_error("failed to load module " + std::to_string(id));
+			}
+		}
+	}
+
+	void unload(uint32_t current) {
+		if (is_loaded(current) && is_registered(current)) {
+			for (const auto loaded_module : m_loaded) {
+				if (loaded_module != current) {
+					const auto& dependencies = m_modules.at(loaded_module).m_dependencies;
+					const bool dependency_is_about_to_unload = dependencies.find(current) != dependencies.end();
+					if (dependency_is_about_to_unload) {
+						unload(loaded_module);
+					}
+				}
+			}
+
+			auto& entry = m_modules.at(current);
+			if (entry.m_module->on_unload() == module::load_result::ok) {
+				m_loaded.erase(current);
+			} else {
+				throw std::runtime_error("failed to unload module " + std::to_string(current));
+			}
+		}
+	}
+
+	struct entry {
+		std::unique_ptr<module> m_module;
+		std::set<uint32_t> m_dependencies;
+		uint32_t m_id;
+	};
+
+	std::map<uint32_t, const entry> m_modules;
 	std::set<uint32_t> m_loaded;
 };
 }  // namespace nexus

@@ -73,8 +73,16 @@ TEST(module_manager, load_dependencies) {
 	EXPECT_TRUE(manager.is_loaded<module_3>());
 }
 
-TEST(module_manager, module_dependencies) {
-	const auto dependencies = module_3::dependencies::id();
-	EXPECT_TRUE(dependencies.find(module_id::get<module_1>()) != dependencies.end());
-	EXPECT_TRUE(dependencies.find(module_id::get<module_2>()) != dependencies.end());
+TEST(module_manager, unload_single) {
+	module_manager manager;
+	manager.register_module<module_1>();
+	manager.register_module<module_2>();
+	manager.register_module<module_3>(1, 2);
+	manager.load<module_3>();
+	EXPECT_TRUE(manager.is_loaded<module_1>());
+	EXPECT_TRUE(manager.is_loaded<module_2>());
+	EXPECT_TRUE(manager.is_loaded<module_3>());
+	// module 3 has a dependency to module 1, so unloading
+	// module 1 should unload module 3 as well.
+	manager.unload<module_1>();
 }
