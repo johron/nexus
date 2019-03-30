@@ -1,6 +1,7 @@
 #pragma once
 #include "module.h"
 #include "module_id.h"
+#include <iterator>
 
 namespace nexus {
 struct module_manager {
@@ -79,24 +80,34 @@ private:
 		}
 	}
 
-	void unload(uint32_t current) {
-		if (is_loaded(current) && is_registered(current)) {
-			for (const auto loaded_module : m_loaded) {
-				if (loaded_module != current) {
-					const auto& dependencies = m_modules.at(loaded_module).m_dependencies;
-					const bool dependency_is_about_to_unload = dependencies.find(current) != dependencies.end();
-					if (dependency_is_about_to_unload) {
-						unload(loaded_module);
-					}
-				}
-			}
+	void unload(uint32_t id) {
+		if (is_loaded(id) && is_registered(id)) {
+			unload_dependencies(id);
 
-			auto& entry = m_modules.at(current);
+			auto& entry = m_modules.at(id);
 			if (entry.m_module->on_unload() == module::load_result::ok) {
-				m_loaded.erase(current);
+				m_loaded.erase(id);
 			} else {
-				throw std::runtime_error("failed to unload module " + std::to_string(current));
+				throw std::runtime_error("failed to unload module " + std::to_string(id));
 			}
+		}
+	}
+
+	void unload_dependencies(uint32_t id) {
+		std::set<uint32_t> to_unload;
+		const auto is_dependency = [this, id](uint32_t module_id) {
+			if (module_id != id) {
+				const auto& dependencies = m_modules.at(module_id).m_dependencies;
+				return dependencies.find(id) != dependencies.end();
+			} else {
+				return false;
+			}
+		};
+
+		std::copy_if(
+			m_loaded.begin(), m_loaded.end(), std::inserter(to_unload, to_unload.end()), is_dependency);
+		for (const auto& module : to_unload) {
+			unload(module);
 		}
 	}
 

@@ -9,7 +9,8 @@ struct module {
 	module& operator=(const module& other) = delete;
 
 	module() = default;
-	~module() = default;
+	virtual ~module() = default;
+
 
 	enum class load_result {
 		ok, error
