@@ -1,7 +1,5 @@
 #pragma once
 
-#define __STRICT_ANSI__
-
 #include <cassert>
 #include <cstdint>
 

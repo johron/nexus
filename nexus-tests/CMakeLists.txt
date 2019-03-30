@@ -19,6 +19,7 @@ set(src_engine
 	"src/engine/window.cpp")
 
 set(src_files 
+	${src_precompiled}
 	${src_engine}
 	${src_math}
 	${src_module})
@@ -28,6 +29,7 @@ add_executable(${target_name} ${src_files} ${res_files})
 source_group("src\\engine" FILES ${src_engine})
 source_group("src\\math" FILES ${src_math})
 source_group("src\\module" FILES ${src_module})
+source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("res" FILES ${res_files})
 
 target_link_libraries(${target_name} "nexus-lib")
@@ -37,7 +39,6 @@ target_include_directories(${target_name} PRIVATE "../nexus-lib/include")
 target_include_directories(${target_name} PRIVATE "../../")
 
 set_target_properties(${target_name} PROPERTIES FOLDER "nexus")
-
 set_target_properties(${target_name} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT ${src_precompiled})
 
 foreach(file ${res_files})
