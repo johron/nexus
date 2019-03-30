@@ -79,18 +79,18 @@ TEST(resource_cache, load_failed) {
 
 TEST(resource_cache, size) {
 	default_cache cache;
-	EXPECT_EQ(cache.size(), 0);
+	EXPECT_EQ(cache.size(), 0u);
 	cache.load(enumerated_id::id_1);
 	cache.load(enumerated_id::id_1);
-	EXPECT_EQ(cache.size(), 1);
+	EXPECT_EQ(cache.size(), 1u);
 	cache.load(enumerated_id::id_2);
-	EXPECT_EQ(cache.size(), 2);
+	EXPECT_EQ(cache.size(), 2u);
 }
 
 TEST(resource_cache, get_triggers_load) {
 	default_cache cache;
 	auto resource = cache.get(enumerated_id::id_1);
-	EXPECT_EQ(cache.size(), 1);
+	EXPECT_EQ(cache.size(), 1u);
 	EXPECT_NE(resource, nullptr);
 }
 
@@ -98,10 +98,10 @@ TEST(resource_cache, release_unused) {
 	default_cache cache;
 	auto resource_1 = cache.get(enumerated_id::id_1);
 	auto resource_2 = cache.get(enumerated_id::id_2);
-	EXPECT_EQ(cache.size(), 2);
+	EXPECT_EQ(cache.size(), 2u);
 	cache.release_unused();
-	EXPECT_EQ(cache.size(), 2);
+	EXPECT_EQ(cache.size(), 2u);
 	resource_1.reset();
 	cache.release_unused();
-	EXPECT_EQ(cache.size(), 1);
+	EXPECT_EQ(cache.size(), 1u);
 }

@@ -49,7 +49,7 @@ struct window {
 
 	template <class drawable_t>
 	inline void draw(const drawable_t& drawable) {
-		static const auto renderer = [this](const auto& drawable) { m_window.draw(drawable); };
+		static const auto renderer = [this](const auto& element) { m_window.draw(element); };
 		drawable.visit(renderer);
 	}
 
