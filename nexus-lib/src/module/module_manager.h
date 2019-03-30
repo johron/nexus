@@ -67,12 +67,12 @@ private:
 
 	void load(uint32_t id) {
 		if (!is_loaded(id) && is_registered(id)) {
-			auto& entry = m_modules.at(id);
-			for (auto& dependency : entry.m_dependencies) {
+			auto& module = m_modules.at(id);
+			for (auto& dependency : module.m_dependencies) {
 				load(dependency);
 			}
 
-			if (entry.m_module->on_load() == module::load_result::ok) {
+			if (module.m_module->on_load() == module::load_result::ok) {
 				m_loaded.insert(id);
 			} else {
 				throw std::runtime_error("failed to load module " + std::to_string(id));
@@ -84,8 +84,8 @@ private:
 		if (is_loaded(id) && is_registered(id)) {
 			unload_dependencies(id);
 
-			auto& entry = m_modules.at(id);
-			if (entry.m_module->on_unload() == module::load_result::ok) {
+			auto& module = m_modules.at(id);
+			if (module.m_module->on_unload() == module::load_result::ok) {
 				m_loaded.erase(id);
 			} else {
 				throw std::runtime_error("failed to unload module " + std::to_string(id));
