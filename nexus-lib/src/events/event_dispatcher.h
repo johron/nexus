@@ -7,6 +7,7 @@ namespace nexus {
 
 template <class event_t>
 struct event_listener {
+	virtual ~event_listener() = default;
 	virtual void on_event(const event_t& event) = 0;
 };
 
