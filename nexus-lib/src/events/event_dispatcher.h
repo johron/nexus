@@ -1,7 +1,7 @@
 #pragma once
+#include "../utils/type_id.h"
 #include "event_listener.h"
 #include <any>
-#include <memory>
 
 namespace nexus {
 
@@ -23,9 +23,11 @@ struct event_dispatcher {
 		const auto event_id = util::type_id::template get<event_t>();
 		const auto& listeners = m_listeners[event_id];
 		for (const auto& entry : listeners) {
-			auto potential_listener = std::any_cast<std::weak_ptr<event_listener<event_t>>>(entry);
-			if (auto active_listener = potential_listener.lock()) {
+			const auto potential_listener = std::any_cast<std::weak_ptr<event_listener<event_t>>>(entry);
+			if (const auto active_listener = potential_listener.lock()) {
 				active_listener->on_event(event);
+			} else {
+				// remove detached listener
 			}
 		}
 	}
