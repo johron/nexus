@@ -1,7 +1,7 @@
 #pragma once
 
-namespace nexus {
-struct module_id {
+namespace nexus::util {
+struct type_id {
 	template <class type>
 	static uint32_t get() {
 		static uint32_t id = the_global_counter++;
@@ -16,4 +16,4 @@ struct module_id {
 private:
 	static uint32_t the_global_counter;
 };
-}
+}  // namespace nexus::util
