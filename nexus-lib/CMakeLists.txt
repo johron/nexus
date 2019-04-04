@@ -36,8 +36,7 @@ set(src_engine
 	"src/dummy.cpp")
 
 set(src_events
-	"src/events/event_broadcaster.h"
-	"src/events/event_listener.h")
+	"src/events/event_broadcaster.h")
 
 set(src_utils
 	"src/utils/type_id.cpp"
