@@ -1,6 +1,5 @@
 #pragma once
 #include "../utils/type_id.h"
-#include "event_listener.h"
 
 namespace nexus {
 template <class event_t>
@@ -22,7 +21,6 @@ struct event_broadcaster {
 		const auto event_id = util::type_id::template get<event_t>();
 		auto& listeners = m_listeners[event_id];
 		using listener_t = std::weak_ptr<event_listener<event_t>>;
-
 		for (int i = listeners.size() - 1; i >= 0; --i) {
 			const auto potential_listener = std::any_cast<listener_t>(listeners[i]);
 			if (auto active_listener = potential_listener.lock()) {
@@ -37,7 +35,6 @@ struct event_broadcaster {
 	void post(const event_t& event) {
 		const auto event_id = util::type_id::template get<event_t>();
 		auto& listeners = m_listeners[event_id];
-
 		using listener_t = std::weak_ptr<event_listener<event_t>>;
 		for (int i = listeners.size() - 1; i >= 0; --i) {
 			const auto potential_listener = std::any_cast<listener_t>(listeners[i]);
