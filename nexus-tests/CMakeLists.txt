@@ -19,7 +19,7 @@ set(src_engine
 	"src/engine/window.cpp")
 
 set(src_events
-	"src/events/event_dispatcher.cpp")
+	"src/events/event_broadcaster.cpp")
 
 set(src_utils
 	"src/utils/type_id.cpp")
