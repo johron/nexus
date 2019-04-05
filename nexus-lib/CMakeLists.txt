@@ -15,6 +15,8 @@ set(src_mock
 set(src_module
 	"src/module/module.h"
 	"src/module/module_dependency.h"
+	"src/module/module_id.cpp"
+	"src/module/module_id.h"
 	"src/module/module_manager.h")
 
 set(src_sfml
@@ -35,23 +37,15 @@ set(src_engine
 	"src/resource_cache.h"
 	"src/dummy.cpp")
 
-set(src_events
-	"src/events/event_broadcaster.h")
-
-set(src_utils
-	"src/utils/type_id.cpp"
-	"src/utils/type_id.h")
 
 set(src_files
     ${src_precompiled}
 	${src_include}
     ${src_engine}
-	${src_events}
 	${src_mock}
 	${src_module}
 	${src_sfml}
-	${src_math}
-	${src_utils})
+	${src_math})
 
 add_library(${target_name} STATIC ${src_files})
 
@@ -60,10 +54,8 @@ source_group("src\\include" FILES ${src_include})
 source_group("src\\engine" FILES ${src_engine})
 source_group("src\\engine\\sfml" FILES ${src_sfml})
 source_group("src\\engine\\mock" FILES ${src_mock})
-source_group("src\\events" FILES ${src_events})
 source_group("src\\math" FILES ${src_math})
 source_group("src\\module" FILES ${src_module})
-source_group("src\\utils" FILES ${src_utils})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")

@@ -11,6 +11,7 @@ struct module {
 	module() = default;
 	virtual ~module() = default;
 
+
 	enum class load_result {
 		ok, error
 	};
