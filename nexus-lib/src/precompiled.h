@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstdint>
 
+#include <limits>
 #include <atomic>
 #include <memory>
 #include <functional>

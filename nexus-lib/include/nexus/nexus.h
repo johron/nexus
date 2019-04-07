@@ -2,6 +2,7 @@
 
 #include "../../src/precompiled.h"
 #include "../../src/utils/type_id.h"
+#include "../../src/utils/number_pool.h"
 
 #include "../../src/engine.h"
 #include "../../src/event_binding.h"

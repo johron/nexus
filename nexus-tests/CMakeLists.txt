@@ -22,6 +22,7 @@ set(src_events
 	"src/events/event_broadcaster.cpp")
 
 set(src_utils
+	"src/utils/number_pool.cpp"
 	"src/utils/type_id.cpp")
 
 set(src_files 

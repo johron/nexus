@@ -39,6 +39,7 @@ set(src_events
 	"src/events/event_broadcaster.h")
 
 set(src_utils
+	"src/utils/number_pool.h"
 	"src/utils/type_id.cpp"
 	"src/utils/type_id.h")
 
