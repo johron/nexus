@@ -17,4 +17,4 @@
 
 #include "sfml/util.h"
 
-#include "utils/type_id.h"
+#include "util/type_id.h"

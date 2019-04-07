@@ -8,7 +8,7 @@
 #include "event_binding.h"
 #include "input_device.h"
 
-#include "utils/type_id.h"
+#include "util/type_id.h"
 
 namespace nexus {
 using keyboard = concrete_keyboard<sfml::keyboard::key, sfml::keyboard>;

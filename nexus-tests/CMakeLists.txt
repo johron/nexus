@@ -19,11 +19,11 @@ set(src_engine
 	"src/engine/window.cpp")
 
 set(src_events
-	"src/events/event_broadcaster.cpp")
+	"src/events/event_system.cpp")
 
-set(src_utils
-	"src/utils/number_pool.cpp"
-	"src/utils/type_id.cpp")
+set(src_util
+	"src/util/number_pool.cpp"
+	"src/util/type_id.cpp")
 
 set(src_files 
 	${src_precompiled}
@@ -31,7 +31,7 @@ set(src_files
 	${src_events}
 	${src_math}
 	${src_module}
-	${src_utils})
+	${src_util})
 
 add_executable(${target_name} ${src_files} ${res_files})
 
@@ -40,7 +40,7 @@ source_group("src\\events" FILES ${src_events})
 source_group("src\\math" FILES ${src_math})
 source_group("src\\module" FILES ${src_module})
 source_group("src\\precompiled" FILES ${src_precompiled})
-source_group("src\\utils" FILES ${src_utils})
+source_group("src\\utils" FILES ${src_util})
 source_group("res" FILES ${res_files})
 
 target_link_libraries(${target_name} "nexus-lib")
