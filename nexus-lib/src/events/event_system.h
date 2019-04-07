@@ -24,7 +24,7 @@ struct event_system {
 		}
 
 		[[nodiscard]] bool is_detached() const {
-			return m_system != nullptr;
+			return m_system == nullptr;
 		}
 
 	private:
@@ -134,8 +134,8 @@ private:
 		std::swap(m_listeners, empty);
 		for (auto& group : empty) {
 			for (auto& entry : group.second) {
-				if (auto listener_data = entry.second.m_token.lock()) {
-					listener_data->detach();
+				if (auto current_data = entry.second.m_token.lock()) {
+					current_data->detach();
 				} else {
 					throw std::runtime_error(
 						"found dead listener that should already have been removed - investigate!");
