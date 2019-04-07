@@ -1,6 +1,4 @@
 #include "../src/events/event_system.h"
-#include "../include/nexus/nexus.h"
-
 #include "gtest/gtest.h"
 
 using namespace nexus;
@@ -36,7 +34,7 @@ TEST(event_system, enqueue_event) {
 	EXPECT_EQ(message_count, 1u);
 }
 
-TEST(event_system, expired_cancel_token_removes_listener) {
+TEST(event_system, expired_listener_token_removes_listener) {
 	event_system events;
 	uint32_t message_count(0);
 	{
@@ -47,7 +45,7 @@ TEST(event_system, expired_cancel_token_removes_listener) {
 	EXPECT_EQ(message_count, 0u);
 }
 
-TEST(event_system, cancel_token_can_be_copied) {
+TEST(event_system, listener_token_can_be_copied) {
 	event_system events;
 	uint32_t message_count(0);
 	{
@@ -59,15 +57,20 @@ TEST(event_system, cancel_token_can_be_copied) {
 	EXPECT_EQ(message_count, 0u);
 }
 
-TEST(event_system, cancel_token_can_expire_after_system) {
+TEST(event_system, listener_token_can_expire_after_system) {
 	auto system = std::make_unique<event_system>();
-	uint32_t message_count(0);
-	{
-		auto first_token =
-			system->register_listener<test_event_1>([&message_count](auto& /*event*/) { ++message_count; });
-		system.reset();
+	auto first_token = system->register_listener<test_event_1>([](auto& /*event*/) {});
+	system.reset();
+}
 
-		event_system::listener test = first_token;
-		event_system::listener test2(test);
-	}
+TEST(event_system, invalidated_listener_token_stops_events) {
+	event_system events;
+	uint32_t message_count(0);
+	auto token = events.register_listener<test_event_1>([&message_count](auto& /*event*/) { ++message_count; });
+	auto tokenCopy(token); // even if a copy exists, invalidating the listener token will stop all events
+	events.post(test_event_1{1});
+	EXPECT_EQ(message_count, 1u);
+	token.invalidate();
+	events.post(test_event_1{1});
+	EXPECT_EQ(message_count, 1u);
 }

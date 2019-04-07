@@ -1,6 +1,6 @@
 #pragma once
-#include "../util/type_id.h"
 #include "../util/number_pool.h"
+#include "../util/type_id.h"
 
 namespace nexus {
 
@@ -23,6 +23,11 @@ struct event_system {
 			}
 		}
 
+		[[nodiscard]] bool is_detached() const {
+			return m_system != nullptr;
+		}
+
+	private:
 		event_system* m_system;
 		uint32_t m_event_id;
 		uint32_t m_listener_id;
@@ -55,11 +60,13 @@ struct event_system {
 		}
 
 		void invalidate() {
-			m_token.reset();
+			if (is_valid()) {
+				m_token->detach();
+			}
 		}
 
-		bool is_valid() const {
-			return m_token != nullptr;
+		[[nodiscard]] bool is_valid() const {
+			return m_token && !m_token->is_detached();
 		}
 
 	private:
@@ -127,10 +134,11 @@ private:
 		std::swap(m_listeners, empty);
 		for (auto& group : empty) {
 			for (auto& entry : group.second) {
-				if (auto listener = entry.second.m_token.lock()) {
-					listener->detach();
+				if (auto listener_data = entry.second.m_token.lock()) {
+					listener_data->detach();
 				} else {
-					throw std::runtime_error("found dead listener that should already have been removed - investigate!");
+					throw std::runtime_error(
+						"found dead listener that should already have been removed - investigate!");
 				}
 			}
 		}
