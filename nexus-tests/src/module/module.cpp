@@ -17,12 +17,12 @@ struct module_3 : public module {
 };
 
 TEST(module_manager, module_id) {
-	const auto id1 = module_id::get<module_1>();
-	const auto id2 = module_id::get<module_2>();
+	const auto id1 = util::type_id::get<module_1>();
+	const auto id2 = util::type_id::get<module_2>();
 	EXPECT_NE(id1, id2);
-	EXPECT_EQ(id1, module_id::get<module_1>());
+	EXPECT_EQ(id1, util::type_id::get<module_1>());
 	const module_2 object;
-	EXPECT_EQ(id2, module_id::get(object));
+	EXPECT_EQ(id2, util::type_id::get(object));
 }
 
 TEST(module_manager, register_module) {
@@ -86,3 +86,36 @@ TEST(module_manager, unload_single) {
 	// module 1 should unload module 3 as well.
 	manager.unload<module_1>();
 }
+
+// template <class return_t>
+// struct base_event {
+// 	using return_type = typename return_t;
+// };
+// 
+// using test_event = base_event<void>;
+// 
+// template <class event_t>
+// struct event_listener {
+// 	virtual typename event_t::return_type on_event(const event_t& event) = 0;
+// };
+// 
+// struct event_dispatcher {
+// 
+// };
+// 
+// struct test_listener : public nexus::module, public event_listener<test_event> {
+// 	void on_event() {
+// 	}
+// 
+// 	virtual test_event::return_type on_event(const test_event& event) override {
+// 		int i = 0;
+// 	}
+// };
+
+// TEST(module_manager, event_test) {
+// 	module_manager manager;
+// 	manager.register_module<test_listener>();
+// 
+// 	auto event_visitor = [](auto& module) { module.on_event(); };
+// 	manager.visit(event_visitor);
+// }

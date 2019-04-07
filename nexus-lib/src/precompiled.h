@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstdint>
 
+#include <limits>
 #include <atomic>
 #include <memory>
 #include <functional>
@@ -10,7 +11,10 @@
 
 #include <map>
 #include <set>
+#include <any>
 
 #include <string>
 
 #include "sfml/util.h"
+
+#include "util/type_id.h"
