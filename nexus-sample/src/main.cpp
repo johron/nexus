@@ -1,40 +1,30 @@
-#include "nexus/nexus-lib.h"
-
-struct sample_app {
-	sample_app(size_t count = 1) {
-		for (auto i = 0; i < count; ++i) {
-			m_sprites.emplace_back("resources/sprite_sheet.png");
-		}
-	}
-
-	void update() {
-	}
-
-	void render(nexus::window& window) {
-		for (const auto& sprite : m_sprites) {
-			window.draw(sprite());
-		}
-	}
-
-private:
-	std::vector<nexus::sprite> m_sprites;
-};
+#include "nexus/nexus.h"
 
 int main(int /*argc*/, char** /*argv*/) {
-	auto window = std::make_unique<nexus::window>(800, 600, "sample window");
-	window->input().bind(nexus::keyboard::key::escape, [&window]() { window->close(); });
+	nexus::window window(800, 600, "sample window");
+	window.keyboard().bind(nexus::keyboard::key::escape, [&window]() { window.close(); });
 
-	sample_app application(1);
+	nexus::sprite sprite("resources/ghost_red.png");
+	sprite.set_position(100, 200);
+	nexus::sprite copy(sprite);
+	copy.set_position(200, 200);
 
-	while (window->is_open()) {
-		window->clear();
-		window->poll_events();
-		application.update();
-		application.render(*window);
-		window->present();
+	nexus::hexagon shape(50);
+	shape.set_fill_color({200, 0, 0, 200});
+	shape.set_outline_thickness(2);
+	shape.set_outline_color({255, 255, 0, 255});
+	shape.set_position(300, 200);
+
+	while (window.is_open()) {
+		window.poll_events();
+		window.clear();
+
+		window.draw(sprite);
+		window.draw(copy);
+		window.draw(shape);
+
+		window.present();
 	}
-
-	window.reset();
 
 	return EXIT_SUCCESS;
 }
