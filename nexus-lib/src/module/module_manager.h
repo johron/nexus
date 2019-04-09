@@ -1,9 +1,41 @@
 #pragma once
-#include "module.h"
 #include <iterator>
+#include "module.h"
+#include <future>
+#include <algorithm>
 
 namespace nexus {
+struct sequential {
+	template <class module_storage_t, class functor_t>
+	static void invoke(const module_storage_t& modules, functor_t&& func) {
+		for (auto& current : modules) {
+			func(*current.second.m_module);
+		}
+	}
+};
+struct parallel {
+	template <class module_storage_t, class functor_t>
+	static void invoke(const module_storage_t& modules, functor_t&& func){
+		std::vector<std::future<void>> futures;
+		for (auto& current : modules) {
+			futures.emplace_back(
+				std::async(std::launch::async, [module = current.second.m_module.get(), &func]() { func(*module); }));
+		}
+
+		std::for_each(futures.begin(), futures.end(), [](std::future<void>& task) { task.wait(); });
+	};
+};
+
+template <class strategy_t>
+struct module_visitor {
+	template <class module_storage_t, class functor_t>
+	static void invoke(const module_storage_t& module_storage, functor_t&& func) {
+		strategy_t::invoke(module_storage, std::forward<functor_t>(func));
+	}
+};
+
 struct module_manager {
+
 	template <class module_t, class... arg_t>
 	void register_module(arg_t... args) {
 		const auto id = util::type_id::get<module_t>();
@@ -51,8 +83,8 @@ struct module_manager {
 	}
 
 	template <class visitor_t>
-	auto visit(visitor_t&& visitor) {
-		return visitor(m_modules);
+	void visit(visitor_t&& visitor) {
+		module_visitor<sequential>::invoke(m_modules, visitor);
 	}
 
 private:

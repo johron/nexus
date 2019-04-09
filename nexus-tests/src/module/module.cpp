@@ -5,8 +5,16 @@
 
 using namespace nexus;
 
-struct module_1 : public module {};
-struct module_2 : public module {};
+struct module_1 : public module {
+	virtual void update() override {
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	}
+};
+struct module_2 : public module {
+	virtual void update() override {
+		std::this_thread::sleep_for(std::chrono::milliseconds(20));
+	}
+};
 struct module_3 : public module {
 	using dependencies = nexus::module_dependency<module_1, module_2>;
 	module_3(int first, int second)
@@ -87,35 +95,16 @@ TEST(module_manager, unload_single) {
 	manager.unload<module_1>();
 }
 
-// template <class return_t>
-// struct base_event {
-// 	using return_type = typename return_t;
-// };
-// 
-// using test_event = base_event<void>;
-// 
-// template <class event_t>
-// struct event_listener {
-// 	virtual typename event_t::return_type on_event(const event_t& event) = 0;
-// };
-// 
-// struct event_dispatcher {
-// 
-// };
-// 
-// struct test_listener : public nexus::module, public event_listener<test_event> {
-// 	void on_event() {
-// 	}
-// 
-// 	virtual test_event::return_type on_event(const test_event& event) override {
-// 		int i = 0;
-// 	}
-// };
+TEST(module_manager, visit_test) {
+	module_manager manager;
+	manager.register_module<module_1>();
+	manager.register_module<module_2>();
 
-// TEST(module_manager, event_test) {
-// 	module_manager manager;
-// 	manager.register_module<test_listener>();
-// 
-// 	auto event_visitor = [](auto& module) { module.on_event(); };
-// 	manager.visit(event_visitor);
-// }
+	struct update_visitor {
+		void operator()(nexus::module& module) {
+			module.update();
+		}
+	};
+
+	manager.visit(update_visitor{});
+}
