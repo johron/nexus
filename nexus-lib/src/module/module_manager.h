@@ -1,9 +1,5 @@
 #pragma once
-#include <algorithm>
-
-#include <experimental/execution>
-#include <future>
-#include <iterator>
+#include "../engine/parallel.h"
 #include "module.h"
 
 namespace nexus {
@@ -49,15 +45,12 @@ struct module_manager {
 
 	template <class functor_t>
 	void visit(functor_t&& func) {
-		visit(func/*, std::execution::seq*/);
-		std::for_each(/*policy,*/ begin(m_modules), end(m_modules), [&func](const auto& current) {
-			func(*current.second.m_module);
-		});
+		visit(std::forward<functor_t>(func), parallel::execute_sequential);
 	}
 
 	template <class functor_t, class execution_policy>
-	void visit(functor_t&& func, const execution_policy& /*policy*/) {
-		std::for_each(/*policy,*/ begin(m_modules), end(m_modules), [&func](const auto& current) {
+	void visit(functor_t&& func, const execution_policy& policy) {
+		parallel::for_each(policy, begin(m_modules), end(m_modules), [&func](const auto& current) {
 			func(*current.second.m_module);
 		});
 	}

@@ -8,8 +8,6 @@
 #include "event_binding.h"
 #include "input_device.h"
 
-#include "util/type_id.h"
-
 namespace nexus {
 using keyboard = concrete_keyboard<sfml::keyboard::key, sfml::keyboard>;
 using mouse = concrete_mouse<sfml::mouse::button, sfml::mouse>;

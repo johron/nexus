@@ -26,9 +26,12 @@ set(src_sfml
 	"src/sfml/shapes.h"
 	"src/sfml/sprite.h"
 	"src/sfml/texture.h"
-	"src/sfml/window.h")
+	"src/sfml/window.h"
+	"src/sfml/precompiled.h")
 
 set(src_engine
+	"src/engine/precompiled.h"
+	"src/engine/parallel.h"
 	"src/engine.h"
 	"src/event_binding.h"
 	"src/input_device.h"
