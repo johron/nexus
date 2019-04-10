@@ -15,7 +15,7 @@
 
 #include <string>
 
-#pragma GCC diagnostic ignored "-Wuninitialized"
+#pragma GCC diagnostic ignored "-Wuseless-cast"
 #pragma GCC diagnostic push
 #include "SFML/Graphics.hpp"
 #pragma GCC diagnostic pop
