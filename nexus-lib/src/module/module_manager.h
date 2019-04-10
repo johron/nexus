@@ -1,7 +1,7 @@
 #pragma once
 #include <algorithm>
 
-//#include <execution>
+#include <execution>
 #include <future>
 #include <iterator>
 #include "module.h"
