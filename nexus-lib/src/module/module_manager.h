@@ -1,41 +1,12 @@
 #pragma once
+#include <algorithm>
+#include <execution>
+#include <future>
 #include <iterator>
 #include "module.h"
-#include <future>
-#include <algorithm>
 
 namespace nexus {
-struct sequential {
-	template <class module_storage_t, class functor_t>
-	static void invoke(const module_storage_t& modules, functor_t&& func) {
-		for (auto& current : modules) {
-			func(*current.second.m_module);
-		}
-	}
-};
-struct parallel {
-	template <class module_storage_t, class functor_t>
-	static void invoke(const module_storage_t& modules, functor_t&& func){
-		std::vector<std::future<void>> futures;
-		for (auto& current : modules) {
-			futures.emplace_back(
-				std::async(std::launch::async, [module = current.second.m_module.get(), &func]() { func(*module); }));
-		}
-
-		std::for_each(futures.begin(), futures.end(), [](std::future<void>& task) { task.wait(); });
-	};
-};
-
-template <class strategy_t>
-struct module_visitor {
-	template <class module_storage_t, class functor_t>
-	static void invoke(const module_storage_t& module_storage, functor_t&& func) {
-		strategy_t::invoke(module_storage, std::forward<functor_t>(func));
-	}
-};
-
 struct module_manager {
-
 	template <class module_t, class... arg_t>
 	void register_module(arg_t... args) {
 		const auto id = util::type_id::get<module_t>();
@@ -75,16 +46,16 @@ struct module_manager {
 		unload(util::type_id::get<module_t>());
 	}
 
-	template <class functor_t, class... arg_t>
-	void visit(functor_t& func, arg_t... args) {
-		for (auto& module : m_modules) {
-			func(*module.second.m_module, std::forward<arg_t>(args)...);
-		}
+	template <class functor_t>
+	void visit(functor_t&& func) {
+		visit(func, std::execution::seq);
 	}
 
-	template <class visitor_t>
-	void visit(visitor_t&& visitor) {
-		module_visitor<sequential>::invoke(m_modules, visitor);
+	template <class functor_t, class execution_policy>
+	void visit(functor_t&& func, const execution_policy& policy) {
+		std::for_each(policy, begin(m_modules), end(m_modules), [&func](const auto& current) {
+			func(*current.second.m_module);
+		});
 	}
 
 private:
