@@ -149,10 +149,10 @@ private:
 		std::weak_ptr<cancel_token> m_token;
 	};
 
-	using listener_id = uint32_t;
-	using message_id = uint32_t;
-	using listener_group = std::map<listener_id, listener_data>;
-	using listener_tree = std::map<message_id, listener_group>;
+	using listener_id_t = uint32_t;
+	using message_id_t = uint32_t;
+	using listener_group = std::map<listener_id_t, listener_data>;
+	using listener_tree = std::map<message_id_t, listener_group>;
 	listener_tree m_listeners;
 	std::vector<std::function<void()>> m_message_queue;
 	util::pool_u32 m_listener_id_pool;
