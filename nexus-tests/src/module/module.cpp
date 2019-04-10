@@ -48,14 +48,15 @@ TEST(module_manager, get_module) {
 	static_assert(std::is_same_v<std::decay_t<decltype(sample_module)>, module_1>);
 }
 
-TEST(module_manager, visit_sequential) {
-	module_manager manager;
-	manager.register_module<module_1>();
-	manager.register_module<module_2>();
-	const auto visitor = [](nexus::module& /*module*/) { /* do something */ };
-	manager.visit(visitor);
-}
+// TEST(module_manager, visit_sequential) {
+// 	module_manager manager;
+// 	manager.register_module<module_1>();
+// 	manager.register_module<module_2>();
+// 	const auto visitor = [](nexus::module& /*module*/) { /* do something */ };
+// 	manager.visit(visitor);
+// }
 
+/*
 TEST(module_manager, visit_parallel) {
 	module_manager manager;
 	manager.register_module<module_1>();
@@ -71,7 +72,7 @@ TEST(module_manager, visit_parallel) {
 	const auto duration = std::chrono::steady_clock::now() - begin;
 	EXPECT_GE(duration, the_update_time);
 	EXPECT_LE(duration, the_update_time * 2);
-}
+}*/
 
 
 TEST(module_manager, load_single) {

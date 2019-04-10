@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
-#include <execution>
+
+//#include <execution>
 #include <future>
 #include <iterator>
 #include "module.h"
@@ -48,12 +49,15 @@ struct module_manager {
 
 	template <class functor_t>
 	void visit(functor_t&& func) {
-		visit(func, std::execution::seq);
+		visit(func/*, std::execution::seq*/);
+		std::for_each(/*policy,*/ begin(m_modules), end(m_modules), [&func](const auto& current) {
+			func(*current.second.m_module);
+		});
 	}
 
 	template <class functor_t, class execution_policy>
-	void visit(functor_t&& func, const execution_policy& policy) {
-		std::for_each(policy, begin(m_modules), end(m_modules), [&func](const auto& current) {
+	void visit(functor_t&& func, const execution_policy& /*policy*/) {
+		std::for_each(/*policy,*/ begin(m_modules), end(m_modules), [&func](const auto& current) {
 			func(*current.second.m_module);
 		});
 	}
