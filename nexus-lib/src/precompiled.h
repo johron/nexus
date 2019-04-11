@@ -15,6 +15,5 @@
 
 #include <string>
 
-#include "sfml/util.h"
-
-#include "util/type_id.h"
+#include "sfml/precompiled.h"
+#include "engine/precompiled.h"

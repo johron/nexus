@@ -11,15 +11,16 @@ struct module {
 	module() = default;
 	virtual ~module() = default;
 
-	enum class load_result {
-		ok, error
-	};
+	enum class load_result { ok, error };
 
 	virtual load_result on_load() {
 		return load_result::ok;
 	}
 	virtual load_result on_unload() {
 		return load_result::ok;
+	}
+
+	virtual void update() {
 	}
 };
 }  // namespace nexus

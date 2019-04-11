@@ -8,8 +8,11 @@ struct number_pool {
 	}
 
 	numeric_t next() {
-		assert(m_number < max() && "number_pool counter has wrapped around");
-		return m_number++;
+		if (m_number < max()) {
+			return m_number++;
+		} else {
+			throw std::runtime_error("number_pool counter has wrapped around");
+		}		
 	}
 
 	void reset() {

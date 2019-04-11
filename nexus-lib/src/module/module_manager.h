@@ -1,6 +1,6 @@
 #pragma once
+#include "../engine/parallel.h"
 #include "module.h"
-#include <iterator>
 
 namespace nexus {
 struct module_manager {
@@ -43,16 +43,16 @@ struct module_manager {
 		unload(util::type_id::get<module_t>());
 	}
 
-	template <class functor_t, class... arg_t>
-	void visit(functor_t& func, arg_t... args) {
-		for (auto& module : m_modules) {
-			func(*module.second.m_module, std::forward<arg_t>(args)...);
-		}
+	template <class functor_t>
+	void visit(functor_t&& func) {
+		visit(std::forward<functor_t>(func), parallel::execute_sequential);
 	}
 
-	template <class visitor_t>
-	auto visit(visitor_t&& visitor) {
-		return visitor(m_modules);
+	template <class functor_t, class execution_policy>
+	void visit(functor_t&& func, const execution_policy& policy) {
+		parallel::for_each(policy, begin(m_modules), end(m_modules), [&func](const auto& current) {
+			func(*current.second.m_module);
+		});
 	}
 
 private:
@@ -74,7 +74,7 @@ private:
 			if (module.m_module->on_load() == module::load_result::ok) {
 				m_loaded.insert(id);
 			} else {
-				throw std::runtime_error("failed to load module " + std::to_string(id));
+				throw std::runtime_error("failed to load module");
 			}
 		}
 	}
@@ -87,7 +87,7 @@ private:
 			if (module.m_module->on_unload() == module::load_result::ok) {
 				m_loaded.erase(id);
 			} else {
-				throw std::runtime_error("failed to unload module " + std::to_string(id));
+				throw std::runtime_error("failed to unload module");
 			}
 		}
 	}

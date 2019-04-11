@@ -1,19 +1,38 @@
-#include <array>
-#include <type_traits>
 #include "../include/nexus/nexus.h"
 #include "gtest/gtest.h"
 
 using namespace nexus;
+static constexpr auto the_update_time = std::chrono::milliseconds(10);
 
-struct module_1 : public module {};
-struct module_2 : public module {};
-struct module_3 : public module {
+template <size_t tag>
+struct test_module : public module {
+	virtual void update() override {
+		std::this_thread::sleep_for(the_update_time);
+	}
+};
+
+using module_1 = test_module<1>;
+using module_2 = test_module<2>;
+
+struct module_3 : public test_module<3> {
 	using dependencies = nexus::module_dependency<module_1, module_2>;
 	module_3(int first, int second)
 		: m_value(first + second) {
 	}
 
 	int m_value;
+};
+
+struct module_fail_to_load : public test_module<4> {
+	virtual load_result on_load() override {
+		return module::load_result::error;
+	}
+};
+
+struct module_fail_to_unload : public test_module<5> {
+	virtual load_result on_unload() override {
+		return module::load_result::error;
+	}
 };
 
 TEST(module_manager, module_id) {
@@ -39,12 +58,25 @@ TEST(module_manager, get_module) {
 	static_assert(std::is_same_v<std::decay_t<decltype(sample_module)>, module_1>);
 }
 
-TEST(module_manager, visit_all) {
+TEST(module_manager, visit_sequential) {
 	module_manager manager;
 	manager.register_module<module_1>();
 	manager.register_module<module_2>();
-	const auto visitor = [](auto&& /*module*/) { /* do something */ };
+	const auto visitor = [](nexus::module& /*module*/) { /* do something */ };
 	manager.visit(visitor);
+}
+
+TEST(module_manager, visit_parallel) {
+	module_manager manager;
+	manager.register_module<module_1>();
+	manager.register_module<module_2>();
+
+	struct update_visitor {
+		void operator()(nexus::module& module) {
+			module.update();
+		}
+	};
+	manager.visit(update_visitor{}, parallel::execute_parallel);
 }
 
 TEST(module_manager, load_single) {
@@ -73,6 +105,21 @@ TEST(module_manager, load_dependencies) {
 	EXPECT_TRUE(manager.is_loaded<module_3>());
 }
 
+TEST(module_manager, load_unregistered) {
+	module_manager manager;
+	manager.load<module_1>();
+}
+
+TEST(module_manager, load_failing_module) {
+	module_manager manager;
+	manager.register_module<module_fail_to_load>();
+	try {
+		manager.load<module_fail_to_load>();
+	} catch (const std::runtime_error& error) {
+		EXPECT_EQ(error.what(), std::string("failed to load module"));
+	}
+}
+
 TEST(module_manager, unload_single) {
 	module_manager manager;
 	manager.register_module<module_1>();
@@ -87,35 +134,13 @@ TEST(module_manager, unload_single) {
 	manager.unload<module_1>();
 }
 
-// template <class return_t>
-// struct base_event {
-// 	using return_type = typename return_t;
-// };
-// 
-// using test_event = base_event<void>;
-// 
-// template <class event_t>
-// struct event_listener {
-// 	virtual typename event_t::return_type on_event(const event_t& event) = 0;
-// };
-// 
-// struct event_dispatcher {
-// 
-// };
-// 
-// struct test_listener : public nexus::module, public event_listener<test_event> {
-// 	void on_event() {
-// 	}
-// 
-// 	virtual test_event::return_type on_event(const test_event& event) override {
-// 		int i = 0;
-// 	}
-// };
-
-// TEST(module_manager, event_test) {
-// 	module_manager manager;
-// 	manager.register_module<test_listener>();
-// 
-// 	auto event_visitor = [](auto& module) { module.on_event(); };
-// 	manager.visit(event_visitor);
-// }
+TEST(module_manager, unload_failing_module) {
+	module_manager manager;
+	manager.register_module<module_fail_to_unload>();
+	manager.load<module_fail_to_unload>();
+	try {
+		manager.unload<module_fail_to_unload>();
+	} catch (const std::runtime_error& error) {
+		EXPECT_EQ(error.what(), std::string("failed to unload module"));
+	}
+}

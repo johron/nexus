@@ -1,6 +1,29 @@
 #include "nexus/nexus.h"
 
+struct sample_module : public nexus::module {
+	virtual load_result on_load() override {
+		m_window = std::make_unique<nexus::window>(800, 600);
+		m_window->keyboard().bind(nexus::keyboard::key::escape, [this]() { m_window->close(); });
+		return load_result::ok;
+	}
+
+private:
+	std::unique_ptr<nexus::window> m_window;
+};
+
+struct sample_1 : public sample_module {};
+struct sample_2 : public sample_module {};
+
 int main(int /*argc*/, char** /*argv*/) {
+	nexus::module_manager manager;
+	manager.register_module<sample_1>();
+	manager.register_module<sample_2>();
+
+	manager.load<sample_1>();
+	manager.load<sample_2>();
+
+
+
 	nexus::window window(800, 600, "sample window");
 	window.keyboard().bind(nexus::keyboard::key::escape, [&window]() { window.close(); });
 

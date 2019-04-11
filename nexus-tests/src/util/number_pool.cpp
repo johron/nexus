@@ -33,5 +33,9 @@ TEST(number_pool, reset) {
 
 TEST(number_pool, wrap_around_causes_assert) {
 	pool_u8 pool(255);
-	EXPECT_DEATH(pool.next(), "number_pool counter has wrapped around");
+	try {
+		const auto number = pool.next();
+	} catch (const std::runtime_error& error){
+		EXPECT_EQ(error.what(), std::string("number_pool counter has wrapped around"));
+	}
 }
