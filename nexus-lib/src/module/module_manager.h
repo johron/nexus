@@ -74,7 +74,7 @@ private:
 			if (module.m_module->on_load() == module::load_result::ok) {
 				m_loaded.insert(id);
 			} else {
-				throw std::runtime_error("failed to load module " + std::to_string(id));
+				throw std::runtime_error("failed to load module");
 			}
 		}
 	}
@@ -87,7 +87,7 @@ private:
 			if (module.m_module->on_unload() == module::load_result::ok) {
 				m_loaded.erase(id);
 			} else {
-				throw std::runtime_error("failed to unload module " + std::to_string(id));
+				throw std::runtime_error("failed to unload module");
 			}
 		}
 	}

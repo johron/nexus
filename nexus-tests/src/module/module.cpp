@@ -23,6 +23,18 @@ struct module_3 : public test_module<3> {
 	int m_value;
 };
 
+struct module_fail_to_load : public test_module<4> {
+	virtual load_result on_load() override {
+		return module::load_result::error;
+	}
+};
+
+struct module_fail_to_unload : public test_module<5> {
+	virtual load_result on_unload() override {
+		return module::load_result::error;
+	}
+};
+
 TEST(module_manager, module_id) {
 	const auto id1 = util::type_id::get<module_1>();
 	const auto id2 = util::type_id::get<module_2>();
@@ -67,7 +79,6 @@ TEST(module_manager, visit_parallel) {
 	manager.visit(update_visitor{}, parallel::execute_parallel);
 }
 
-
 TEST(module_manager, load_single) {
 	module_manager manager;
 	manager.register_module<module_1>();
@@ -94,6 +105,21 @@ TEST(module_manager, load_dependencies) {
 	EXPECT_TRUE(manager.is_loaded<module_3>());
 }
 
+TEST(module_manager, load_unregistered) {
+	module_manager manager;
+	manager.load<module_1>();
+}
+
+TEST(module_manager, load_failing_module) {
+	module_manager manager;
+	manager.register_module<module_fail_to_load>();
+	try {
+		manager.load<module_fail_to_load>();
+	} catch (const std::runtime_error& error) {
+		EXPECT_EQ(error.what(), std::string("failed to load module"));
+	}
+}
+
 TEST(module_manager, unload_single) {
 	module_manager manager;
 	manager.register_module<module_1>();
@@ -106,4 +132,15 @@ TEST(module_manager, unload_single) {
 	// module 3 has a dependency to module 1, so unloading
 	// module 1 should unload module 3 as well.
 	manager.unload<module_1>();
+}
+
+TEST(module_manager, unload_failing_module) {
+	module_manager manager;
+	manager.register_module<module_fail_to_unload>();
+	manager.load<module_fail_to_unload>();
+	try {
+		manager.unload<module_fail_to_unload>();
+	} catch (const std::runtime_error& error) {
+		EXPECT_EQ(error.what(), std::string("failed to unload module"));
+	}
 }
