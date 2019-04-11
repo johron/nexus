@@ -14,7 +14,6 @@ set(src_mock
 
 set(src_module
 	"src/module/module.h"
-	"src/module/module_dependency.h"
 	"src/module/module_manager.h")
 
 set(src_sfml

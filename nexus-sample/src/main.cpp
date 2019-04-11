@@ -1,10 +1,9 @@
 #include "nexus/nexus.h"
 
 struct sample_module : public nexus::module {
-	virtual load_result on_load() override {
-		m_window = std::make_unique<nexus::window>(800, 600);
+	sample_module() 
+		: m_window(std::make_unique<nexus::window>(800, 600)) {
 		m_window->keyboard().bind(nexus::keyboard::key::escape, [this]() { m_window->close(); });
-		return load_result::ok;
 	}
 
 private:

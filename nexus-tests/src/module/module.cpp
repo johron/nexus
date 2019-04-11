@@ -15,24 +15,11 @@ using module_1 = test_module<1>;
 using module_2 = test_module<2>;
 
 struct module_3 : public test_module<3> {
-	using dependencies = nexus::module_dependency<module_1, module_2>;
 	module_3(int first, int second)
 		: m_value(first + second) {
 	}
 
 	int m_value;
-};
-
-struct module_fail_to_load : public test_module<4> {
-	virtual load_result on_load() override {
-		return module::load_result::error;
-	}
-};
-
-struct module_fail_to_unload : public test_module<5> {
-	virtual load_result on_unload() override {
-		return module::load_result::error;
-	}
 };
 
 TEST(module_manager, module_id) {
@@ -54,6 +41,7 @@ TEST(module_manager, register_module) {
 TEST(module_manager, get_module) {
 	module_manager manager;
 	manager.register_module<module_1>();
+	manager.load<module_1>();
 	const auto& sample_module = manager.get<module_1>();
 	static_assert(std::is_same_v<std::decay_t<decltype(sample_module)>, module_1>);
 }
@@ -91,32 +79,12 @@ TEST(module_manager, load_single) {
 	EXPECT_FALSE(manager.is_loaded<module_3>());
 }
 
-TEST(module_manager, load_dependencies) {
-	module_manager manager;
-	manager.register_module<module_1>();
-	manager.register_module<module_2>();
-	manager.register_module<module_3>(1, 2);
-
-	// module 3 has dependencies to module 1 and 2, loading
-	// it should result in all the modules being loaded
-	manager.load<module_3>();
-	EXPECT_TRUE(manager.is_loaded<module_1>());
-	EXPECT_TRUE(manager.is_loaded<module_2>());
-	EXPECT_TRUE(manager.is_loaded<module_3>());
-}
-
 TEST(module_manager, load_unregistered) {
 	module_manager manager;
-	manager.load<module_1>();
-}
-
-TEST(module_manager, load_failing_module) {
-	module_manager manager;
-	manager.register_module<module_fail_to_load>();
 	try {
-		manager.load<module_fail_to_load>();
+		manager.load<module_1>();
 	} catch (const std::runtime_error& error) {
-		EXPECT_EQ(error.what(), std::string("failed to load module"));
+		EXPECT_EQ(error.what(), std::string("module not registered"));
 	}
 }
 
@@ -126,21 +94,17 @@ TEST(module_manager, unload_single) {
 	manager.register_module<module_2>();
 	manager.register_module<module_3>(1, 2);
 	manager.load<module_3>();
-	EXPECT_TRUE(manager.is_loaded<module_1>());
-	EXPECT_TRUE(manager.is_loaded<module_2>());
+	EXPECT_FALSE(manager.is_loaded<module_1>());
+	EXPECT_FALSE(manager.is_loaded<module_2>());
 	EXPECT_TRUE(manager.is_loaded<module_3>());
-	// module 3 has a dependency to module 1, so unloading
-	// module 1 should unload module 3 as well.
-	manager.unload<module_1>();
+	manager.unload<module_3>();
 }
 
-TEST(module_manager, unload_failing_module) {
+TEST(module_manager, unload_unregistered) {
 	module_manager manager;
-	manager.register_module<module_fail_to_unload>();
-	manager.load<module_fail_to_unload>();
 	try {
-		manager.unload<module_fail_to_unload>();
+		manager.unload<module_1>();
 	} catch (const std::runtime_error& error) {
-		EXPECT_EQ(error.what(), std::string("failed to unload module"));
+		EXPECT_EQ(error.what(), std::string("module not registered"));
 	}
 }
