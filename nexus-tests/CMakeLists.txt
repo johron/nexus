@@ -7,6 +7,7 @@ set(src_precompiled
 	"src/precompiled.h")
 
 set(src_math
+	"src/math/rect.cpp"
 	"src/math/vector.cpp")
 
 set(src_module

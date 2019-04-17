@@ -1,7 +1,6 @@
 #pragma once
 #include "util.h"
-#include "sprite.h"
-#include "SFML/Graphics.hpp"
+#include "view.h"
 
 namespace nexus::sfml {
 
@@ -39,6 +38,14 @@ struct window {
 		m_window.setPosition(util::make_vector(pos));
 	}
 
+	void set_view(const view& current_view) {
+		m_window.setView(current_view);
+	}
+
+	void reset_view() {
+		m_window.setView(m_window.getDefaultView());
+	}
+
 	keyboard_t& keyboard() {
 		return m_keyboard;
 	}
@@ -49,8 +56,7 @@ struct window {
 
 	template <class drawable_t>
 	inline void draw(const drawable_t& drawable) {
-		static const auto renderer = [this](const auto& element) { m_window.draw(element); };
-		drawable.visit(renderer);
+		m_window.draw(drawable);
 	}
 
 	void poll_events() {

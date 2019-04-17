@@ -34,8 +34,39 @@ TEST(module_manager, module_id) {
 TEST(module_manager, register_module) {
 	module_manager manager;
 	manager.register_module<module_1>();
-	manager.register_module<module_2>();
-	manager.register_module<module_3>(1, 2);
+	EXPECT_FALSE(manager.is_loaded<module_1>());
+	EXPECT_TRUE(manager.is_registered<module_1>());
+}
+
+TEST(module_manager, add_module) {
+	module_manager manager;
+	manager.add_module<module_1>();
+	EXPECT_TRUE(manager.is_loaded<module_1>());
+	EXPECT_TRUE(manager.is_registered<module_1>());
+}
+
+struct interface_type : public module {
+	virtual int number() const = 0;
+};
+
+struct implementing_type : public interface_type {
+	implementing_type(int number)
+		: m_number(number) {
+	}
+
+	int number() const override {
+		return m_number;
+	}
+
+private:
+	int m_number;
+};
+
+TEST(module_manager, module_alias) {
+	module_manager manager;
+	manager.add_module<implementing_type, interface_type>(10);
+	auto& sample = manager.get<interface_type>();
+	EXPECT_EQ(sample.number(), 10);
 }
 
 TEST(module_manager, get_module) {

@@ -7,6 +7,7 @@ set(src_include
 	"include/nexus/nexus.h")
 
 set(src_math
+	"src/math/rect.h"
 	"src/math/vector.h")
 
 set(src_mock
@@ -26,6 +27,7 @@ set(src_sfml
 	"src/sfml/sprite.h"
 	"src/sfml/texture.h"
 	"src/sfml/window.h"
+	"src/sfml/view.h"
 	"src/sfml/precompiled.h")
 
 set(src_engine

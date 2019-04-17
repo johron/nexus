@@ -15,9 +15,12 @@ using mouse = concrete_mouse<sfml::mouse::button, sfml::mouse>;
 using window = sfml::window<keyboard, mouse>;
 
 using sprite = sfml::sprite;
-using circle = sfml::circle;
-using triangle = sfml::triangle;
-using hexagon = sfml::hexagon;
-using rect = sfml::rect;
+
+namespace shape {
+	using circle = sfml::circle;
+	using triangle = sfml::triangle;
+	using hexagon = sfml::hexagon;
+	using rect = sfml::rect;
+}
 
 }  // namespace nexus

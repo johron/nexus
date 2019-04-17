@@ -20,14 +20,8 @@ struct drawable {
 		return m_drawable->getRotation();
 	}
 
-	template <class visitor_t>
-	void visit(const visitor_t& visitor) const {
-		visitor(*m_drawable);
-	}
-
-	template <class visitor_t>
-	void visit(const visitor_t& visitor) {
-		visitor(*m_drawable);
+	operator const drawable_t&() const {
+		return *m_drawable;
 	}
 
 	drawable& operator=(const drawable& other) {

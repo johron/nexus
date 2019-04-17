@@ -4,13 +4,16 @@
 
 namespace nexus {
 struct module_manager {
-	template <class module_t, class... arg_t>
-	void register_module(arg_t... args) {
-		const auto id = util::type_id::get<module_t>();
+	template <class module_t, class alias_t = module_t, class... arg_t>
+	void register_module(arg_t&&... args) {
+		const auto id = util::type_id::get<alias_t>();
+		m_registry[id] = [args...]() { return module_entry{std::make_unique<module_t>(args...)}; };
+	}
 
-		m_registry[id] = [args...]() {
-			return module_entry{ std::make_unique<module_t>(args...) };
-		};
+	template <class module_t, class alias_t = module_t, class... arg_t>
+	void add_module(arg_t&&... args) {
+		register_module<module_t, alias_t>(std::forward<arg_t>(args)...);
+		load<alias_t>();
 	}
 
 	template <class module_t>
