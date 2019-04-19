@@ -11,11 +11,12 @@ struct rect {
 		, m_height(0) {
 	}
 
-	constexpr rect(T left, T top, T width, T height)
-		: m_left(left)
-		, m_top(top)
-		, m_width(width)
-		, m_height(height) {
+	template <class U>
+	constexpr rect(U left, U top, U width, U height)
+		: m_left(static_cast<T>(left))
+		, m_top(static_cast<T>(top))
+		, m_width(static_cast<T>(width))
+		, m_height(static_cast<T>(height)) {
 	}
 
 	[[nodiscard]] constexpr bool operator==(const rect& other) const {
@@ -78,54 +79,9 @@ struct rect {
 	T m_width;
 	T m_height;
 };
+
+using rectf = rect<float>;
+using recti = rect<int>;
+
 }  // namespace nexus
 
-/*
-////////////////////////////////////////////////////////////
-template <typename T>
-bool Rect<T>::intersects(const Rect<T>& rectangle) const
-{
-	Rect<T> intersection;
-	return intersects(rectangle, intersection);
-}
-
-
-////////////////////////////////////////////////////////////
-template <typename T>
-bool Rect<T>::intersects(const Rect<T>& rectangle, Rect<T>& intersection) const
-{
-	// Rectangles with negative dimensions are allowed, so we must handle them correctly
-
-	// Compute the min and max of the first rectangle on both axes
-	T r1MinX = std::min(left, static_cast<T>(left + width));
-	T r1MaxX = std::max(left, static_cast<T>(left + width));
-	T r1MinY = std::min(top, static_cast<T>(top + height));
-	T r1MaxY = std::max(top, static_cast<T>(top + height));
-
-	// Compute the min and max of the second rectangle on both axes
-	T r2MinX = std::min(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
-	T r2MaxX = std::max(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
-	T r2MinY = std::min(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
-	T r2MaxY = std::max(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
-
-	// Compute the intersection boundaries
-	T interLeft   = std::max(r1MinX, r2MinX);
-	T interTop    = std::max(r1MinY, r2MinY);
-	T interRight  = std::min(r1MaxX, r2MaxX);
-	T interBottom = std::min(r1MaxY, r2MaxY);
-
-	// If the intersection is valid (positive non zero area), then there is an intersection
-	if ((interLeft < interRight) && (interTop < interBottom))
-	{
-		intersection = Rect<T>(interLeft, interTop, interRight - interLeft, interBottom - interTop);
-		return true;
-	}
-	else
-	{
-		intersection = Rect<T>(0, 0, 0, 0);
-		return false;
-	}
-}
-
-
-*/

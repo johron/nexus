@@ -4,6 +4,7 @@
 #include "sfml/window.h"
 #include "sfml/sprite.h"
 #include "sfml/shapes.h"
+#include "sfml/view.h"
 
 #include "event_binding.h"
 #include "input_device.h"
@@ -15,6 +16,8 @@ using mouse = concrete_mouse<sfml::mouse::button, sfml::mouse>;
 using window = sfml::window<keyboard, mouse>;
 
 using sprite = sfml::sprite;
+
+using view = sfml::view;
 
 namespace shape {
 	using circle = sfml::circle;

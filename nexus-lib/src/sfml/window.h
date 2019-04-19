@@ -3,7 +3,6 @@
 #include "view.h"
 
 namespace nexus::sfml {
-
 template <class keyboard_t, class mouse_t>
 struct window {
 	window()
@@ -36,6 +35,10 @@ struct window {
 
 	void set_position(const vector2i& pos) {
 		m_window.setPosition(util::make_vector(pos));
+	}
+
+	void set_position(int x, int y) {
+		set_position({x, y});
 	}
 
 	void set_view(const view& current_view) {
