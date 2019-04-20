@@ -63,6 +63,14 @@ struct view {
 		m_view.zoom(factor);
 	}
 
+	void set_viewport(const nexus::rectf& rect) {
+		m_view.setViewport(util::make_rect(rect));
+	}
+
+	nexus::rectf get_viewport() const {
+		return util::make_rect(m_view.getViewport());
+	}
+
 	operator const sf::View&() const {
 		return m_view;
 	}

@@ -12,7 +12,7 @@ void test2() {
 	shape.set_outline_thickness(1);
 
 	nexus::view view(nexus::vector2f{200, 200}, nexus::vector2f{300, 200});
-	win1.set_view(view);
+	view.set_viewport({0.5, 0.5, 0.5, 0.5});
 
 	while (true) {
 		view.rotate(0.5f);
