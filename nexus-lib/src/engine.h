@@ -14,10 +14,9 @@ using keyboard = concrete_keyboard<sfml::keyboard::key, sfml::keyboard>;
 using mouse = concrete_mouse<sfml::mouse::button, sfml::mouse>;
 
 using window = sfml::window<keyboard, mouse>;
+using view = sfml::view;
 
 using sprite = sfml::sprite;
-
-using view = sfml::view;
 
 namespace shape {
 	using circle = sfml::circle;
