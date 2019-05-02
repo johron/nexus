@@ -23,5 +23,5 @@ TEST(clock, reset) {
 	std::this_thread::sleep_for(sleep_time);
 	const auto duration_2 = clock.reset().as_milliseconds();
 	const auto difference = std::max(duration_1, duration_2) - std::min(duration_1, duration_2);
-	EXPECT_LE(difference, 1);
+	EXPECT_LE(difference, 3);
 }
