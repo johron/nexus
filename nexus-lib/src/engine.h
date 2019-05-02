@@ -9,6 +9,9 @@
 #include "event_binding.h"
 #include "input_device.h"
 
+#include "imgui.h"
+#include "sfml/imgui/imgui-SFML.h"
+
 namespace nexus {
 using keyboard = concrete_keyboard<sfml::keyboard::key, sfml::keyboard>;
 using mouse = concrete_mouse<sfml::mouse::button, sfml::mouse>;

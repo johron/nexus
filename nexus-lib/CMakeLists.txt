@@ -37,6 +37,7 @@ set(src_engine
 	"src/event_binding.h"
 	"src/input_device.h"
 	"src/resource_cache.h"
+	"src/time.h"
 	"src/dummy.cpp")
 
 set(src_events
@@ -73,6 +74,8 @@ source_group("src\\util" FILES ${src_util})
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")
 target_link_libraries(${target_name} PUBLIC ${sfml_libraries})
+
+target_include_directories(${target_name} PUBLIC ${IMGUI_INCLUDE_DIR})
 
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 

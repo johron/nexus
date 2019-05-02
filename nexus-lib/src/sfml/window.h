@@ -57,6 +57,10 @@ struct window {
 		return m_mouse;
 	}
 
+	operator sf::RenderWindow&() {
+		return m_window;
+	}
+
 	template <class drawable_t>
 	inline void draw(const drawable_t& drawable) {
 		m_window.draw(drawable);

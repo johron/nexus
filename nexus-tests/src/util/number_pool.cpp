@@ -31,7 +31,7 @@ TEST(number_pool, reset) {
 	}
 }
 
-TEST(number_pool, wrap_around_causes_assert) {
+TEST(number_pool, wrap_around_causes_exception) {
 	pool_u8 pool(255);
 	try {
 		const auto number = pool.next();
