@@ -5,7 +5,7 @@ TEST(clock, time_conversion) {
 	nexus::time sample_time{std::chrono::seconds(62)};
 	EXPECT_EQ(sample_time.as_seconds(), 62.0f);
 	EXPECT_EQ(sample_time.as_milliseconds(), 62000u);
-	EXPECT_EQ(sample_time.as_minutes(), 1u);
+	EXPECT_EQ(sample_time.as_minutes(), 1);
 }
 
 TEST(clock, elapsed_time) {
