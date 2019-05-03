@@ -1,10 +1,9 @@
 #pragma once
 #include "util.h"
-#include "sprite.h"
-#include "SFML/Graphics.hpp"
+#include "view.h"
+#include "../time.h"
 
 namespace nexus::sfml {
-
 template <class keyboard_t, class mouse_t>
 struct window {
 	window()
@@ -13,6 +12,11 @@ struct window {
 
 	window(uint32_t width, uint32_t height, const std::string& title = "unnamed")
 		: m_window(sf::VideoMode(width, height), title) {
+		ImGui::SFML::Init(m_window);
+	}
+
+	~window() {
+		ImGui::SFML::Shutdown();
 	}
 
 	[[nodiscard]] bool is_open() const {
@@ -39,6 +43,18 @@ struct window {
 		m_window.setPosition(util::make_vector(pos));
 	}
 
+	void set_position(int x, int y) {
+		set_position({x, y});
+	}
+
+	void set_view(const view& current_view) {
+		m_window.setView(current_view);
+	}
+
+	void reset_view() {
+		m_window.setView(m_window.getDefaultView());
+	}
+
 	keyboard_t& keyboard() {
 		return m_keyboard;
 	}
@@ -47,15 +63,23 @@ struct window {
 		return m_mouse;
 	}
 
+	operator sf::RenderWindow&() {
+		return m_window;
+	}
+
 	template <class drawable_t>
 	inline void draw(const drawable_t& drawable) {
-		static const auto renderer = [this](const auto& element) { m_window.draw(element); };
-		drawable.visit(renderer);
+		m_window.draw(drawable);
+	}
+
+	void update(const time& delta_time) {
+		ImGui::SFML::Update(m_window, sf::microseconds(delta_time.as_microseconds()));
 	}
 
 	void poll_events() {
 		sf::Event event;
 		while (m_window.pollEvent(event)) {
+			ImGui::SFML::ProcessEvent(event);
 			switch (event.type) {
 				case sf::Event::Closed:
 					close();
@@ -77,6 +101,7 @@ struct window {
 	}
 
 	void present() {
+		ImGui::SFML::Render(m_window);
 		m_window.display();
 	}
 

@@ -7,6 +7,7 @@ set(src_precompiled
 	"src/precompiled.h")
 
 set(src_math
+	"src/math/rect.cpp"
 	"src/math/vector.cpp")
 
 set(src_module
@@ -15,6 +16,7 @@ set(src_module
 set(src_engine
 	"src/engine/event_binding.cpp"
 	"src/engine/resource_cache.cpp"
+	"src/engine/time.cpp"
 	"src/engine/keyboard.cpp"
 	"src/engine/window.cpp")
 

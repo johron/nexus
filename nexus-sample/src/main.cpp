@@ -1,53 +1,43 @@
 #include "nexus/nexus.h"
 
-struct sample_module : public nexus::module {
-	virtual load_result on_load() override {
-		m_window = std::make_unique<nexus::window>(800, 600);
-		m_window->keyboard().bind(nexus::keyboard::key::escape, [this]() { m_window->close(); });
-		return load_result::ok;
+void test2() {
+	nexus::window win1(800, 600, "test 1");
+	win1.set_position(100, 100);
+	nexus::window win2(800, 600, "test 2");
+	win2.set_position(950, 100);
+
+	nexus::shape::triangle shape(50);
+	shape.set_fill_color({0, 0, 255});
+	shape.set_outline_color({120, 120, 0});
+	shape.set_outline_thickness(1);
+
+	nexus::view view(nexus::vector2f{200, 200}, nexus::vector2f{300, 200});
+	view.set_viewport({0.5, 0.5, 0.5, 0.5});
+
+	nexus::timer timer;
+	while (true) {
+		view.rotate(0.5f);
+		win1.set_view(view);
+		win1.clear();
+		win2.clear();
+		nexus::vector2f origin(50, 80);
+		for (int y = 0; y < 5; ++y) {
+			for (int x = 0; x < 7; ++x) {
+				shape.set_position(origin + nexus::vector2f(x * 100, y * 100));
+				win1.draw(shape);
+				win2.draw(shape);
+			}
+		}
+		win1.present();
+		win2.present();
+
+		win1.poll_events();
+		win2.poll_events();
 	}
-
-private:
-	std::unique_ptr<nexus::window> m_window;
-};
-
-struct sample_1 : public sample_module {};
-struct sample_2 : public sample_module {};
+}
 
 int main(int /*argc*/, char** /*argv*/) {
-	nexus::module_manager manager;
-	manager.register_module<sample_1>();
-	manager.register_module<sample_2>();
-
-	manager.load<sample_1>();
-	manager.load<sample_2>();
-
-
-
-	nexus::window window(800, 600, "sample window");
-	window.keyboard().bind(nexus::keyboard::key::escape, [&window]() { window.close(); });
-
-	nexus::sprite sprite("resources/ghost_red.png");
-	sprite.set_position(100, 200);
-	nexus::sprite copy(sprite);
-	copy.set_position(200, 200);
-
-	nexus::hexagon shape(50);
-	shape.set_fill_color({200, 0, 0, 200});
-	shape.set_outline_thickness(2);
-	shape.set_outline_color({255, 255, 0, 255});
-	shape.set_position(300, 200);
-
-	while (window.is_open()) {
-		window.poll_events();
-		window.clear();
-
-		window.draw(sprite);
-		window.draw(copy);
-		window.draw(shape);
-
-		window.present();
-	}
+	test2();
 
 	return EXIT_SUCCESS;
 }
