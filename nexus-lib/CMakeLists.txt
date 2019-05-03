@@ -20,7 +20,6 @@ set(src_module
 set(src_sfml
 	"src/sfml/util.h"
 	"src/sfml/drawable.h"
-	"src/sfml/events.h"
 	"src/sfml/mouse.h"
 	"src/sfml/keyboard.h"
 	"src/sfml/shapes.h"
