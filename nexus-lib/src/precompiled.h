@@ -1,15 +1,5 @@
 #pragma once
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wold-style-cast"
-#pragma GCC diagnostic push
-#endif
-#include "imgui.h"
-#include "sfml/imgui/imgui-SFML.h"
-#ifdef __GNUC__
-#pragma GCC diagnostic pop
-#endif
-
 #include <cassert>
 #include <cstdint>
 

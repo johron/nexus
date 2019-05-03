@@ -8,21 +8,24 @@ struct game : public sample::game {
 	game()
 		: m_window(800, 600, "sample game") {
 		m_window.keyboard().bind(nx::keyboard::key::escape, [this]() { m_window.close(); });
-		//ImGui::SFML::Init(m_window);
 	}
 
 	~game() {
-		//ImGui::SFML::Shutdown();
 	}
 
-	virtual void update() override {
+	virtual void update(nexus::time&& delta_time) override {
+		m_window.update(delta_time);
 		m_window.poll_events();
-		//ImGui::SFML::Update(m_window, sf::Clock().restart());
 	}
 
 	virtual void render() override {
 		m_window.clear();
 		m_view->render(m_window);
+
+		ImGui::Begin("test");
+		ImGui::Button("button");
+		ImGui::End();
+
 		m_window.present();
 	}
 

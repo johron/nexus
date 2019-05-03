@@ -7,8 +7,9 @@ auto make_game() {
 int main(int /*argc*/, char** /*argv*/) {
 	auto game = make_game();
 
+	nexus::timer timer;
 	while (game->is_running()) {
-		game->update();
+		game->update(timer.reset());
 		game->render();
 	}
 

@@ -10,3 +10,5 @@
 #include "../../src/module/module_manager.h"
 
 #include "../../src/math/vector.h"
+
+#include "../../src/sfml/precompiled.h"

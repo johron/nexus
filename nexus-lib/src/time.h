@@ -37,8 +37,8 @@ private:
 	std::chrono::steady_clock::duration m_duration;
 };
 
-struct clock {
-	clock()
+struct timer {
+	timer()
 		: m_begin(std::chrono::steady_clock::now()) {
 	}
 

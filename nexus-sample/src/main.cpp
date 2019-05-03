@@ -14,6 +14,7 @@ void test2() {
 	nexus::view view(nexus::vector2f{200, 200}, nexus::vector2f{300, 200});
 	view.set_viewport({0.5, 0.5, 0.5, 0.5});
 
+	nexus::timer timer;
 	while (true) {
 		view.rotate(0.5f);
 		win1.set_view(view);
