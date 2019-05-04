@@ -5,7 +5,7 @@ namespace nx = nexus;
 namespace sample {
 struct game {
 	virtual ~game() = default;
-	virtual void update(nexus::time&& delta_time) = 0;
+	virtual void update(nx::time&& delta_time) = 0;
 	virtual void render() = 0;
 	virtual bool is_running() const = 0;
 };

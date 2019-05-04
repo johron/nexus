@@ -6,14 +6,17 @@
 namespace pac_man {
 struct game : public sample::game {
 	game()
-		: m_window(800, 600, "sample game") {
+		: m_window(800, 600, "sample game")
+		, m_model(std::make_unique<world_model>(nx::vector2i(16, 16)))
+		, m_view(std::make_unique<world_view>(*m_model)) {
 		m_window.keyboard().bind(nx::keyboard::key::escape, [this]() { m_window.close(); });
 	}
 
 	~game() {
 	}
 
-	virtual void update(nexus::time&& delta_time) override {
+	virtual void update(nx::time&& delta_time) override {
+		m_model->update(delta_time);
 		m_window.update(delta_time);
 		m_window.poll_events();
 	}
@@ -21,11 +24,6 @@ struct game : public sample::game {
 	virtual void render() override {
 		m_window.clear();
 		m_view->render(m_window);
-
-		ImGui::Begin("test");
-		ImGui::Button("button");
-		ImGui::End();
-
 		m_window.present();
 	}
 
@@ -34,7 +32,7 @@ struct game : public sample::game {
 	}
 
 	nx::window m_window;
-	std::unique_ptr<world_view> m_view;
 	std::unique_ptr<world_model> m_model;
+	std::unique_ptr<world_view> m_view;
 };
 }  // namespace pac_man

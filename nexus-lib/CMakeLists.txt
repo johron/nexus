@@ -40,6 +40,7 @@ set(src_engine
 	"src/input_device.h"
 	"src/resource_cache.h"
 	"src/time.h"
+	"src/color.h"
 	"src/dummy.cpp")
 
 set(src_events

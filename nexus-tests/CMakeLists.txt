@@ -14,6 +14,7 @@ set(src_module
 	"src/module/module.cpp")
 
 set(src_engine
+	"src/engine/color.cpp"
 	"src/engine/event_binding.cpp"
 	"src/engine/resource_cache.cpp"
 	"src/engine/time.cpp"
