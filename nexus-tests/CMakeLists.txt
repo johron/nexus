@@ -25,6 +25,7 @@ set(src_events
 	"src/events/event_system.cpp")
 
 set(src_util
+	"src/util/file.cpp"
 	"src/util/number_pool.cpp"
 	"src/util/type_id.cpp")
 

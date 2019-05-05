@@ -17,6 +17,8 @@ set(src_game
 	"src/pac_man/maze.h"
 	"src/pac_man/player.h"
 	"src/pac_man/ghost.h"
+	"src/pac_man/world_cell.h"
+	"src/pac_man/world_definition.h"
 	"src/pac_man/world_model.h"
 	"src/pac_man/world_view.h")
 

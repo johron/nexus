@@ -1,19 +1,11 @@
 #pragma once
+#include "world_cell.h"
 
-namespace pac_man {
-struct cell {
-	nx::vector2i m_pos;
-};
-
-struct world_model {
-	world_model(nx::vector2i size)
-		: m_size(size) {
-		m_cells.reserve(size.x * size.y);
-		for (int y = 0; y < size.y; ++y) {
-			for (int x = 0; x < size.x; ++x) {
-				m_cells.emplace_back(cell{nx::vector2i(x, y)});
-			}
-		}
+namespace pac_man::model {
+struct world {
+	world(std::vector<cell>&& cells, const nx::vector2i& size)
+		: m_cells(std::forward<std::vector<cell>>(cells))
+		, m_size(size) {
 	}
 
 	void update(const nx::time& /*delta_time*/) {
@@ -31,4 +23,4 @@ private:
 	std::vector<cell> m_cells;
 	nx::vector2i m_size;
 };
-}  // namespace pac_man
+}  // namespace pac_man::model

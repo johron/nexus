@@ -1,25 +1,27 @@
 #pragma once
+#include <type_traits>
 #include "world_model.h"
 
-namespace pac_man {
-struct cell_view {
-	cell_view(const cell& cell, nx::vector2f offset)
-		: m_shape(30, 30) {
-		m_shape.set_position(cell.m_pos * 32 + offset);
-		m_shape.set_fill_color(nx::color(200, 0, 0, 70));
-		m_shape.set_outline_color(nx::color(200, 80, 200));
+namespace pac_man::view {
+constexpr auto cell_view_size = 30;
+constexpr auto cell_pos_size = 32;
+constexpr auto grid_offset = nx::vector2f(10, 10);
+struct cell {
+	cell(const nx::vector2i& position, const nx::vector2f& offset)
+		: m_shape(cell_view_size, cell_view_size) {
+		m_shape.set_position(position * cell_pos_size + offset);
 	}
-
 	nx::shape::rect m_shape;
 };
 
-struct world_view {
-	world_view(const world_model& model)
+struct world {
+	world(const model::world& model)
 		: m_model(model) {
-
-		m_cells.reserve(model.cells().size());
-		for (const auto& cell : model.cells()) {
-			m_cells.emplace_back(cell, nx::vector2f{10, 10});
+		m_cells.reserve(m_model.size().x * m_model.size().y);
+		for (int y = 0; y < m_model.size().y; ++y) {
+			for (int x = 0; x < m_model.size().x; ++x) {
+				m_cells.emplace_back(cell({x, y}, grid_offset));
+			}
 		}
 	}
 
@@ -30,7 +32,7 @@ struct world_view {
 	}
 
 private:
-	const world_model& m_model;
-	std::vector<cell_view> m_cells;
+	const model::world& m_model;
+	std::vector<cell> m_cells;
 };
-}  // namespace pac_man
+}  // namespace pac_man::view

@@ -47,6 +47,7 @@ set(src_events
 	"src/events/event_system.h")
 
 set(src_util
+	"src/util/file.h"
 	"src/util/number_pool.h"
 	"src/util/type_id.cpp"
 	"src/util/type_id.h")

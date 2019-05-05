@@ -8,16 +8,16 @@ x.xxxx.xx.xxxxxxxx.xx.xxxx.x
 x.xxxx.xx.xxxxxxxx.xx.xxxx.x
 x......xx....xx....xx......x
 xxxxxx.xxxxx xx xxxxx.xxxxxx
-     x.xxxxx xx xxxxx.x     
-     x.xx          xx.x     
-     x.xx xxxxxxxx xx.x     
-     x.xx x      x xx.x     
+xxxxxx.xxxxx xx xxxxx.xxxxxx
+xxxxxx.xx          xx.xxxxxx
+xxxxxx.xx xxxxxxxx xx.xxxxxx
+xxxxxx.xx x      x xx.xxxxxx
 xxxxxx.xx x      x xx.xxxxxx
 p     .   x      x   .     p
 xxxxxx.xx x      x xx.xxxxxx
-     x.xx xxxxxxxx xx.x     
-     x.xx          xx.x     
-     x.xx xxxxxxxx xx.x     
+xxxxxx.xx xxxxxxxx xx.xxxxxx
+xxxxxx.xx          xx.xxxxxx
+xxxxxx.xx xxxxxxxx xx.xxxxxx
 xxxxxx.xx xxxxxxxx xx.xxxxxx
 x............xx............x
 x.xxxx.xxxxx.xx.xxxxx.xxxx.x
