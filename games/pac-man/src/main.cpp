@@ -9,6 +9,7 @@ struct pac_man_game : public nx::game {
 	}
 
 	virtual bool is_finished() const override {
+		return true;
 	}
 
 	virtual void render() override {
