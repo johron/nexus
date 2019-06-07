@@ -11,7 +11,7 @@ struct window {
 	}
 
 	window(uint32_t width, uint32_t height, const std::string& title = "unnamed")
-		: m_window(sf::VideoMode(width, height), title) {
+		: m_window(sf::VideoMode(width, height), title, 7u, sf::ContextSettings{0, 0, 8}) {
 		ImGui::SFML::Init(m_window);
 	}
 

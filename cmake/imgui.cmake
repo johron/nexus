@@ -44,6 +44,11 @@ configure_file(
     ${PROJECT_BINARY_DIR}/third_party/imgui-sfml/src/imgui-SFML.h
     ${PROJECT_BINARY_DIR}/third_party/imgui/src/imgui-SFML.h
     COPYONLY)
+    
+configure_file(
+    ${PROJECT_BINARY_DIR}/third_party/imgui-sfml/src/imgui-SFML_export.h
+    ${PROJECT_BINARY_DIR}/third_party/imgui/src/imgui-SFML_export.h
+    COPYONLY)
 
 configure_file(
     ${PROJECT_BINARY_DIR}/third_party/imgui-sfml/src/imgui-SFML.cpp

@@ -34,6 +34,10 @@ protected:
 		return *m_drawable;
 	}
 
+	const drawable_t get_drawable() const {
+		return *m_drawable;
+	}
+
 	template <class... arg_t>
 	drawable(arg_t... args)
 		: m_drawable(std::make_unique<drawable_t>(std::forward<arg_t>(args)...)) {

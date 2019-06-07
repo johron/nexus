@@ -1,6 +1,6 @@
 #pragma once
-#include "drawable.h"
 #include "../color.h"
+#include "drawable.h"
 
 namespace nexus::sfml {
 template <class shape_t>
@@ -13,22 +13,29 @@ protected:
 
 public:
 	void set_fill_color(const color& fill) {
-		this->get_drawable().setFillColor(sf::Color(fill.to_int()));
+		drawable<shape_t>::get_drawable().setFillColor(sf::Color(fill.to_int()));
 	}
 
-	void set_outline_color(const color& outline, float thickness = 1.0f) {
-		this->get_drawable().setOutlineColor(sf::Color(outline.to_int()));
-		set_outline_thickness(thickness);
+	void set_outline_color(const color& outline) {
+		drawable<shape_t>::get_drawable().setOutlineColor(sf::Color(outline.to_int()));
 	}
 
 	void set_outline_thickness(float thickness) {
-		this->get_drawable().setOutlineThickness(thickness);
+		drawable<shape_t>::get_drawable().setOutlineThickness(thickness);
 	}
 };
 
 struct circle : public shape<sf::CircleShape> {
 	circle(float radius)
 		: shape(radius) {
+	}
+
+	float get_radius() const {
+		return get_drawable().getRadius();
+	}
+
+	void set_radius(float radius) {
+		get_drawable().setRadius(radius);
 	}
 };
 
@@ -45,7 +52,7 @@ struct triangle : public shape<sf::CircleShape> {
 };
 
 struct hexagon : public shape<sf::CircleShape> {
-	hexagon(float radius) 
+	hexagon(float radius)
 		: shape(radius, 6) {
 	}
 };

@@ -17,6 +17,9 @@ set(src_module
 	"src/module/module.h"
 	"src/module/module_manager.h")
 
+set(src_application
+	"src/application/application.h")
+
 set(src_sfml
 	"src/sfml/util.h"
 	"src/sfml/drawable.h"
@@ -54,6 +57,7 @@ set(src_util
 
 set(src_files
     ${src_precompiled}
+	${src_application}
 	${src_include}
     ${src_engine}
 	${src_events}
@@ -68,6 +72,7 @@ add_library(${target_name} STATIC ${src_files})
 
 source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
+source_group("src\\application" FILES ${src_application})
 source_group("src\\engine" FILES ${src_engine})
 source_group("src\\engine\\sfml" FILES ${src_sfml})
 source_group("src\\engine\\imgui" FILES ${src_imgui})
