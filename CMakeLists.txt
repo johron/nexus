@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 project("nexus" C CXX)
 
 include("cmake/compiler_warnings.cmake")
@@ -7,7 +7,6 @@ include("cmake/code_coverage.cmake")
 include("cmake/googletest.cmake")
 include("cmake/cotire.cmake")
 include("cmake/sfml.cmake")
-include("cmake/imgui.cmake")
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "predefined")

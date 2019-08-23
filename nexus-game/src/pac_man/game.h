@@ -21,11 +21,6 @@ struct game : public sample::game {
 	virtual void render() override {
 		m_window.clear();
 		m_view->render(m_window);
-
-		ImGui::Begin("test");
-		ImGui::Button("button");
-		ImGui::End();
-
 		m_window.present();
 	}
 
