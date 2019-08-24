@@ -12,11 +12,6 @@ struct window {
 
 	window(uint32_t width, uint32_t height, const std::string& title = "unnamed")
 		: m_window(sf::VideoMode(width, height), title) {
-		ImGui::SFML::Init(m_window);
-	}
-
-	~window() {
-		ImGui::SFML::Shutdown();
 	}
 
 	[[nodiscard]] bool is_open() const {
@@ -73,13 +68,11 @@ struct window {
 	}
 
 	void update(const time& delta_time) {
-		ImGui::SFML::Update(m_window, sf::microseconds(delta_time.as_microseconds()));
 	}
 
 	void poll_events() {
 		sf::Event event;
 		while (m_window.pollEvent(event)) {
-			ImGui::SFML::ProcessEvent(event);
 			switch (event.type) {
 				case sf::Event::Closed:
 					close();
@@ -101,7 +94,6 @@ struct window {
 	}
 
 	void present() {
-		ImGui::SFML::Render(m_window);
 		m_window.display();
 	}
 
