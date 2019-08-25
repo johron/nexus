@@ -1,5 +1,4 @@
 message("-- External Project: cotire")
-include(FetchContent)
 FetchContent_Declare(
     cotire
     GIT_REPOSITORY https://github.com/sakra/cotire.git
