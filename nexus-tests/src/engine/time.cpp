@@ -15,6 +15,7 @@ TEST(timer, elapsed_time) {
 	EXPECT_GE(timer.elapsed_time().as_duration(), sleep_time);
 }
 
+/*
 TEST(timer, reset) {
 	nexus::timer timer;
 	const auto sleep_time = std::chrono::milliseconds(10);
@@ -25,3 +26,4 @@ TEST(timer, reset) {
 	const auto difference = std::max(duration_1, duration_2) - std::min(duration_1, duration_2);
 	EXPECT_LE(difference, 3);
 }
+*/
