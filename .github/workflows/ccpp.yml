@@ -2,7 +2,6 @@ name: CMake
 on: [push]
 env:
   BUILD_TYPE: Release
-  BUILD_DIR: ${{runner.workspace}}/build
 
 jobs:
   default_cmake_build:
@@ -15,19 +14,19 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: create build directory
-      run: cmake -E make_directory $BUILD_DIR
+      run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: generate project
       shell: bash
-      working-directory: $BUILD_DIR
+      working-directory: ${{runner.workspace}}/build
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
     - name: compile project
-      working-directory: $BUILD_DIR
+      working-directory: ${{runner.workspace}}/build
       shell: bash
       run: cmake --build . --config $BUILD_TYPE
 
     - name: run unit tests
-      working-directory: $BUILD_DIR
+      working-directory: ${{runner.workspace}}/build
       shell: bash
       run: ctest -C $BUILD_TYPE
