@@ -1,0 +1,18 @@
+name: Default CMake C/C++ CI
+on: [push]
+
+jobs:
+  default_cmake_build:
+    name: default cmake build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}    
+    steps:
+    - uses: actions/checkout@v1
+    - name: generate
+      run: cmake . -B.build
+    - name: compile
+      run: cmake --build .build
+    - name: unit test
+      run: ctest .build

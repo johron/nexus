@@ -14,9 +14,6 @@ struct window {
 		: m_window(sf::VideoMode(width, height), title) {
 	}
 
-	~window() {
-	}
-
 	[[nodiscard]] bool is_open() const {
 		return m_window.isOpen();
 	}
@@ -70,7 +67,7 @@ struct window {
 		m_window.draw(drawable);
 	}
 
-	void update(const time& /*delta_time*/) {
+	void update(const time& delta_time) {
 	}
 
 	void poll_events() {
