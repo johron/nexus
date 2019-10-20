@@ -15,5 +15,4 @@ jobs:
     - name: compile
       run: cmake --build .build
     - name: unit test
-      run: cd .build
-      run: ctest .
+      run: cd .build; ctest .
