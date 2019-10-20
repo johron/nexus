@@ -1,19 +1,33 @@
-name: CMake C/C++ CI
+name: CMake
 on: [push]
+env:
+  BUILD_TYPE: Release
+  BUILD_DIR: ${{runner.workspace}}/build
 
 jobs:
   default_cmake_build:
-    name: default cmake build
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [windows-latest]
-    runs-on: ${{ matrix.os }}    
+
     steps:
     - uses: actions/checkout@v1
-    - name: generate
-      run: cmake . -B.build
-    - name: compile
-      run: cmake --build .build
-    - name: unit test
-      run: cd .build
-      run: ctest .
+
+    - name: create build directory
+      run: cmake -E make_directory $BUILD_DIR
+
+    - name: generate project
+      shell: bash
+      working-directory: $BUILD_DIR
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: compile project
+      working-directory: $BUILD_DIR
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: run unit tests
+      working-directory: $BUILD_DIR
+      shell: bash
+      run: ctest -C $BUILD_TYPE
