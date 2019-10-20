@@ -1,4 +1,4 @@
-name: Default CMake C/C++ CI
+name: CMake C/C++ CI
 on: [push]
 
 jobs:
@@ -15,4 +15,5 @@ jobs:
     - name: compile
       run: cmake --build .build
     - name: unit test
-      run: ctest .build
+      run: cd .build
+      run: ctest .
