@@ -1,32 +1,31 @@
-name: CMake
+name: CMake Pipeline
 on: [push]
 env:
   BUILD_TYPE: Release
 
 jobs:
-  default_cmake_build:
+  build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macOS-latest]
+        os: [windows-latest]
 
     steps:
     - uses: actions/checkout@v1
-
-    - name: create build directory
+    - name: Setup build environment
       run: cmake -E make_directory ${{runner.workspace}}/build
 
-    - name: generate project
+    - name: Generate project
       shell: bash
       working-directory: ${{runner.workspace}}/build
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
-    - name: compile project
+    - name: Build project
       working-directory: ${{runner.workspace}}/build
       shell: bash
       run: cmake --build . --config $BUILD_TYPE
 
-    - name: run unit tests
+    - name: Run unit tests
       working-directory: ${{runner.workspace}}/build
       shell: bash
       run: ctest -C $BUILD_TYPE
