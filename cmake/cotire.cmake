@@ -1,8 +1,7 @@
 message("-- External Project: cotire")
 FetchContent_Declare(
     cotire
-    GIT_REPOSITORY https://github.com/sakra/cotire.git
-    GIT_TAG cotire-1.8.0
+    URL https://github.com/sakra/cotire/archive/cotire-1.8.0.zip
 )
 
 FetchContent_Populate(cotire)
