@@ -8,5 +8,5 @@ FetchContent_Declare(
 FetchContent_Populate(cotire)
 FetchContent_GetProperties(cotire)
 
-include(${cotire_SOURCE_DIR}/cmake/cotire.cmake)
+include("${cotire_SOURCE_DIR}/cmake/cotire.cmake")
 set(COTIRE_TARGETS_FOLDER "third_party//cotire")
