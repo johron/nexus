@@ -10,7 +10,7 @@ FetchContent_GetProperties(cotire)
 
 if (DEFINED cotire_SOURCE_DIR)
     message("dir: ${cotire_SOURCE_DIR}")
-    file(GLOB_RECURSE found_files "*.*")
+    file(GLOB_RECURSE found_files "${cotire_SOURCE_DIR}/*.*")
     message("files: ${found_files}")
     include("${cotire_SOURCE_DIR}/cmake/cotire.cmake")
     set(COTIRE_TARGETS_FOLDER "third_party//cotire")
