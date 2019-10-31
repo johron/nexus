@@ -8,8 +8,15 @@ FetchContent_Declare(
 FetchContent_Populate(cotire)
 FetchContent_GetProperties(cotire)
 
+function()
+    
+endfunction()
+
+
 if (DEFINED cotire_SOURCE_DIR)
     message("dir: ${cotire_SOURCE_DIR}")
+    file(GLOB_RECURSE found_files "*.*")
+    message("files: ${found_files}")
     include("${cotire_SOURCE_DIR}/cmake/cotire.cmake")
     set(COTIRE_TARGETS_FOLDER "third_party//cotire")
 else()
