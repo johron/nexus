@@ -8,5 +8,9 @@ FetchContent_Declare(
 FetchContent_Populate(cotire)
 FetchContent_GetProperties(cotire)
 
-include("${cotire_SOURCE_DIR}/cmake/cotire.cmake")
-set(COTIRE_TARGETS_FOLDER "third_party//cotire")
+if (DEFINED cotire_SOURCE_DIR)
+    include("${cotire_SOURCE_DIR}/cmake/cotire.cmake")
+    set(COTIRE_TARGETS_FOLDER "third_party//cotire")
+else()
+    message(FATAL_ERROR "-- ERROR: Failed to configure cotire")
+endif()
