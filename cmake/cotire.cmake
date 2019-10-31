@@ -9,6 +9,7 @@ FetchContent_Populate(cotire)
 FetchContent_GetProperties(cotire)
 
 if (DEFINED cotire_SOURCE_DIR)
+    message("dir: ${cotire_SOURCE_DIR}")
     include("${cotire_SOURCE_DIR}/cmake/cotire.cmake")
     set(COTIRE_TARGETS_FOLDER "third_party//cotire")
 else()
