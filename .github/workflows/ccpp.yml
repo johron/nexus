@@ -15,6 +15,10 @@ jobs:
     - name: Setup build environment
       run: cmake -E make_directory ${{runner.workspace}}/build
 
+    - name: Check versions
+      shell: bash
+      run: cmake --version
+
     - name: Generate project
       shell: bash
       working-directory: ${{runner.workspace}}/build
