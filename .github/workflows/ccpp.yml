@@ -1,6 +1,7 @@
 name: CMake Pipeline
 on: [push]
 env:
+  SOURCE_DIR: ${{runner.workspace}}
   BUILD_TYPE: Release
 
 jobs:
@@ -26,8 +27,9 @@ jobs:
 
     - name: Generate project
       shell: bash
+      source-directory: ${{runner.workspace}}
       working-directory: ${{runner.workspace}}/build
-      run: cmake ${{runner.workspace}} -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      run: cmake $SOURCE_DIR -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
     - name: Build project
       working-directory: ${{runner.workspace}}/build
