@@ -11,13 +11,17 @@ jobs:
         os: [windows-latest]
 
     steps:
-    - uses: actions/checkout@v1
-      with: 
-        fetch-depth: 1
-
+    - name: Checkout repository
+      uses: actions/checkout@v1
+      
     - name: Setup build environment
       shell: bash
       run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Install dependencies
+      if: matrix.os == 'ubuntu-latest'
+      shell: bash
+      run: sudo apt-get install libx11-dev xorg-dev freeglut3-dev libudev-dev
 
     - name: Generate project
       shell: bash
