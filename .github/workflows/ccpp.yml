@@ -15,8 +15,8 @@ jobs:
       with: 
         fetch-depth: 1
     - uses: johron/actions/cmake_create_build_dir@master
-        with: 
-          build_dir: ${{runner.workspace}}/build
+      with: 
+        build_dir: ${{runner.workspace}}/build
 
     - name: Check versions
       shell: bash
