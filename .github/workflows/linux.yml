@@ -23,6 +23,7 @@ jobs:
         sudo apt-get install xorg-dev 
         sudo apt-get install freeglut3-dev 
         sudo apt-get install libudev-dev
+        sudo -H pip install coverage
       shell: bash
 
     - name: Generate project
@@ -42,5 +43,7 @@ jobs:
     
     - name: Analyze code coverage
       working-directory: ${{runner.workspace}}/build
-      run: bash <(curl -s https://codecov.io/bash) -x $GCOV
+      run: |
+      which gcov
+      bash <(curl -s https://codecov.io/bash) -x gcov
         
