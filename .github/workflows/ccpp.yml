@@ -11,26 +11,25 @@ jobs:
         os: [windows-latest]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v1
-      with: 
-        fetch-depth: 1
-
-    - name: Create build directory
+    - uses: actions/checkout@v1
+    - name: Setup build environment
       run: cmake -E make_directory ${{runner.workspace}}/build
 
-    - name: Install dependencies
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get install libx11-dev xorg-dev freeglut3-dev libudev-dev
+    - name: Check versions
+      shell: bash
+      run: cmake --version
 
     - name: Generate project
+      shell: bash
       working-directory: ${{runner.workspace}}/build
-      run: cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
     - name: Build project
       working-directory: ${{runner.workspace}}/build
+      shell: bash
       run: cmake --build . --config $BUILD_TYPE
 
     - name: Run unit tests
       working-directory: ${{runner.workspace}}/build
+      shell: bash
       run: ctest -C $BUILD_TYPE
