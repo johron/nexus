@@ -9,8 +9,6 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
-    env:
-      SOURCE_DIR: ${{runner.workspace}}
 
     steps:
     - uses: actions/checkout@v1
@@ -28,7 +26,8 @@ jobs:
 
     - name: Generate project
       shell: bash
-      source-directory: ${{runner.workspace}}
+      env:
+        SOURCE_DIR: ${{runner.workspace}}
       working-directory: ${{runner.workspace}}/build
       run: cmake $SOURCE_DIR -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
