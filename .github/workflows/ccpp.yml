@@ -12,8 +12,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup build environment
-      run: cmake -E make_directory ${{runner.workspace}}/build
+      with: 
+        fetch-depth: 1
+    - uses: johron/actions/cmake_create_build_dir
+        with: 
+          build_dir: ${{runner.workspace}}/build
 
     - name: Check versions
       shell: bash
