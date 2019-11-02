@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       if: matrix.os == 'ubuntu-latest'
       shell: bash
-      run: sudo apt-get install libx11-dev
+      run: sudo apt-get install libx11-dev xorg-dev freeglut3-dev libudev-dev
 
     - name: Generate project
       shell: bash
