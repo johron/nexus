@@ -1,14 +1,11 @@
-name: CMake Pipeline
+name: windows
 on: [push]
 env:
   BUILD_TYPE: Release
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest]
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository

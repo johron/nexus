@@ -1,0 +1,51 @@
+name: linux
+on: [push]
+env:
+  BUILD_TYPE: Debug
+  CXX_EXE: usr/bin/g++8
+  CC_EXE: usr/bin/gcc-8
+  GCOV: usr/bin/gcov-8
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v1
+      with: 
+        fetch-depth: 1
+        
+    - name: Create build directory
+      run: cmake -E make_directory ${{runner.workspace}}/build
+
+    - name: Install dependencies
+      run: | 
+        sudo apt-get install libx11-dev 
+        sudo apt-get install xorg-dev 
+        sudo apt-get install freeglut3-dev 
+        sudo apt-get install libudev-dev
+        sudo apt-get install g++-8
+        export CXX=$CXX_EXE
+        export CC=$CC_EXE
+      shell: bash
+
+    - name: Generate project
+      working-directory: ${{runner.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DENABLE_COVERAGE=ON
+      shell: bash
+
+    - name: Build project
+      working-directory: ${{runner.workspace}}/build
+      run: cmake --build . --config $BUILD_TYPE
+      shell: bash
+
+    - name: Run unit tests
+      working-directory: ${{runner.workspace}}/build
+      run: ctest -C $BUILD_TYPE
+      shell: bash
+    
+    - name: Analyze code coverage
+      working-directory: ${{runner.workspace}}/build
+      run: bash <(curl -s https://codecov.io/bash) -x $GCOV
+        
