@@ -1,7 +1,6 @@
 name: CMake Pipeline
 on: [push]
 env:
-  SOURCE_DIR: ${{runner.workspace}}
   BUILD_TYPE: Release
 
 jobs:
@@ -10,6 +9,8 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest]
+    env:
+      SOURCE_DIR: ${{runner.workspace}}
 
     steps:
     - uses: actions/checkout@v1
