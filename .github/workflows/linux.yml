@@ -2,9 +2,7 @@ name: linux
 on: [push]
 env:
   BUILD_TYPE: Debug
-  CXX_EXE: usr/bin/g++8
-  CC_EXE: usr/bin/gcc-8
-  GCOV: usr/bin/gcov-8
+  GCOV: usr/bin/gcov-7
 
 jobs:
   build:
@@ -25,9 +23,6 @@ jobs:
         sudo apt-get install xorg-dev 
         sudo apt-get install freeglut3-dev 
         sudo apt-get install libudev-dev
-        sudo apt-get install g++-8
-        export CXX=$CXX_EXE
-        export CC=$CC_EXE
       shell: bash
 
     - name: Generate project
