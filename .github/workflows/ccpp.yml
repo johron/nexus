@@ -8,19 +8,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        os: [windows-latest]
 
     steps:
     - uses: actions/checkout@v1
       with: 
         fetch-depth: 1
-    - uses: johron/actions/cmake/create_build_dir@master
-      with: 
-        build_dir: ${{runner.workspace}}/build
 
-    - name: Check versions
+    - name: Setup build environment
       shell: bash
-      run: cmake --version
+      run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Generate project
       shell: bash
