@@ -8,7 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, ubuntu-latest]
 
     steps:
     - name: Checkout repository
@@ -26,10 +26,6 @@ jobs:
         sudo apt-get install xorg-dev 
         sudo apt-get install freeglut3-dev 
         sudo apt-get install libudev-dev
-      shell: bash
-
-    - name: Check versions
-      run: cmake --version
       shell: bash
 
     - name: Generate project
