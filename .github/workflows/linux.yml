@@ -1,8 +1,7 @@
 name: linux
 on: [push]
 env:
-  BUILD_TYPE: Debug
-  GCOV: usr/bin/gcov-7
+  BUILD_TYPE: Release
 
 jobs:
   build:
@@ -39,22 +38,4 @@ jobs:
       working-directory: ${{runner.workspace}}/build
       run: ctest -C $BUILD_TYPE
       shell: bash
-    
-    - name: Setup Python  
-      uses: actions/setup-python@master
-      with:
-        version: 3.7
-
-    - name: Generate coverage report
-      working-directory: ${{runner.workspace}}/build
-      run: |
-        pip install pytest-cpp
-        pip install pytest-cov
-        pytest --cov=./ --cov-report=xml
-      shell: bash
-        
-    - name: Upload coverage to Codecov  
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.codecov_token}}
         
