@@ -42,6 +42,6 @@ jobs:
     
     - name: Analyze code coverage
       working-directory: ${{runner.workspace}}/build
-      run: <(curl -s https://codecov.io/bash) -x gcov -t ${{secrets.codecov_token}}
+      run: bash <(curl -s https://codecov.io/bash) -x gcov -t ${{secrets.codecov_token}}
       shell: bash
         
