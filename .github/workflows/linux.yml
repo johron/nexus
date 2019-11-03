@@ -23,6 +23,9 @@ jobs:
         sudo apt-get install xorg-dev 
         sudo apt-get install freeglut3-dev 
         sudo apt-get install libudev-dev
+        pip install wheel
+        pip install pytest-cpp
+        pip install pytest-cov
       shell: bash
 
     - name: Generate project
@@ -41,10 +44,8 @@ jobs:
       shell: bash
     
     - name: Generate coverage report
-      run: |
-        pip install pytest-cpp
-        pip install pytest-cov
-        pytest --cov=./ --cov-report=xml
+      run: pytest --cov=./ --cov-report=xml
+      shell: bash
         
     - name: Upload coverage to Codecov  
       uses: codecov/codecov-action@v1.0.3
