@@ -1,5 +1,5 @@
 name: clang-tidy
-on: [pull-request]
+on: [pull_request]
 
 jobs:
   clang-tidy:
