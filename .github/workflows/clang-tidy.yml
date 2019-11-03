@@ -1,8 +1,10 @@
 name: clang-tidy
-on: [pull_request]
+on: [push]
+env:
+  BUILD_TYPE: Release
 
 jobs:
-  clang-tidy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +34,12 @@ jobs:
       run: cmake --build . --config $BUILD_TYPE
       shell: bash
 
+    - name: Run unit tests
+      working-directory: ${{runner.workspace}}/build
+      run: ctest -C $BUILD_TYPE
+      shell: bash
+
     - name: Run clang-tidy
       working-directory: ${{runner.workspace}}/build
       uses: muxee/clang-tidy-action@0.0.1-rc1
+      
