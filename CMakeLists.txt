@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.11)
 project("nexus" C CXX)
 
 include("cmake/compiler_warnings.cmake")
 include("cmake/compiler_features.cmake")
+include("cmake/fetch_content.cmake")
 include("cmake/code_coverage.cmake")
 include("cmake/googletest.cmake")
 include("cmake/cotire.cmake")

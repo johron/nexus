@@ -1,5 +1,4 @@
 message("-- External Project: sfml")
-include(FetchContent)
 FetchContent_Declare(
     sfml
     GIT_REPOSITORY https://github.com/SFML/SFML.git
