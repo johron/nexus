@@ -11,7 +11,7 @@ struct window {
 	}
 
 	window(uint32_t width, uint32_t height, const std::string& title = "unnamed")
-		: m_window(sf::VideoMode(width, height), title) {
+		: m_window(sf::VideoMode(width, height), title, 7u, sf::ContextSettings(0, 0, 8)) {
 	}
 
 	[[nodiscard]] bool is_open() const {
@@ -67,7 +67,7 @@ struct window {
 		m_window.draw(drawable);
 	}
 
-	void update(const time& delta_time) {
+	void update(const time& /*delta_time*/) {
 	}
 
 	void poll_events() {
