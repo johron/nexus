@@ -1,7 +1,7 @@
-#include "pac_man/game.h"
+#include "game/game.h"
 
 auto make_game() {
-	return std::make_unique<pac_man::game>();
+	return std::make_unique<match_game::game>();
 }
 
 int main(int /*argc*/, char** /*argv*/) {

@@ -29,9 +29,6 @@ set(src_sfml
 	"src/sfml/view.h"
 	"src/sfml/precompiled.h")
 
-set(src_imgui
-	${IMGUI_COMPILATION_UNITS})
-
 set(src_engine
 	"src/engine/precompiled.h"
 	"src/engine/parallel.h"
@@ -58,7 +55,6 @@ set(src_files
 	${src_mock}
 	${src_module}
 	${src_sfml}
-	${src_imgui}
 	${src_math}
 	${src_util})
 

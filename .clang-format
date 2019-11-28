@@ -1,4 +1,4 @@
-﻿AllowShortFunctionsOnASingleLine: false
+﻿AllowShortFunctionsOnASingleLine: InlineOnly
 BasedOnStyle: Chromium
 BinPackArguments: false
 BinPackParameters: false

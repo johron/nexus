@@ -1,37 +1,37 @@
 set(target_name "nexus-game")
 
-include("resources/pac_man.cmake")
-
-set(res_files
-	${res_player}
-	${res_avoid}
-	${res_blinky})
-
 set(src_precompiled "src/precompiled.h")
 
 set(src_shared
 	"src/shared/game.h")
 
+set(src_model
+	"src/game/model/board.h"
+	"src/game/model/item.h")
+
+set(src_view
+	"src/game/view/board.h"
+	"src/game/view/item.h")
+
 set(src_game
-	"src/pac_man/game.h"
-	"src/pac_man/maze.h"
-	"src/pac_man/player.h"
-	"src/pac_man/ghost.h"
-	"src/pac_man/world_model.h"
-	"src/pac_man/world_view.h")
+	"src/game/game.h")
 
 set(src_main
 	"src/main.cpp")
 
 set(src_files 
 	${src_precompiled}
+	${src_model}
+	${src_view}
 	${src_game}
 	${src_shared}
 	${src_main})
 
 add_executable(${target_name} WIN32 ${src_files} ${res_files})
 
-source_group("src\\pac_man" FILES ${src_game})
+source_group("src\\game" FILES ${src_game})
+source_group("src\\game\\model" FILES ${src_model})
+source_group("src\\game\\view" FILES ${src_view})
 source_group("src\\main" FILES ${src_main})
 source_group("src\\shared" FILES ${src_shared})
 

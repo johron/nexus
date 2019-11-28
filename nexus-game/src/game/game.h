@@ -1,17 +1,19 @@
 #pragma once
 #include "../shared/game.h"
-#include "world_model.h"
-#include "world_view.h"
+#include "view/board.h"
+#include "model/board.h"
 
-namespace pac_man {
+namespace match_game {
 struct game : public sample::game {
 	game()
-		: m_window(800, 600, "sample game") {
+		: m_window(800, 600, "sample game") 
+		, m_model(std::make_unique<model::board>(8, 8)) 
+		, m_view(std::make_unique<view::board>(*m_model)) {
+
 		m_window.keyboard().bind(nx::keyboard::key::escape, [this]() { m_window.close(); });
 	}
 
-	~game() {
-	}
+	~game() = default;
 
 	virtual void update(nexus::time&& delta_time) override {
 		m_window.update(delta_time);
@@ -29,7 +31,7 @@ struct game : public sample::game {
 	}
 
 	nx::window m_window;
-	std::unique_ptr<world_view> m_view;
-	std::unique_ptr<world_model> m_model;
+	std::unique_ptr<model::board> m_model;
+	std::unique_ptr<view::board> m_view;
 };
 }  // namespace pac_man
