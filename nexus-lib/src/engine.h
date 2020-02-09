@@ -10,19 +10,4 @@
 #include "input_device.h"
 
 namespace nexus {
-using keyboard = concrete_keyboard<sfml::keyboard::key, sfml::keyboard>;
-using mouse = concrete_mouse<sfml::mouse::button, sfml::mouse>;
-
-using window = sfml::window<keyboard, mouse>;
-using view = sfml::view;
-
-using sprite = sfml::sprite;
-
-namespace shape {
-	using circle = sfml::circle;
-	using triangle = sfml::triangle;
-	using hexagon = sfml::hexagon;
-	using rect = sfml::rect;
-}
-
 }  // namespace nexus

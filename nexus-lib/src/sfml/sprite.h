@@ -2,7 +2,7 @@
 #include "drawable.h"
 #include "texture.h"
 
-namespace nexus::sfml {
+namespace nexus {
 
 struct sprite : public drawable<sf::Sprite> {
 	sprite(const std::string& filename)

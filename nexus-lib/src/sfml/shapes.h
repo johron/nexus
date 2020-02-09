@@ -1,7 +1,7 @@
 #pragma once
 #include "drawable.h"
 
-namespace nexus::sfml {
+namespace nexus {
 struct color {
 	color(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha = 255)
 		: r(red)
@@ -48,11 +48,11 @@ struct circle : public shape<sf::CircleShape> {
 	}
 };
 
-struct rect : public shape<sf::RectangleShape> {
-	rect(float width, float height)
-		: shape(sf::Vector2f(width, height)) {
-	}
-};
+// struct rect : public shape<sf::RectangleShape> {
+// 	rect(float width, float height)
+// 		: shape(sf::Vector2f(width, height)) {
+// 	}
+// };
 
 struct triangle : public shape<sf::CircleShape> {
 	triangle(float radius)

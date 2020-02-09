@@ -1,6 +1,6 @@
 #pragma once
 
-namespace nexus::sfml {
+namespace nexus {
 struct texture : public sf::Texture {
 	texture(const std::string& filename) {
 		if (!loadFromFile(filename)) {

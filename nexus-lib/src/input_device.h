@@ -2,8 +2,8 @@
 #include "event_binding.h"
 
 namespace nexus {
-template <class key_t, class keyboard_t>
-struct concrete_keyboard : public event_binding<key_t, std::function<void()>> {
+template <class key_t>
+struct keyboard : public event_binding<key_t, std::function<void()>> {
 	using key = key_t;
 
 	static bool is_key_down(const key_t& key_code) {

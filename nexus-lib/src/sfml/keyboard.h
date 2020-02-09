@@ -1,10 +1,10 @@
 #pragma once
 #include "SFML/Window/Keyboard.hpp"
 
-namespace nexus::sfml {
-struct keyboard {
+namespace nexus {
+struct keyboard : public event_binding<key, std::function<void()>> {
 	enum class key {
-		// clang-format off
+	// clang-format off
 	unknown = -1,
 	a = 0, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z,
 	
@@ -49,7 +49,7 @@ struct keyboard {
 	f1, f2, f3, f4, f5, f6, f7, f8, 
 	f9, f10, f11, f12, f13, f14, f15,
 	pause,
-		// clang-format on
+	// clang-format on
 	};
 
 	static bool is_key_down(const key& key) {

@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Window/Mouse.hpp"
 
-namespace nexus::sfml {
+namespace nexus {
 struct mouse {
 	enum button {
 		left,

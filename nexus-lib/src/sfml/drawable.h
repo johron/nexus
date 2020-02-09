@@ -1,7 +1,7 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
-namespace nexus::sfml {
+namespace nexus {
 template <class drawable_t>
 struct drawable {
 	void set_position(float x, float y) {

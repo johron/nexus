@@ -13,8 +13,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "predefined")
 set_property(GLOBAL PROPERTY CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_subdirectory("nexus-lib")
-add_subdirectory("nexus-tests")
-add_subdirectory("nexus-sample")
-add_subdirectory("nexus-game")
-
+add_subdirectory("nexus-core")
+add_subdirectory("nexus-core-tests")
+add_subdirectory("nexus-gfx")
+add_subdirectory("samples")

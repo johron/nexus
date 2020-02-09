@@ -2,7 +2,7 @@
 #include "../math/rect.h"
 #include "../math/vector.h"
 
-namespace nexus::sfml::util {
+namespace nexus::util {
 // utility interface to convert between engine vector and sfml vector
 template <class T>
 inline auto make_vector(const sf::Vector2<T>& other) {

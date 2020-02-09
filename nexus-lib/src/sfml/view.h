@@ -1,7 +1,7 @@
 #pragma once
 #include "util.h"
 
-namespace nexus::sfml {
+namespace nexus {
 struct view {
 	view()
 		: m_view() {
