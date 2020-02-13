@@ -82,8 +82,7 @@ struct event_broker {
 
 	template <class event_t>
 	void publish(const event_t& event) {
-		const auto event_id = std::type_index(typeid(event_t));
-		auto& listeners = m_listeners[event_id];
+		auto& listeners = m_listeners[std::type_index(typeid(event_t))];
 		using callback = std::function<void(const event_t&)>;
 		for (auto& entry : listeners) {
 			const auto& func = std::any_cast<callback>(entry.second.m_function);
@@ -117,14 +116,13 @@ struct event_broker {
 
 	template <class event_t>
 	[[nodiscard]] std::size_t listener_count() const {
-		const auto event_id = std::type_index(typeid(event_t));
-		const auto it = m_listeners.find(event_id);
+		const auto it = m_listeners.find(std::type_index(typeid(event_t)));
 		return it != m_listeners.end() ? it->second.size() : 0;
 	}
 
 private:
 	void detach_all() {
-		listener_tree empty;
+		listener_map empty;
 		std::swap(m_listeners, empty);
 		for (auto& group : empty) {
 			for (auto& entry : group.second) {
@@ -145,8 +143,8 @@ private:
 
 	using listener_id_t = uint32_t;
 	using listener_group = std::map<listener_id_t, listener_data>;
-	using listener_tree = std::map<std::type_index, listener_group>;
-	listener_tree m_listeners;
+	using listener_map = std::map<std::type_index, listener_group>;
+	listener_map m_listeners;
 	std::vector<std::function<void()>> m_message_queue;
 	util::pool_u32 m_listener_id_pool;
 };

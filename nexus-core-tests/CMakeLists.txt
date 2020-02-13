@@ -8,6 +8,7 @@ set(src_math
 	"src/math/vector.cpp")
 
 set(src_core
+	"src/module_manager.cpp"
 	"src/number_pool.cpp"
 	"src/event_binding.cpp"
 	"src/event_broker.cpp")

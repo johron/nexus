@@ -10,12 +10,12 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "TRUE to build SFML libs ass DLL's" FORCE)
 
 FetchContent_MakeAvailable(sfml)
 
-set(sfml_libraries "sfml-graphics" "sfml-network" "sfml-system" "sfml-window")
+set(sfml_libs "sfml-graphics" "sfml-network" "sfml-system" "sfml-window")
 
 if (WIN32)
-    list(APPEND sfml_libraries "sfml-main")
+    list(APPEND sfml_libs "sfml-main")
 endif(WIN32)
 
-foreach(library ${sfml_libraries})
+foreach(library ${sfml_libs})
     set_target_properties(${library} PROPERTIES FOLDER "third_party/sfml")
 endforeach(library)

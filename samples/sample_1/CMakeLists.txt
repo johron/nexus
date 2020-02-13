@@ -17,6 +17,8 @@ source_group("src\\sample" FILES ${src_sample})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")
+target_link_libraries(${target_name} PUBLIC "nnexus-core")
+target_link_libraries(${target_name} PUBLIC "nnexus-gfx")
 
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 

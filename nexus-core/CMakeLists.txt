@@ -10,6 +10,7 @@ set(src_core
 	"src/dummy.cpp"
 	"src/event_binding.h"
 	"src/event_broker.h"
+	"src/module_manager.h"
 	"src/number_pool.h")
 
 set(src_math

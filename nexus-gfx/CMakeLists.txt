@@ -6,17 +6,33 @@ set(src_precompiled
 set(src_include
 	"include/nexus/nexus-gfx.h")
 
+set(src_sfml
+	"src/sfml/drawable.h"
+	"src/sfml/input_device.h"
+	"src/sfml/keyboard.h"
+	"src/sfml/mouse.h"
+	"src/sfml/shapes.h"
+	"src/sfml/sprite.h"
+	"src/sfml/texture.h"
+	"src/sfml/util.h"
+	"src/sfml/view.h"
+	"src/sfml/window.h"
+	"src/sfml/gfx_sfml.h")
+
 set(src_files
     ${src_precompiled}
+	${src_sfml}
 	${src_include})
 
 add_library(${target_name} STATIC ${src_files})
 
 source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
+source_group("src\\sfml" FILES ${src_sfml})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")
+target_link_libraries(${target_name} PUBLIC ${sfml_libs})
 
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 
