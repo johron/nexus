@@ -10,15 +10,15 @@ set(src_files
     ${src_precompiled}
 	${src_sample})
 
-add_library(${target_name} STATIC ${src_files})
+add_executable(${target_name} WIN32 ${src_files})
 
 source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\sample" FILES ${src_sample})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")
-target_link_libraries(${target_name} PUBLIC "nnexus-core")
-target_link_libraries(${target_name} PUBLIC "nnexus-gfx")
+target_link_libraries(${target_name} PUBLIC "nexus-core")
+target_link_libraries(${target_name} PUBLIC "nexus-gfx")
 
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 

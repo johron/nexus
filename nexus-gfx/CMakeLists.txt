@@ -4,7 +4,11 @@ set(src_precompiled
     "src/precompiled.h")
 
 set(src_include
-	"include/nexus/nexus-gfx.h")
+	"include/nexus/nexus-gfx.h"
+	"include/nexus/nexus-sfml.h")
+
+set(src_dummy
+	"src/dummy.cpp")
 
 set(src_sfml
 	"src/sfml/drawable.h"
@@ -22,6 +26,7 @@ set(src_sfml
 set(src_files
     ${src_precompiled}
 	${src_sfml}
+	${src_dummy}
 	${src_include})
 
 add_library(${target_name} STATIC ${src_files})

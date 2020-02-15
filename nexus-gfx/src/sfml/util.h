@@ -1,6 +1,4 @@
 #pragma once
-#include "../math/rect.h"
-#include "../math/vector.h"
 
 namespace nexus::util {
 // utility interface to convert between engine vector and sfml vector
