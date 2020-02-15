@@ -15,3 +15,6 @@
 #elif defined(_MSC_VER)
 #pragma warning(pop)
 #endif
+
+#include "../../src/sfml/window.h"
+#include "../../src/sfml/sprite.h"

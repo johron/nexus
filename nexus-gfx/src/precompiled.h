@@ -1,5 +1,5 @@
 #pragma once
-#include "../include/nexus/nexus-sfml.h"
+#include "../include/nexus/nexus-gfx.h"
 
 
 #include <stdexcept>

@@ -39,6 +39,8 @@ target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")
 target_link_libraries(${target_name} PUBLIC ${sfml_libs})
 
+target_include_directories(${target_name} PUBLIC "../nexus-core/include/")
+
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 
 set_target_properties(${target_name} PROPERTIES FOLDER "nexus")
