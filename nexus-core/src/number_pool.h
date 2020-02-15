@@ -2,21 +2,28 @@
 #include <cstdint>
 
 namespace nexus::util {
+namespace detail {
 template <class numeric_t>
+struct wrap_around_validator {
+	static void validate(numeric_t& num) {
+		if (num == std::numeric_limits<numeric_t>::max()) {
+			throw std::runtime_error("number_pool counter has wrapped around");
+		}
+	}
+};
+}  // namespace detail
+
+template <class numeric_t, class validator_t = detail::wrap_around_validator<numeric_t>>
 struct number_pool {
 	constexpr number_pool(numeric_t initial_value = min())
-		: m_number(initial_value) {
-	}
+		: m_number(initial_value) {}
 
 	number_pool(const number_pool& other) = delete;
 	number_pool& operator=(const number_pool& other) = delete;
 
 	numeric_t next() {
-		if (m_number < max()) {
-			return m_number++;
-		} else {
-			throw std::runtime_error("number_pool counter has wrapped around");
-		}		
+		validator_t::validate(m_number);
+		return m_number++;
 	}
 
 	void reset() {

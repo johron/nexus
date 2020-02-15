@@ -1,8 +1,8 @@
 #pragma once
-#include <typeindex>
 #include <execution>
 #include <functional>
 #include <map>
+#include <typeindex>
 
 namespace nexus {
 template <class module_t>

@@ -8,16 +8,14 @@ struct rect {
 		: m_left(0)
 		, m_top(0)
 		, m_width(0)
-		, m_height(0) {
-	}
+		, m_height(0) {}
 
 	template <class U>
 	constexpr rect(U left, U top, U width, U height)
 		: m_left(static_cast<T>(left))
 		, m_top(static_cast<T>(top))
 		, m_width(static_cast<T>(width))
-		, m_height(static_cast<T>(height)) {
-	}
+		, m_height(static_cast<T>(height)) {}
 
 	[[nodiscard]] constexpr bool operator==(const rect& other) const {
 		return m_left == other.m_left && m_top == other.m_top && m_width == other.m_width &&
@@ -84,4 +82,3 @@ using rectf = rect<float>;
 using recti = rect<int>;
 
 }  // namespace nexus
-

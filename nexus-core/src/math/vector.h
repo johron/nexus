@@ -3,9 +3,9 @@
 
 #if _MSC_VER
 #pragma warning(push)
-#pragma warning(disable : 4201)  // nonstandard extension used: nameless struct/union
+#pragma warning(disable : 4201)	 // nonstandard extension used: nameless struct/union
 #elif __GNUC__
-#pragma GCC diagnostic ignored "-Wpedantic"  // ISO C++ prohibits anonymous structs [-Wpedantic]
+#pragma GCC diagnostic ignored "-Wpedantic"	 // ISO C++ prohibits anonymous structs [-Wpedantic]
 #pragma GCC diagnostic push
 #endif
 
@@ -41,13 +41,11 @@ template <class T, std::size_t N>
 struct vector_base : public vector_data<T, N> {
 protected:
 	constexpr vector_base()
-		: vector_data<T, N>{} {
-	}
+		: vector_data<T, N>{} {}
 
 	template <class... arg_t>
 	constexpr vector_base(arg_t&&... args)
-		: vector_data<T, N>{static_cast<T>(std::forward<arg_t>(args))...} {
-	}
+		: vector_data<T, N>{static_cast<T>(std::forward<arg_t>(args))...} {}
 
 public:
 	[[nodiscard]] constexpr std::size_t size() const {
@@ -84,23 +82,19 @@ public:
 template <class T, std::size_t N, std::enable_if_t<std::is_arithmetic_v<T>, int> = 0>
 struct vector : public vector_base<T, N> {
 	constexpr vector()
-		: vector_base<T, N>{} {
-	}
+		: vector_base<T, N>{} {}
 
 	template <class... arg_t, std::enable_if_t<sizeof...(arg_t) == N, int> = 0>
 	constexpr vector(arg_t&&... args)
-		: vector_base<T, N>{std::forward<arg_t>(args)...} {
-	}
+		: vector_base<T, N>{std::forward<arg_t>(args)...} {}
 
 	template <class U>
 	constexpr vector(const vector<U, N>& other)
-		: vector<T, N>{other, std::make_index_sequence<N>{}} {
-	}
+		: vector<T, N>{other, std::make_index_sequence<N>{}} {}
 
 	template <class U, std::size_t... I>
 	constexpr vector(const vector<U, N>& other, std::index_sequence<I...>)
-		: vector_base<T, N>{other[I]...} {
-	}
+		: vector_base<T, N>{other[I]...} {}
 };
 
 namespace detail::vector {
@@ -205,5 +199,5 @@ using vector3i = vector<int, 3>;
 #if _MSC_VER
 #pragma warning(pop)  // nonstandard extension used: nameless struct/union
 #elif __GNUC__
-#pragma GCC diagnostic pop  // ISO C++ prohibits anonymous structs [-Wpedantic]
+#pragma GCC diagnostic pop	// ISO C++ prohibits anonymous structs [-Wpedantic]
 #endif
