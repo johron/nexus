@@ -2,15 +2,13 @@
 #include "util.h"
 #include "view.h"
 
-namespace nexus {
+namespace nexus::gfx {
 struct window {
 	window()
-		: m_window{} {
-	}
+		: m_window{} {}
 
 	window(uint32_t width, uint32_t height, const std::string& title = "unnamed")
-		: m_window(sf::VideoMode(width, height), title, 7u, sf::ContextSettings(0, 0, 8)) {
-	}
+		: m_window(sf::VideoMode(width, height), title, 7u, sf::ContextSettings(0, 0, 8)) {}
 
 	[[nodiscard]] bool is_open() const {
 		return m_window.isOpen();
@@ -57,9 +55,7 @@ struct window {
 		m_window.draw(drawable);
 	}
 
-	void add_listener() {
-
-	}
+	void add_listener() {}
 
 	void poll_events() {
 		sf::Event event;
@@ -68,12 +64,6 @@ struct window {
 				case sf::Event::Closed:
 					close();
 					break;
-				case sf::Event::KeyPressed:
-					//m_keyboard.trigger(static_cast<typename keyboard_t::key>(event.key.code));
-					break;
-				case sf::Event::MouseButtonPressed:
-					//m_mouse.trigger(static_cast<typename mouse_t::button>(event.mouseButton.button),
-									//nexus::vector2i(event.mouseButton.x, event.mouseButton.y));
 				default:
 					break;
 			}
@@ -91,4 +81,4 @@ struct window {
 private:
 	sf::RenderWindow m_window;
 };
-}  // namespace nexus::sfml
+}  // namespace nexus::gfx

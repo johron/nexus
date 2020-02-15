@@ -1,6 +1,6 @@
 #pragma once
 
-namespace nexus {
+namespace nexus::gfx {
 struct texture : public sf::Texture {
 	texture(const std::string& filename) {
 		if (!loadFromFile(filename)) {
@@ -8,4 +8,4 @@ struct texture : public sf::Texture {
 		}
 	}
 };
-}  // namespace nexus::sfml
+}  // namespace nexus::gfx

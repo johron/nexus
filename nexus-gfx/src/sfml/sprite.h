@@ -2,8 +2,7 @@
 #include "drawable.h"
 #include "texture.h"
 
-namespace nexus {
-
+namespace nexus::gfx {
 struct sprite : public drawable<sf::Sprite> {
 	sprite(const std::string& filename)
 		: m_texture(std::make_shared<texture>(filename)) {
@@ -13,4 +12,4 @@ struct sprite : public drawable<sf::Sprite> {
 private:
 	std::shared_ptr<texture> m_texture;
 };
-}  // namespace nexus::sfml
+}  // namespace nexus::gfx

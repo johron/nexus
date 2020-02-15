@@ -1,17 +1,15 @@
 #pragma once
 #include "util.h"
 
-namespace nexus {
+namespace nexus::gfx {
 struct view {
 	view()
-		: m_view() {
-	}
+		: m_view() {}
 
-	view(nexus::vector2f&& pos, nexus::vector2f&& size)
-		: m_view(sf::FloatRect(pos.x, pos.y, size.x, size.y)) {
-	}
-	
-	nexus::vector2f get_center() const {
+	view(vector2f&& pos, vector2f&& size)
+		: m_view(sf::FloatRect(pos.x, pos.y, size.x, size.y)) {}
+
+	vector2f get_center() const {
 		return util::make_vector(m_view.getCenter());
 	}
 
@@ -19,11 +17,11 @@ struct view {
 		m_view.setCenter(x, y);
 	}
 
-	void set_center(const nexus::vector2f& pos) {
+	void set_center(const vector2f& pos) {
 		set_center(pos.x, pos.y);
 	}
 
-	nexus::vector2f get_size() const {
+	vector2f get_size() const {
 		return util::make_vector(m_view.getSize());
 	}
 
@@ -31,7 +29,7 @@ struct view {
 		m_view.setSize(width, height);
 	}
 
-	void set_size(const nexus::vector2f& size) {
+	void set_size(const vector2f& size) {
 		set_size(size.x, size.y);
 	}
 
@@ -51,11 +49,11 @@ struct view {
 		m_view.move(x, y);
 	}
 
-	void move(const nexus::vector2f& offset) {
+	void move(const vector2f& offset) {
 		move(offset.x, offset.y);
 	}
 
-	void reset(nexus::vector2f&& pos, nexus::vector2f&& size) {
+	void reset(vector2f&& pos, vector2f&& size) {
 		m_view.reset(sf::FloatRect(pos.x, pos.y, size.x, size.y));
 	}
 
@@ -63,11 +61,11 @@ struct view {
 		m_view.zoom(factor);
 	}
 
-	void set_viewport(const nexus::rectf& rect) {
+	void set_viewport(const rectf& rect) {
 		m_view.setViewport(util::make_rect(rect));
 	}
 
-	nexus::rectf get_viewport() const {
+	rectf get_viewport() const {
 		return util::make_rect(m_view.getViewport());
 	}
 
@@ -78,4 +76,4 @@ struct view {
 private:
 	sf::View m_view;
 };
-}  // namespace nexus::sfml
+}  // namespace nexus::gfx

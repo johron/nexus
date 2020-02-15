@@ -18,3 +18,7 @@
 
 #include "../../src/sfml/window.h"
 #include "../../src/sfml/sprite.h"
+#include "../../src/sfml/shapes.h"
+
+#include "../../src/sfml/keyboard.h"
+#include "../../src/sfml/mouse.h"
