@@ -12,7 +12,6 @@ set(src_dummy
 
 set(src_sfml
 	"src/sfml/drawable.h"
-	"src/sfml/input_device.h"
 	"src/sfml/keyboard.h"
 	"src/sfml/mouse.h"
 	"src/sfml/shapes.h"
@@ -20,8 +19,7 @@ set(src_sfml
 	"src/sfml/texture.h"
 	"src/sfml/util.h"
 	"src/sfml/view.h"
-	"src/sfml/window.h"
-	"src/sfml/gfx_sfml.h")
+	"src/sfml/window.h")
 
 set(src_files
     ${src_precompiled}

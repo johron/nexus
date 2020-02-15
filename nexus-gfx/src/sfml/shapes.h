@@ -48,11 +48,11 @@ struct circle : public shape<sf::CircleShape> {
 	}
 };
 
-// struct rect : public shape<sf::RectangleShape> {
-// 	rect(float width, float height)
-// 		: shape(sf::Vector2f(width, height)) {
-// 	}
-// };
+struct rect : public shape<sf::RectangleShape> {
+	rect(float width, float height)
+		: shape(sf::Vector2f(width, height)) {
+	}
+};
 
 struct triangle : public shape<sf::CircleShape> {
 	triangle(float radius)
