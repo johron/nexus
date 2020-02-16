@@ -16,9 +16,12 @@
 #pragma warning(pop)
 #endif
 
+#include "../../src/sfml/color.h"
 #include "../../src/sfml/window.h"
 #include "../../src/sfml/sprite.h"
 #include "../../src/sfml/shapes.h"
+#include "../../src/sfml/texture.h"
+#include "../../src/sfml/image.h"
 
 #include "../../src/sfml/keyboard.h"
 #include "../../src/sfml/mouse.h"

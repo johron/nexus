@@ -1,0 +1,49 @@
+set(target_name "interface_sample")
+
+set(src_precompiled
+    "src/precompiled.h")
+
+set(src_sample
+    "src/main.cpp")
+
+set(res_textures
+	"res/textures/sprite_sheet.png"
+	"res/textures/ghost_red.png")
+
+set(res_files
+	${res_textures})
+
+set(src_files
+    ${src_precompiled}
+	${src_files}
+	${src_sample}
+	${res_textures})
+
+add_executable(${target_name} WIN32 ${src_files})
+
+source_group("src\\precompiled" FILES ${src_precompiled})
+source_group("src\\sample" FILES ${src_sample})
+source_group("res\\textures" FILES ${res_textures})
+
+target_link_libraries(${target_name} PUBLIC "compiler-warnings")
+target_link_libraries(${target_name} PUBLIC "code-coverage")
+target_link_libraries(${target_name} PUBLIC "nexus-core")
+target_link_libraries(${target_name} PUBLIC "nexus-gfx")
+
+target_compile_features(${target_name} INTERFACE cxx_std_17)
+
+target_include_directories(${target_name} PRIVATE "../../nexus-core/include")
+target_include_directories(${target_name} PRIVATE "../../nexus-gfx/include")
+
+set_target_properties(${target_name} PROPERTIES FOLDER "sample")
+set_target_properties(${target_name} PROPERTIES LINKER_LANGUAGE CXX)
+set_target_properties(${target_name} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT ${src_precompiled})
+
+foreach(file ${res_files})
+	add_custom_command(TARGET ${target_name} 
+		POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+		${CMAKE_CURRENT_SOURCE_DIR}/${file}
+		${CMAKE_CURRENT_BINARY_DIR}/${file})
+endforeach(file ${res_files})
+
+cotire(${target_name})

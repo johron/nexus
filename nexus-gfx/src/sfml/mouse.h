@@ -1,7 +1,12 @@
 #pragma once
 
+#if defined(_MSC_VER)
+#pragma warning(disable : 4505)	 // unreferenced local function has been removed
+#pragma warning(push)
+#endif
+
 namespace nexus::mouse {
-enum button {
+enum class button {
 	left,
 	right,
 	middle,
@@ -20,5 +25,8 @@ static vector2i get_position() {
 static void set_position(const vector2i& position) {
 	sf::Mouse::setPosition(util::make_vector(position));
 }
-
 }  // namespace nexus::mouse
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif

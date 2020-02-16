@@ -1,1 +1,2 @@
-add_subdirectory("sample_1")
+add_subdirectory("interface_sample")
+add_subdirectory("pac_man")

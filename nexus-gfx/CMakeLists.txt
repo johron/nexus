@@ -13,7 +13,9 @@ set(src_dummy
 set(src_sfml
 	"src/sfml/drawable.h"
 	"src/sfml/keyboard.h"
+	"src/sfml/image.h"
 	"src/sfml/mouse.h"
+	"src/sfml/color.h"
 	"src/sfml/shapes.h"
 	"src/sfml/sprite.h"
 	"src/sfml/texture.h"

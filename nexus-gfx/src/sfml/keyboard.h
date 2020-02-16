@@ -1,5 +1,10 @@
 #pragma once
 
+#if defined(_MSC_VER)
+#pragma warning(disable : 4505)	 // unreferenced local function has been removed
+#pragma warning(push)
+#endif
+
 namespace nexus::keyboard {
 // clang-format off
 enum class key {
@@ -53,4 +58,8 @@ enum class key {
 static bool is_key_down(const key& key) {
 	return sf::Keyboard::isKeyPressed(static_cast<sf::Keyboard::Key>(key));
 }
-}	// namespace nexus::keyboard
+}  // namespace nexus::keyboard
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif

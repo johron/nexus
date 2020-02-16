@@ -5,7 +5,12 @@
 namespace nexus::gfx {
 struct sprite : public drawable<sf::Sprite> {
 	sprite(const std::string& filename)
-		: m_texture(std::make_shared<texture>(filename)) {
+		: m_texture(std::make_unique<texture>(filename)) {
+		get_drawable().setTexture(*m_texture);
+	}
+
+	sprite(std::unique_ptr<texture> texture)
+		: m_texture(std::move(texture)) {
 		get_drawable().setTexture(*m_texture);
 	}
 

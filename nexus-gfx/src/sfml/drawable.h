@@ -1,5 +1,5 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+#include "util.h"
 
 namespace nexus {
 template <class drawable_t>
