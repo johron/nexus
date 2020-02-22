@@ -1,7 +1,5 @@
-#include <typeindex>
-
+#include "../src/core/module_manager.h"
 #include "gtest/gtest.h"
-#include "nexus/nexus-core.h"
 
 using namespace nexus;
 static constexpr auto the_update_time = std::chrono::milliseconds(10);

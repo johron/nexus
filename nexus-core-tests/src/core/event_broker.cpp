@@ -1,4 +1,4 @@
-#include "../src/event_broker.h"
+#include "../src/core/event_broker.h"
 #include "gtest/gtest.h"
 
 using namespace nexus;

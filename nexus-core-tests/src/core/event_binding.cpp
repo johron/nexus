@@ -1,4 +1,4 @@
-#include "nexus/nexus-core.h"
+#include "../src/core/event_binding.h"
 #include "gtest/gtest.h"
 
 using binding_t = nexus::event_binding<int, std::function<void()>>;

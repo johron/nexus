@@ -7,13 +7,17 @@ set(src_root
 	"src/main.cpp")
 
 set(src_game
+	"src/game/entity.h"
+	"src/game/entity_factory.h"
     "src/game/game.h"
-	"src/game/game.cpp")
+	"src/game/game.cpp"
+	"src/game/player.h")
 
 set(src_util
 	"src/util/sprite_factory.h")
 
 set(res_textures
+	"res/textures/sprite_sheet.h"
 	"res/textures/sprite_sheet.png")
 
 set(res_files

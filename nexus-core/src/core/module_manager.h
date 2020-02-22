@@ -10,7 +10,7 @@ struct module_manager {
 	template <class module_t, class alias_t = module_t, class... arg_t>
 	void register_module(arg_t&&... args) {
 		m_registry[std::type_index(typeid(alias_t))] = [args...]() {
-			return module_entry{std::make_unique<module_t>(args...)};
+			return module_entry{std::make_unique<module_t>(std::forward<arg_t>(args)...)};
 		};
 	}
 

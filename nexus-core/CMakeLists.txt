@@ -6,12 +6,15 @@ set(src_precompiled
 set(src_include
 	"include/nexus/nexus-core.h")
 
+set(src_root
+	"src/dummy.cpp")
+
 set(src_core
-	"src/dummy.cpp"
-	"src/event_binding.h"
-	"src/event_broker.h"
-	"src/module_manager.h"
-	"src/number_pool.h")
+	"src/core/event_binding.h"
+	"src/core/event_broker.h"
+	"src/core/state_machine.h"
+	"src/core/module_manager.h"
+	"src/core/number_pool.h")
 
 set(src_math
 	"src/math/rect.h"
@@ -19,6 +22,7 @@ set(src_math
 
 set(src_files
     ${src_precompiled}
+	${src_root}
 	${src_core}
 	${src_math}
 	${src_include})

@@ -1,5 +1,5 @@
+#include "../src/core/number_pool.h"
 #include "gtest/gtest.h"
-#include "nexus/nexus-core.h"
 
 using namespace nexus::util;
 

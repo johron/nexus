@@ -1,6 +1,5 @@
 #pragma once
 #include <typeindex>
-
 #include "number_pool.h"
 
 namespace nexus {

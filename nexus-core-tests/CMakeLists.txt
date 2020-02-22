@@ -8,11 +8,11 @@ set(src_math
 	"src/math/vector.cpp")
 
 set(src_core
-	"src/module_manager.cpp"
-	"src/number_pool.cpp"
-	"src/event_binding.cpp"
-	"src/event_broker.cpp")
-
+	"src/core/module_manager.cpp"
+	"src/core/number_pool.cpp"
+	"src/core/event_binding.cpp"
+	"src/core/event_broker.cpp"
+	"src/core/state_machine.cpp")
 
 set(src_files 
 	${src_precompiled}
