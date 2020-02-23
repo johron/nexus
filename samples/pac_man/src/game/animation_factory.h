@@ -5,7 +5,7 @@
 namespace pac_man {
 struct entity_factory {
 	entity_factory() 
-		: m_sprite_sheet(std::make_unique<nexus::gfx::image>("res/textures/pac_man.png")) {
+		: m_sprite_sheet(std::make_unique<nexus::gfx::image>("res/textures/sprite_sheet.png")) {
 	}
 
 	std::unique_ptr<entity> create() {
@@ -17,7 +17,7 @@ struct entity_factory {
 	std::unique_ptr<util::animation> create_anim() {
 		return std::make_unique<util::animation>(
 			*m_sprite_sheet,
-			std::vector<nexus::recti>{nexus::recti{0, 0, 22, 22}, nexus::recti{24, 0, 22, 22}},
+			std::vector<nexus::recti>{nexus::recti{292, 173, 22, 22}, nexus::recti{340, 173, 22, 22}},
 			std::chrono::milliseconds(300));
 	}
 

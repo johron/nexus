@@ -11,13 +11,14 @@ set(src_game
 	"src/game/entity_factory.h"
     "src/game/game.h"
 	"src/game/game.cpp"
+	"src/game/game_data.h"
 	"src/game/player.h")
 
 set(src_util
 	"src/util/animation.h")
 
 set(res_textures
-	"res/textures/sprite_sheet.h"
+	"res/textures/pac_man.png"
 	"res/textures/sprite_sheet.png")
 
 set(res_files

@@ -71,7 +71,7 @@ struct window {
 	}
 
 	void clear() {
-		m_window.clear(sf::Color::Black);
+		m_window.clear(sf::Color::Cyan);
 	}
 
 	void present() {
