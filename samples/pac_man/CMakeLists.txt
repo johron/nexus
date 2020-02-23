@@ -14,7 +14,7 @@ set(src_game
 	"src/game/player.h")
 
 set(src_util
-	"src/util/sprite_factory.h")
+	"src/util/animation.h")
 
 set(res_textures
 	"res/textures/sprite_sheet.h"

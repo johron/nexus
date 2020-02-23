@@ -14,7 +14,8 @@ set(src_core
 	"src/core/event_broker.h"
 	"src/core/state_machine.h"
 	"src/core/module_manager.h"
-	"src/core/number_pool.h")
+	"src/core/number_pool.h"
+	"src/core/time.h")
 
 set(src_math
 	"src/math/rect.h"
