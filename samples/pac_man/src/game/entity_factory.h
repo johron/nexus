@@ -16,7 +16,9 @@ struct entity_factory {
 
 	std::unique_ptr<util::animation> create_anim() {
 		return std::make_unique<util::animation>(
-			*m_sprite_sheet, std::vector<nexus::recti>{nexus::recti{292, 173, 22, 22}, nexus::recti{340, 173, 22, 22}});
+			*m_sprite_sheet,
+			std::vector<nexus::recti>{nexus::recti{292, 173, 22, 22}, nexus::recti{340, 173, 22, 22}},
+			std::chrono::milliseconds(300));
 	}
 
 	std::unique_ptr<nexus::gfx::image> m_sprite_sheet;

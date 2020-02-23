@@ -17,6 +17,9 @@ set(src_core
 	"src/core/number_pool.h"
 	"src/core/time.h")
 
+set(src_json
+	"src/json/json.h")
+
 set(src_math
 	"src/math/rect.h"
 	"src/math/vector.h")
@@ -25,6 +28,7 @@ set(src_files
     ${src_precompiled}
 	${src_root}
 	${src_core}
+	${src_json}
 	${src_math}
 	${src_include})
 
@@ -34,9 +38,12 @@ source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
 source_group("src\\math" FILES ${src_math})
 source_group("src\\core" FILES ${src_core})
+source_group("src\\json" FILES ${src_json})
 
 target_link_libraries(${target_name} PUBLIC "compiler-warnings")
 target_link_libraries(${target_name} PUBLIC "code-coverage")
+
+target_include_directories(${target_name} INTERFACE "${rapidjson_SOURCE_DIR}/include")
 
 target_compile_features(${target_name} INTERFACE cxx_std_17)
 

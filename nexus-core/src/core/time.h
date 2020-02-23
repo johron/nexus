@@ -3,25 +3,22 @@
 #include <ratio>
 
 namespace nexus {
-struct duration {
+struct duration : public std::chrono::nanoseconds {
 	template <class time_t>
-	constexpr duration(time_t&& duration) 
-		: m_duration(duration) {}
+	duration(time_t&& duration) 
+		: std::chrono::nanoseconds(duration) {}
 
 	[[nodiscard]] float to_seconds() const {
-		return static_cast<float>(m_duration.count()) / std::nano::den;
+		return static_cast<float>(count()) / std::nano::den;
 	}
 
 	[[nodiscard]] std::chrono::milliseconds to_milliseconds() const {
-		return std::chrono::duration_cast<std::chrono::milliseconds>(m_duration);
+		return std::chrono::duration_cast<std::chrono::milliseconds>(*this);
 	}
 
 	[[nodiscard]] std::chrono::microseconds to_microseconds() const {
-		return std::chrono::duration_cast<std::chrono::microseconds>(m_duration);
+		return std::chrono::duration_cast<std::chrono::microseconds>(*this);
 	}
-
-private:
-	std::chrono::nanoseconds m_duration;
 };
 
 struct timer {
@@ -43,5 +40,4 @@ private:
 	using clock = std::chrono::high_resolution_clock;
 	clock::time_point m_begin;
 };
-
 }  // namespace nexus

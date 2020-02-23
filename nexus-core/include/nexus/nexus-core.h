@@ -14,3 +14,5 @@
 #include "../src/core/number_pool.h"
 #include "../src/core/state_machine.h"
 #include "../src/core/time.h"
+
+#include "../src/json/json.h"
