@@ -17,7 +17,9 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Install dependencies
-      run: sudo apt update | sudo apt-get install libx11-dev xorg-dev 
+      run: | 
+        sudo apt-get update --ignore-missing
+        sudo apt-get install libx11-dev xorg-dev freeglut3-dev libudev-dev
       shell: bash
 
     - name: Generate project
