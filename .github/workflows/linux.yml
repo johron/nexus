@@ -16,6 +16,10 @@ jobs:
     - name: Create build directory
       run: cmake -E make_directory ${{runner.workspace}}/build
 
+    - name: Install dependencies
+      run: sudo apt-get install libx11-dev
+      shell: bash
+
     - name: Generate project
       working-directory: ${{runner.workspace}}/build
       run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DENABLE_COVERAGE=ON
