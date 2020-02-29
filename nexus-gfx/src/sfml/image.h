@@ -1,5 +1,5 @@
 #pragma once
-#include "color.h"
+#include "../gfx/color.h"
 
 namespace nexus::gfx {
 struct image : public sf::Image {

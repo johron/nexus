@@ -24,6 +24,10 @@ struct drawable {
 		return m_drawable->getRotation();
 	}
 
+	void move(const vector2f& offset) {
+		return m_drawable->move(util::make_vector(offset));
+	}
+
 	operator const drawable_t&() const {
 		return *m_drawable;
 	}

@@ -4,6 +4,8 @@
 
 namespace nexus::gfx {
 struct sprite : public drawable<sf::Sprite> {
+	sprite() {}
+
 	sprite(const std::string& filename)
 		: m_texture(std::make_unique<texture>(filename, recti{})) {
 		get_drawable().setTexture(*m_texture);

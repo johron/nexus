@@ -15,7 +15,7 @@ set(src_game
 	"src/game/player.h")
 
 set(src_util
-	"src/util/animation.h")
+	"src/util/sprite_sheet.h")
 
 set(res_textures
 	"res/textures/pac_man.png"

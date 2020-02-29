@@ -1,5 +1,7 @@
 #include <nexus/nexus-gfx.h>
+
 #include "game/game.h"
+#include "util/sprite_sheet.h"
 
 using namespace nexus;
 using namespace std::chrono_literals;
@@ -11,8 +13,27 @@ int main(int /*argc*/, char** /*argv*/) {
 	gfx::view view({0, 0}, {400, 300});
 	main_window.set_view(view);
 
-	pac_man::data::sprite_sheet sprites("res/textures/pac_man.png");
-	auto anim = sprites.make_animation(pac_man::data::entity::clyde, pac_man::data::facing::right);
+	pac_man::util::sprite_sheet sprites("res/textures/pac_man.png");
+
+	std::vector<std::shared_ptr<nexus::gfx::sprite_animation>> anims{
+		sprites.make_animation(pac_man::data::entity::clyde, pac_man::direction::right),
+		sprites.make_animation(pac_man::data::entity::clyde, pac_man::direction::left),
+		sprites.make_animation(pac_man::data::entity::clyde, pac_man::direction::up),
+		sprites.make_animation(pac_man::data::entity::clyde, pac_man::direction::down), 
+		sprites.make_animation(pac_man::data::entity::pinky, pac_man::direction::right),
+		sprites.make_animation(pac_man::data::entity::pinky, pac_man::direction::left),
+		sprites.make_animation(pac_man::data::entity::pinky, pac_man::direction::up),
+		sprites.make_animation(pac_man::data::entity::pinky, pac_man::direction::down), 
+		sprites.make_animation(pac_man::data::entity::player, pac_man::direction::right),
+		sprites.make_animation(pac_man::data::entity::player, pac_man::direction::left),
+		sprites.make_animation(pac_man::data::entity::player, pac_man::direction::up),
+		sprites.make_animation(pac_man::data::entity::player, pac_man::direction::down)};
+
+	nexus::vector2f pos(0, 0);
+	for (auto& anim : anims) {
+		anim->set_position(pos);
+		pos.x += 24.f;
+	}
 
 	nexus::timer timer;
 	while (game.is_running() && main_window.is_open()) {
@@ -21,12 +42,17 @@ int main(int /*argc*/, char** /*argv*/) {
 		}
 		const auto delta_time = timer.reset();
 		main_window.poll_events();
-		//game.update(delta_time);
-		anim->update(delta_time);
+		for (const auto& anim : anims) {
+			anim->update(delta_time);
+		}
 
-		main_window.clear();
-		anim->draw(main_window);
-		//game.draw(main_window);
+		game.update(delta_time);
+
+		main_window.clear(nexus::gfx::colors::gray);
+		for (const auto& anim : anims) {
+			main_window.draw(*anim);
+		}
+		game.draw(main_window);
 		main_window.present();
 	}
 

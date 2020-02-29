@@ -70,8 +70,8 @@ struct window {
 		}
 	}
 
-	void clear() {
-		m_window.clear(sf::Color::Cyan);
+	void clear(const color& color = colors::black) {
+		m_window.clear(util::make_color(color));
 	}
 
 	void present() {
