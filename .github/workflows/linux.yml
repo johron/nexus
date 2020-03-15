@@ -17,7 +17,9 @@ jobs:
       run: cmake -E make_directory ${{runner.workspace}}/build
 
     - name: Install conan
-      run: pip3 install conan
+      run: |
+      sudo apt-get install python3-setuptools
+      pip3 install conan
       shell: bash
 
     - name: Install dependencies
