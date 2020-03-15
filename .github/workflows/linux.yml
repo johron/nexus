@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Install conan
+      run: pip install conan
+      
     - name: Checkout repository
       uses: actions/checkout@v1
       with: 
