@@ -3,6 +3,7 @@
 #include <functional>
 #include <map>
 #include <typeindex>
+#include <memory>
 
 namespace nexus {
 template <class module_t>

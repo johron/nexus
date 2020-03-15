@@ -1,7 +1,7 @@
-add_library(compiler-warnings INTERFACE)
+add_library(compiler_warnings INTERFACE)
 
 if (MSVC)
-    target_compile_options(compiler-warnings INTERFACE 
+    target_compile_options(compiler_warnings INTERFACE 
         /W4						# warning level 4
         /permissive-			# standards conformance https://docs.microsoft.com/en-us/cpp/build/reference/permissive-standards-conformance?view=vs-2017
         /w14242					# 'identfier': conversion from 'type1' to 'type1', possible loss of data
@@ -25,7 +25,7 @@ if (MSVC)
         /w14906					# string literal cast to 'LPWSTR'
         /w14928)                # illegal copy-initialization; more than one user-defined conversion has been implicitly applied
 else()
-    target_compile_options(compiler-warnings INTERFACE 
+    target_compile_options(compiler_warnings INTERFACE 
         -Wall                   # reasonable and standard
         -Wextra                 # reasonable and standard
         -Wshadow                # warn the user if a variable declaration shadows one from a parent context

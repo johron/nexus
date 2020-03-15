@@ -14,27 +14,32 @@ set(src_core
 	"src/core/event_broker.cpp"
 	"src/core/state_machine.cpp")
 
+set(src_util
+	"src/util/observer_ptr.cpp")
+
 set(src_files 
 	${src_precompiled}
 	${src_core}
-	${src_math})
+	${src_math}
+	${src_util})
 
 add_executable(${target_name} ${src_files} ${res_files})
 
+source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\core" FILES ${src_core})
 source_group("src\\math" FILES ${src_math})
-source_group("src\\precompiled" FILES ${src_precompiled})
+source_group("src\\util" FILES ${src_util})
 source_group("res" FILES ${res_files})
 
 target_link_libraries(${target_name} "nexus-core")
-target_link_libraries(${target_name} "gtest_main")
+target_link_libraries(${target_name} CONAN_PKG::gtest)
 
 target_include_directories(${target_name} PRIVATE "../nexus-core/include")
 target_include_directories(${target_name} PRIVATE "../../")
 
 set_target_properties(${target_name} PROPERTIES FOLDER "nexus")
-set_target_properties(${target_name} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT ${src_precompiled})
 
+target_precompile_headers(${target_name} PUBLIC ${src_precompiled} PRIVATE ${common_precompiled})
 
 #foreach(file ${res_files})
 #	add_custom_command(TARGET ${target_name} 
@@ -43,5 +48,5 @@ set_target_properties(${target_name} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT ${
 #		${CMAKE_CURRENT_BINARY_DIR}/${file})
 #endforeach(file ${res_files})
 
+include(GoogleTest)
 gtest_discover_tests(${target_name})
-cotire(${target_name})

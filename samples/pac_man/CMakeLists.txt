@@ -39,19 +39,19 @@ source_group("src\\game" FILES ${src_game})
 source_group("src\\util" FILES ${src_util})
 source_group("res\\textures" FILES ${res_textures})
 
-target_link_libraries(${target_name} PUBLIC "compiler-warnings")
-target_link_libraries(${target_name} PUBLIC "code-coverage")
+target_link_libraries(${target_name} PUBLIC "compiler_warnings")
+target_link_libraries(${target_name} PUBLIC "compiler_features")
+target_link_libraries(${target_name} PUBLIC "sanitizers")
 target_link_libraries(${target_name} PUBLIC "nexus-core")
 target_link_libraries(${target_name} PUBLIC "nexus-gfx")
-
-target_compile_features(${target_name} INTERFACE cxx_std_17)
 
 target_include_directories(${target_name} PRIVATE "../../nexus-core/include")
 target_include_directories(${target_name} PRIVATE "../../nexus-gfx/include")
 
 set_target_properties(${target_name} PROPERTIES FOLDER "sample")
 set_target_properties(${target_name} PROPERTIES LINKER_LANGUAGE CXX)
-set_target_properties(${target_name} PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT ${src_precompiled})
+
+target_precompile_headers(${target_name} PUBLIC ${src_precompiled} PRIVATE ${common_precompiled})
 
 foreach(file ${res_files})
 	add_custom_command(TARGET ${target_name} 
@@ -59,5 +59,3 @@ foreach(file ${res_files})
 		${CMAKE_CURRENT_SOURCE_DIR}/${file}
 		${CMAKE_CURRENT_BINARY_DIR}/${file})
 endforeach(file ${res_files})
-
-cotire(${target_name})

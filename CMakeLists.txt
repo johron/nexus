@@ -1,14 +1,18 @@
 cmake_minimum_required(VERSION 3.11)
 project("nexus" C CXX)
 
+include("cmake/default_settings.cmake")
+include("cmake/common_precompiled.cmake")
 include("cmake/compiler_warnings.cmake")
 include("cmake/compiler_features.cmake")
-include("cmake/fetch_content.cmake")
-include("cmake/code_coverage.cmake")
-include("cmake/googletest.cmake")
-include("cmake/sfml.cmake")
-include("cmake/rapidjson.cmake")
-include("cmake/cotire.cmake")
+include("cmake/sanitizers.cmake")
+include("cmake/conan.cmake")
+
+add_conan_package("gtest/1.8.1@bincrafters/stable")
+add_conan_package("rapidjson/1.1.0@bincrafters/stable")
+add_conan_package("imgui-sfml/2.1@bincrafters/stable")
+
+run_conan()
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "predefined")
