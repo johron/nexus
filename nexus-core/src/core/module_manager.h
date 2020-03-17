@@ -2,8 +2,8 @@
 #include <execution>
 #include <functional>
 #include <map>
-#include <typeindex>
 #include <memory>
+#include <typeindex>
 
 namespace nexus {
 template <class module_t>
@@ -53,15 +53,12 @@ struct module_manager {
 
 	template <class functor_t>
 	void visit(functor_t&& func) {
-		std::for_each(
-			m_modules.begin(), m_modules.end(), [&func](auto& entry) { func(*entry.second.m_module); });
+		std::for_each(m_modules.begin(), m_modules.end(), [&func](auto& entry) { func(*entry.second.m_module); });
 	}
 
-	template <class functor_t, class execution_policy_t>
+	template <class functor_t, class execution_policy_t, class = std::enable_if_t<std::is_execution_policy_v<execution_policy_t>>>
 	void visit(functor_t&& func, const execution_policy_t& policy) {
-		std::for_each(policy, m_modules.begin(), m_modules.end(), [&func](auto& entry) {
-			func(*entry.second.m_module);
-		});
+		std::for_each(policy, m_modules.begin(), m_modules.end(), [&func](auto& entry) { func(*entry.second.m_module); });
 	}
 
 private:

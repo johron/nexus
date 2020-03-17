@@ -18,8 +18,6 @@ jobs:
 
     - name: Install conan
       run: |
-        which gcc-9
-        which g++-9
         sudo apt-get install python3-setuptools
         sudo pip3 install wheel
         sudo pip3 install conan_package_tools
@@ -35,7 +33,7 @@ jobs:
 
     - name: Generate project
       working-directory: ${{runner.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DENABLE_COVERAGE=ON -DCMAKE_CXX_COMPILER=gcc-9
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DENABLE_COVERAGE=ON -DCMAKE_CXX_COMPILER=gcc-9 -DCMAKE_C_COMPILER=gcc-9
       shell: bash
 
     - name: Build project

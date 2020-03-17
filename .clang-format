@@ -4,7 +4,7 @@ BinPackArguments: false
 BinPackParameters: false
 BreakConstructorInitializers: BeforeComma 
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
-ColumnLimit: 110
+ColumnLimit: 130
 AccessModifierOffset: '-4'
 IndentWidth: '4'
 Language: Cpp

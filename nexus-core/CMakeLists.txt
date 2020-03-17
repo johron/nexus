@@ -18,6 +18,7 @@ set(src_core
 	"src/core/time.h")
 
 set(src_util
+	"src/util/execution.h"
 	"src/util/observer_ptr.h")
 
 set(src_json
