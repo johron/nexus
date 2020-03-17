@@ -2,6 +2,8 @@ name: linux
 on: [push]
 env:
   BUILD_TYPE: Release
+  CC: gcc-9.2
+  CXX: gcc-9.2
 
 jobs:
   build:
