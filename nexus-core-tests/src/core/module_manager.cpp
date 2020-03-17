@@ -55,22 +55,11 @@ TEST(module_manager, get_module) {
 	static_assert(std::is_same_v<std::decay_t<decltype(sample_module)>, test_module_1>);
 }
 
-TEST(module_manager, visit_sequential) {
+TEST(module_manager, visit) {
 	test_module_manager manager;
 	manager.register_module<test_module_1>();
 	manager.register_module<test_module_2>();
-	manager.visit([](test_module&) {}, std::execution::seq);
-}
-
-TEST(module_manager, visit_parallel) {
-	test_module_manager manager;
-	manager.register_module<test_module_1>();
-	manager.register_module<test_module_2>();
-
-	struct update_visitor {
-		void operator()(test_module&) {}
-	};
-	manager.visit(update_visitor{}, std::execution::par);
+	manager.visit([](test_module&) {});
 }
 
 TEST(module_manager, load_single) {
