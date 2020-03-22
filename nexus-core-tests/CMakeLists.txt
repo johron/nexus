@@ -11,8 +11,7 @@ set(src_core
 	"src/core/module_manager.cpp"
 	"src/core/number_pool.cpp"
 	"src/core/event_binding.cpp"
-	"src/core/event_broker.cpp"
-	"src/core/state_machine.cpp")
+	"src/core/event_broker.cpp")
 
 set(src_util
 	"src/util/observer_ptr.cpp")

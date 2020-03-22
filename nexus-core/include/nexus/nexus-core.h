@@ -12,7 +12,6 @@
 #include "../../src/core/event_binding.h"
 #include "../../src/core/module_manager.h"
 #include "../../src/core/number_pool.h"
-#include "../../src/core/state_machine.h"
 #include "../../src/core/time.h"
 
 #include "../../src/json/json.h"
