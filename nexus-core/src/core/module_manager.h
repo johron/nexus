@@ -5,7 +5,7 @@
 #include <typeindex>
 
 namespace nexus {
-template <class module_t>
+template <class module_base_t>
 struct module_manager {
 	template <class module_t, class alias_t = module_t, class... arg_t>
 	void register_module(arg_t&&... args) {
@@ -86,7 +86,7 @@ private:
 	}
 
 	struct module_entry {
-		std::unique_ptr<module_t> m_module;
+		std::unique_ptr<module_base_t> m_module;
 	};
 
 	std::map<std::type_index, std::function<module_entry()>> m_registry;
