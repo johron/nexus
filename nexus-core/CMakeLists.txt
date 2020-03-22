@@ -12,7 +12,6 @@ set(src_root
 set(src_core
 	"src/core/event_binding.h"
 	"src/core/event_broker.h"
-	"src/core/state_machine.h"
 	"src/core/module_manager.h"
 	"src/core/number_pool.h"
 	"src/core/time.h")
