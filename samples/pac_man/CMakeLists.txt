@@ -12,6 +12,7 @@ set(src_game
     "src/game/game.h"
 	"src/game/game.cpp"
 	"src/game/game_data.h"
+	"src/game/maze.h"
 	"src/game/player.h")
 
 set(src_util

@@ -15,6 +15,7 @@ set(src_gfx
 	"src/gfx/sprite_animation.h")
 
 set(src_sfml
+	"src/sfml/blend_mode.h"
 	"src/sfml/drawable.h"
 	"src/sfml/keyboard.h"
 	"src/sfml/image.h"
@@ -26,10 +27,14 @@ set(src_sfml
 	"src/sfml/view.h"
 	"src/sfml/window.h")
 
+set(src_util
+	"src/util/performance_monitor.h")
+
 set(src_files
     ${src_precompiled}
 	${src_sfml}
 	${src_gfx}
+	${src_util}
 	${src_dummy}
 	${src_include})
 
@@ -39,6 +44,7 @@ source_group("src\\precompiled" FILES ${src_precompiled})
 source_group("src\\include" FILES ${src_include})
 source_group("src\\gfx" FILES ${src_gfx})
 source_group("src\\sfml" FILES ${src_sfml})
+source_group("src\\util" FILES ${src_util})
 
 target_link_libraries(${target_name} PUBLIC "compiler_warnings")
 target_link_libraries(${target_name} PUBLIC "compiler_features")

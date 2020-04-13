@@ -4,3 +4,4 @@
 
 #include "../../src/gfx/color.h"
 #include "../../src/gfx/sprite_animation.h"
+#include "../../src/util/performance_monitor.h"

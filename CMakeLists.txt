@@ -8,6 +8,8 @@ include("cmake/compiler_features.cmake")
 include("cmake/sanitizers.cmake")
 include("cmake/conan.cmake")
 
+option(IMGUI_SFML_BUILD_EXAMPLES "Build ImGui_SFML examples" ON)
+
 add_conan_package("gtest/1.8.1@bincrafters/stable")
 add_conan_package("rapidjson/1.1.0@bincrafters/stable")
 add_conan_package("imgui-sfml/2.1@bincrafters/stable")

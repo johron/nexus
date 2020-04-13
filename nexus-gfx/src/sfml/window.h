@@ -8,7 +8,13 @@ struct window {
 		: m_window{} {}
 
 	window(uint32_t width, uint32_t height, const std::string& title = "unnamed")
-		: m_window(sf::VideoMode(width, height), title, 7u, sf::ContextSettings(0, 0, 8)) {}
+		: m_window(sf::VideoMode(width, height), title, 7u, sf::ContextSettings(0, 0, 8)) {
+		ImGui::SFML::Init(m_window);
+	}
+
+	~window() {
+		ImGui::SFML::Shutdown();
+	}
 
 	[[nodiscard]] bool is_open() const {
 		return m_window.isOpen();
@@ -50,16 +56,30 @@ struct window {
 		return m_window;
 	}
 
-	template <class drawable_t>
-	inline void draw(const drawable_t& drawable) {
-		m_window.draw(drawable);
+	template <class drawable_t, class... arg_t>
+	inline void draw(const drawable_t& drawable, arg_t... args) {
+		m_window.draw(drawable, std::forward<arg_t>(args)...);
 	}
 
-	void add_listener() {}
+	void update(duration delta) {
+		ImGui::SFML::Update(m_window, sf::microseconds(delta.to_microseconds().count()));
+		poll_events();
+	}
 
+	void clear(const color& color = colors::black) {
+		m_window.clear(util::make_color(color));
+	}
+
+	void present() {
+		ImGui::SFML::Render(m_window);
+		m_window.display();
+	}
+
+private:
 	void poll_events() {
 		sf::Event event;
 		while (m_window.pollEvent(event)) {
+			ImGui::SFML::ProcessEvent(event);
 			switch (event.type) {
 				case sf::Event::Closed:
 					close();
@@ -70,15 +90,6 @@ struct window {
 		}
 	}
 
-	void clear(const color& color = colors::black) {
-		m_window.clear(util::make_color(color));
-	}
-
-	void present() {
-		m_window.display();
-	}
-
-private:
 	sf::RenderWindow m_window;
 };
 }  // namespace nexus::gfx

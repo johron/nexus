@@ -8,7 +8,9 @@
 #pragma warning(push)
 #endif
 
-#include "SFML/Graphics.hpp"
+#include <imgui.h>
+#include <imgui-SFML.h>
+#include <SFML/Graphics.hpp>
 
 #if defined(__GNUC__)
 #pragma GCC diagnostic pop
@@ -16,6 +18,7 @@
 #pragma warning(pop)
 #endif
 
+#include "../../src/sfml/blend_mode.h"
 #include "../../src/sfml/window.h"
 #include "../../src/sfml/sprite.h"
 #include "../../src/sfml/shapes.h"

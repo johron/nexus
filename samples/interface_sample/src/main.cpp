@@ -1,4 +1,5 @@
 #include <nexus/nexus-gfx.h>
+#include "view/node_editor.h"
 
 using namespace nexus;
 
@@ -14,20 +15,26 @@ int main(int /*argc*/, char** /*argv*/) {
 	gfx::view view({0, 0}, {160, 120});
 	main_window.set_view(view);
 
+	node_editor editor;
+	gfx::performance_monitor perf_view;
 
+	timer main_timer;
 	while (main_window.is_open()) {
 		if (keyboard::is_key_down(keyboard::key::escape)) {
 			main_window.close();
 		}
-		main_window.poll_events();
 
-		if (mouse::is_button_down(mouse::button::left)) {
-			t3->set_position(t3->get_position() + vector2f{0.02f, 0.f});
-		}
+		std::this_thread::sleep_for(6ms);
 
+		const auto delta_time = main_timer.reset();
+		main_window.update(delta_time);
 		main_window.clear();
-		main_window.draw(*t3);
-		main_window.draw(*t4);
+
+		perf_view.update(delta_time);
+		perf_view.draw();
+
+		editor.draw();
+
 		main_window.present();
 	}
 

@@ -10,6 +10,7 @@ struct entity {
 };
 
 struct direction_provider {
+	virtual ~direction_provider() = default;
 	virtual direction get_direction() const = 0;
 };
 
@@ -30,6 +31,7 @@ struct keyboard_controller : public direction_provider {
 };
 
 struct speed_provider {
+	virtual ~speed_provider() = default;
 	virtual float get_speed() const = 0;
 };
 

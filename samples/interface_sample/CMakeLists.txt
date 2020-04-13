@@ -3,6 +3,13 @@ set(target_name "interface_sample")
 set(src_precompiled
     "src/precompiled.h")
 
+set(src_view
+	"src/view/performance.h"
+	"src/view/node_editor.h")
+
+set(src_node
+	"src/node/node.h")
+
 set(src_sample
     "src/main.cpp")
 
@@ -15,13 +22,16 @@ set(res_files
 
 set(src_files
     ${src_precompiled}
-	${src_files}
+	${src_view}
+	${src_node}
 	${src_sample}
 	${res_textures})
 
 add_executable(${target_name} WIN32 ${src_files})
 
 source_group("src\\precompiled" FILES ${src_precompiled})
+source_group("src\\node" FILES ${src_node})
+source_group("src\\view" FILES ${src_view})
 source_group("src\\sample" FILES ${src_sample})
 source_group("res\\textures" FILES ${res_textures})
 
