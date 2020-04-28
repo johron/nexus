@@ -13,10 +13,9 @@ set(src_game
 	"src/game/game.cpp"
 	"src/game/game_data.h"
 	"src/game/maze.h"
-	"src/game/player.h")
-
-set(src_util
-	"src/util/sprite_sheet.h")
+	"src/game/maze_factory.h"
+	"src/game/player.h"
+	"src/game/sprite_sheet.h")
 
 set(res_textures
 	"res/textures/pac_man.png"

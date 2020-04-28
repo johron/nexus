@@ -1,10 +1,12 @@
 #pragma once
 #include "../game/game_data.h"
 
-namespace pac_man::util {
+namespace pac_man {
 struct sprite_sheet {
 	sprite_sheet(const std::string& filename)
 		: m_image(filename) {}
+
+	// implement move constructor
 
 	auto make_animation(direction facing, nexus::vector2i origin, uint8_t frames) {
 		const nexus::vector2i stride{24, 0};
@@ -18,7 +20,7 @@ struct sprite_sheet {
 			rects.emplace_back(pos.x, pos.y, size.x, size.y);
 		}
 
-		return std::make_unique<nexus::gfx::sprite_animation>(m_image, rects, std::chrono::milliseconds(300));
+		return nexus::gfx::sprite_animation(m_image, rects, std::chrono::milliseconds(300));
 	}
 
 	auto make_animation(data::entity entity, direction facing) {
@@ -41,4 +43,4 @@ struct sprite_sheet {
 private:
 	nexus::gfx::image m_image;
 };
-}  
+}  // namespace pac_man

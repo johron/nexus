@@ -1,7 +1,7 @@
 #pragma once
 
 namespace pac_man {
-enum class direction : int32_t { right, down, left, up };
+enum class direction : int32_t { right, down, left, up, none };
 }
 
 namespace pac_man::data {

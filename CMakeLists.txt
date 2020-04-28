@@ -8,7 +8,8 @@ include("cmake/compiler_features.cmake")
 include("cmake/sanitizers.cmake")
 include("cmake/conan.cmake")
 
-option(IMGUI_SFML_BUILD_EXAMPLES "Build ImGui_SFML examples" ON)
+#option(IMGUI_SFML_BUILD_EXAMPLES "Build ImGui_SFML examples" ON)
+
 
 add_conan_package("gtest/1.8.1@bincrafters/stable")
 add_conan_package("rapidjson/1.1.0@bincrafters/stable")
@@ -20,7 +21,13 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY PREDEFINED_TARGETS_FOLDER "predefined")
 set_property(GLOBAL PROPERTY CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_subdirectory("nexus-core")
-add_subdirectory("nexus-core-tests")
-add_subdirectory("nexus-gfx")
+option(NEXUS_BUILD_TESTS "Build nexus tests" ON)
+
+add_subdirectory("nexus/core")
+add_subdirectory("nexus/gfx")
+
+if (NEXUS_CORE_BUILD_TESTS)
+    add_subdirectory("nexus/tests")
+endif()
+
 add_subdirectory("samples")

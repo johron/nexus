@@ -1,4 +1,4 @@
-set(target_name "nexus-core-tests")
+set(target_name "nexus-tests")
 
 set(src_precompiled
 	"src/precompiled.h")
@@ -14,7 +14,7 @@ set(src_core
 	"src/core/event_broker.cpp")
 
 set(src_util
-	"src/util/observer_ptr.cpp")
+	"src/util/multicast_delegate.cpp")
 
 set(src_files 
 	${src_precompiled}
