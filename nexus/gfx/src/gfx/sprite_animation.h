@@ -29,6 +29,10 @@ struct sprite_animation : public sprite {
 		}
 	}
 
+	void reset() {
+		m_active_time = 0;
+	}
+
 	std::vector<std::shared_ptr<nexus::gfx::texture>> m_textures;
 	nexus::duration m_active_time;
 	nexus::duration m_total_time;

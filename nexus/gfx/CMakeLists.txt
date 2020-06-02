@@ -51,7 +51,7 @@ target_link_libraries(${target_name} PUBLIC "compiler_features")
 target_link_libraries(${target_name} PUBLIC "sanitizers")
 target_link_libraries(${target_name} PUBLIC CONAN_PKG::imgui-sfml)
 
-target_include_directories(${target_name} PUBLIC "../nexus-core/include/")
+target_include_directories(${target_name} PUBLIC "../core/include/")
 
 set_target_properties(${target_name} PROPERTIES FOLDER "nexus")
 set_target_properties(${target_name} PROPERTIES LINKER_LANGUAGE CXX)

@@ -25,10 +25,10 @@ struct entity_factory {
 
 private:
 	move_animations get_animations(data::entity type) {
-		return {m_sprites.make_animation(type, direction::left),
-				m_sprites.make_animation(type, direction::right),
-				m_sprites.make_animation(type, direction::up),
-				m_sprites.make_animation(type, direction::down)};
+		return {m_sprites.make_animation(type, direction::right),
+				m_sprites.make_animation(type, direction::down),
+				m_sprites.make_animation(type, direction::left),
+				m_sprites.make_animation(type, direction::up)};
 	}
 
 	std::map<data::entity, create_func> m_creators;

@@ -60,7 +60,8 @@ struct moving_entity : public entity {
 				  move_animations sprites)
 		: m_direction_provider(std::move(movement))
 		, m_speed_provider(std::move(speed))
-		, m_sprites(std::move(sprites)) {}
+		, m_sprites(std::move(sprites)) 
+		, m_direction(direction::left) {}
 
 	void set_position(const nexus::vector2f& position) override {
 		m_position = position;
@@ -73,38 +74,45 @@ struct moving_entity : public entity {
 		const auto direction = m_direction_provider->get_direction();
 		const auto distance = m_speed_provider->get_speed() * duration.to_seconds();
 		move(direction, distance);
+		for (auto& sprite : m_sprites) {
+			sprite.update(duration);
+		}
 	}
 
 	void move(direction dir, float distance) {
-		const auto index = static_cast<std::size_t>(dir);
 		auto current_position = get_position();
-		switch (dir) {
-			case pac_man::direction::right:
-				current_position += nexus::vector2f{distance, 0};
-				break;
-			case pac_man::direction::down:
-				current_position += nexus::vector2f{0, distance};
-				break;
-			case pac_man::direction::left:
-				current_position += nexus::vector2f{-distance, 0};
-				break;
-			case pac_man::direction::up:
-				current_position += nexus::vector2f{0, -distance};
-				break;
-			case pac_man::direction::none:
-				// don't move
-				break;
+		if (dir != direction::none) {
+			m_direction = dir;
+
+			switch (m_direction) {
+				case pac_man::direction::right:
+					current_position += nexus::vector2f{distance, 0};
+					break;
+				case pac_man::direction::down:
+					current_position += nexus::vector2f{0, distance};
+					break;
+				case pac_man::direction::left:
+					current_position += nexus::vector2f{-distance, 0};
+					break;
+				case pac_man::direction::up:
+					current_position += nexus::vector2f{0, -distance};
+					break;
+				case pac_man::direction::none:
+					break;
+			}
 		}
 		set_position(current_position);
 	}
 
 	void draw(nexus::gfx::window& window) override {
-
+		const auto& sprite = m_sprites.at(static_cast<std::size_t>(m_direction));
+		window.draw(sprite, sf::BlendAdd);
 	}
 
 	std::unique_ptr<direction_provider> m_direction_provider;
 	std::unique_ptr<speed_provider> m_speed_provider;
 	move_animations m_sprites;
+	direction m_direction;
 };
 
 struct player : public moving_entity {

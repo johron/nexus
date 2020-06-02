@@ -45,8 +45,8 @@ target_link_libraries(${target_name} PUBLIC "sanitizers")
 target_link_libraries(${target_name} PUBLIC "nexus-core")
 target_link_libraries(${target_name} PUBLIC "nexus-gfx")
 
-target_include_directories(${target_name} PRIVATE "../../nexus-core/include")
-target_include_directories(${target_name} PRIVATE "../../nexus-gfx/include")
+target_include_directories(${target_name} PRIVATE "../../nexus/core/include")
+target_include_directories(${target_name} PRIVATE "../../nexus/gfx/include")
 
 set_target_properties(${target_name} PROPERTIES FOLDER "sample")
 set_target_properties(${target_name} PROPERTIES LINKER_LANGUAGE CXX)
