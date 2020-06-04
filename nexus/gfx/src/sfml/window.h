@@ -3,6 +3,14 @@
 #include "view.h"
 
 namespace nexus::gfx {
+template <class drawable_t>
+struct drawer {
+	template <class render_target, class... arg_t>
+	static void draw(render_target& target, drawable_t drawable, arg_t... args) {
+		target.draw(drawable, std::forward<arg_t>(args)...);
+	}
+};
+
 struct window {
 	window()
 		: m_window{} {}
@@ -58,7 +66,7 @@ struct window {
 
 	template <class drawable_t, class... arg_t>
 	inline void draw(const drawable_t& drawable, arg_t... args) {
-		m_window.draw(drawable, std::forward<arg_t>(args)...);
+		drawer<drawable_t>::draw(m_window, drawable, std::forward<arg_t>(args)...);
 	}
 
 	void update(duration delta) {

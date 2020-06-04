@@ -19,6 +19,7 @@ set(src_sfml
 	"src/sfml/drawable.h"
 	"src/sfml/keyboard.h"
 	"src/sfml/image.h"
+	"src/sfml/line.h"
 	"src/sfml/mouse.h"
 	"src/sfml/shapes.h"
 	"src/sfml/sprite.h"

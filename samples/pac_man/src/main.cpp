@@ -12,7 +12,7 @@ int main(int /*argc*/, char** /*argv*/) {
 	pac_man::game game(maze_factory);
 
 	gfx::window main_window(800, 600, "pac man");
-	gfx::view view({-20, -20}, {800, 600});
+	gfx::view view({-50, -50}, {800, 600});
 	main_window.set_view(view);
 
 	nexus::timer timer;

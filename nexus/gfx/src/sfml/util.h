@@ -31,4 +31,9 @@ inline auto make_color(const nexus::gfx::color& other) {
 	return sf::Color(other.to_int());
 }
 
+template <class base_t>
+inline auto make_vertex(const base_t& vertex) {
+	return sf::Vertex{make_vector(vertex)};
+}
+
 }  // namespace nexus::sfml::util

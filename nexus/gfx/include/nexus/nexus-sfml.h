@@ -24,6 +24,7 @@
 #include "../../src/sfml/shapes.h"
 #include "../../src/sfml/texture.h"
 #include "../../src/sfml/image.h"
+#include "../../src/sfml/line.h"
 
 #include "../../src/sfml/keyboard.h"
 #include "../../src/sfml/mouse.h"

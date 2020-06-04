@@ -43,5 +43,4 @@ struct hexagon : public shape<sf::CircleShape> {
 	hexagon(float radius)
 		: shape(radius, 6) {}
 };
-
 }  // namespace nexus::gfx
