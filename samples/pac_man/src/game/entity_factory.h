@@ -6,7 +6,7 @@
 
 namespace pac_man {
 struct entity_factory {
-	using create_func = std::function<std::unique_ptr<entity>()>;
+	using create_func = std::function<std::unique_ptr<moving_entity>()>;
 	entity_factory(sprite_sheet&& sprites)
 		: m_sprites(std::forward<sprite_sheet>(sprites)) {
 		register_entity<player>(player::type, get_animations(player::type));
@@ -18,7 +18,7 @@ struct entity_factory {
 		m_creators.insert({entity_type, func});
 	}
 
-	std::unique_ptr<entity> create(data::entity type) {
+	std::unique_ptr<moving_entity> create(data::entity type) {
 		auto entity = m_creators.at(type)();
 		return entity;
 	}

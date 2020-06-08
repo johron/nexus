@@ -20,7 +20,9 @@ struct sprite_sheet {
 			rects.emplace_back(pos.x, pos.y, size.x, size.y);
 		}
 
-		return nexus::gfx::sprite_animation(m_image, rects, std::chrono::milliseconds(300));
+		auto anim = nexus::gfx::sprite_animation(m_image, rects, std::chrono::milliseconds(300));
+		anim.set_origin(size / 2.f);
+		return anim;
 	}
 
 	auto make_animation(data::entity entity, direction facing) {

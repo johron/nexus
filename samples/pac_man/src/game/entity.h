@@ -1,7 +1,6 @@
 #pragma once
-#include <array>
-#include "game_data.h"
 #include "../src/math/vector.h"
+#include "game_data.h"
 
 namespace pac_man {
 struct entity {
@@ -22,23 +21,35 @@ protected:
 
 struct direction_provider {
 	virtual ~direction_provider() = default;
+	virtual void update() = 0;
 	virtual direction get_direction() const = 0;
 };
 
 struct keyboard_controller : public direction_provider {
-	direction get_direction() const override {
+	keyboard_controller()
+		: m_direction(direction::left) {}
+
+	void update() override {
+		if (nexus::keyboard::is_key_down(nexus::keyboard::key::arrow_right)) {
+			m_direction = direction::right;
+		} 
+		if (nexus::keyboard::is_key_down(nexus::keyboard::key::arrow_up)) {
+			m_direction = direction::up;
+		} 
+		if (nexus::keyboard::is_key_down(nexus::keyboard::key::arrow_down)) {
+			m_direction = direction::down;
+		} 
 		if (nexus::keyboard::is_key_down(nexus::keyboard::key::arrow_left)) {
-			return direction::left;
-		} else if (nexus::keyboard::is_key_down(nexus::keyboard::key::arrow_right)) {
-			return direction::right;
-		} else if (nexus::keyboard::is_key_down(nexus::keyboard::key::arrow_up)) {
-			return direction::up;
-		} else if (nexus::keyboard::is_key_down(nexus::keyboard::key::arrow_down)) {
-			return direction::down;
-		} else {
-			return direction::none; 
+			m_direction = direction::left;
 		}
 	}
+
+	direction get_direction() const override {
+		return m_direction;
+	}
+
+private:
+	direction m_direction;
 };
 
 struct speed_provider {
@@ -55,13 +66,10 @@ struct constant_speed_provider : public speed_provider {
 using move_animations = std::array<nexus::gfx::sprite_animation, 4>;
 
 struct moving_entity : public entity {
-	moving_entity(std::unique_ptr<direction_provider> movement,
-				  std::unique_ptr<speed_provider> speed,
-				  move_animations sprites)
+	moving_entity(std::unique_ptr<direction_provider> movement, std::unique_ptr<speed_provider> speed, move_animations sprites)
 		: m_direction_provider(std::move(movement))
 		, m_speed_provider(std::move(speed))
-		, m_sprites(std::move(sprites)) 
-		, m_direction(direction::left) {}
+		, m_sprites(std::move(sprites)) {}
 
 	void set_position(const nexus::vector2f& position) override {
 		m_position = position;
@@ -71,48 +79,29 @@ struct moving_entity : public entity {
 	}
 
 	void update(const nexus::duration& duration) override {
-		const auto direction = m_direction_provider->get_direction();
-		const auto distance = m_speed_provider->get_speed() * duration.to_seconds();
-		move(direction, distance);
+		m_direction_provider->update();
 		for (auto& sprite : m_sprites) {
 			sprite.update(duration);
 		}
 	}
 
-	void move(direction dir, float distance) {
-		auto current_position = get_position();
-		if (dir != direction::none) {
-			m_direction = dir;
+	auto get_speed() const {
+		return m_speed_provider->get_speed();
+	}
 
-			switch (m_direction) {
-				case pac_man::direction::right:
-					current_position += nexus::vector2f{distance, 0};
-					break;
-				case pac_man::direction::down:
-					current_position += nexus::vector2f{0, distance};
-					break;
-				case pac_man::direction::left:
-					current_position += nexus::vector2f{-distance, 0};
-					break;
-				case pac_man::direction::up:
-					current_position += nexus::vector2f{0, -distance};
-					break;
-				case pac_man::direction::none:
-					break;
-			}
-		}
-		set_position(current_position);
+	auto get_direction() const {
+		return m_direction_provider->get_direction();
 	}
 
 	void draw(nexus::gfx::window& window) override {
-		const auto& sprite = m_sprites.at(static_cast<std::size_t>(m_direction));
+		const auto direction = get_direction();
+		const auto& sprite = m_sprites.at(static_cast<std::size_t>(direction));
 		window.draw(sprite, sf::BlendAdd);
 	}
 
 	std::unique_ptr<direction_provider> m_direction_provider;
 	std::unique_ptr<speed_provider> m_speed_provider;
 	move_animations m_sprites;
-	direction m_direction;
 };
 
 struct player : public moving_entity {

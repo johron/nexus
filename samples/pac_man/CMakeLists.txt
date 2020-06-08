@@ -16,7 +16,8 @@ set(src_game
 	"src/game/maze_factory.h"
 	"src/game/navgrid.h"
 	"src/game/player.h"
-	"src/game/sprite_sheet.h")
+	"src/game/sprite_sheet.h"
+	"src/game/util.h")
 
 set(res_textures
 	"res/textures/pac_man.png"

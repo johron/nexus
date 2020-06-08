@@ -44,7 +44,7 @@ constexpr color red{0xff0000ff};
 constexpr color green{0x00ff00ff};
 constexpr color blue{0x0000ffff};
 
-constexpr color white{0x0000bbff};
+constexpr color white{0xffffffff};
 constexpr color cyan{0x00ffffff};
 constexpr color magenta{0xff00ffff};
 constexpr color yellow{0xffff00ff};
